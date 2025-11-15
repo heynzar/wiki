@@ -1,4 +1,6 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { BookIcon } from "lucide-react";
+import Image from "next/image";
 
 /**
  * Shared layout configurations
@@ -11,20 +13,32 @@ export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       title: (
-        <>
-          <svg
-            width="24"
-            height="24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-label="Logo"
-          >
-            <circle cx={12} cy={12} r={12} fill="currentColor" />
-          </svg>
-          My App
-        </>
+        <Image
+          alt="Wiki Nzar Dev Logo"
+          src="/logo.svg"
+          width={40}
+          height={20}
+          className="h-5 w-auto dark:grayscale-100 dark:invert-100"
+        />
       ),
     },
-    // see https://fumadocs.dev/docs/ui/navigation/links
-    links: [],
+
+    links: [
+      {
+        text: "Explore",
+        url: "/explore",
+        active: "url",
+      },
+      {
+        text: "Philosophy",
+        url: "/philosophy",
+        active: "url",
+      },
+      {
+        text: "Visuals",
+        url: "/visuals",
+        active: "url",
+      },
+    ],
   };
 }
