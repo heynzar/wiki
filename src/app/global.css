@@ -3,6 +3,31 @@
 @import "fumadocs-ui/css/preset.css";
 
 @layer base {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.8 0 0);
+    border-radius: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.7 0 0);
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: oklch(0.35 0 0);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.45 0 0);
+  }
+
   .content {
     h1 {
       @apply text-2xl tracking-tighter md:text-4xl;
@@ -28,9 +53,9 @@
       @apply !my-10;
     }
 
-    a {
+    /* a {
       @apply underline transition-colors ml-1 hover:text-fd-muted-foreground;
-    }
+    } */
 
     strong {
       @apply font-normal font-serif bg-[#0000ff]/10 dark:bg-fd-foreground/20 !px-2 !py-0.5 rounded;

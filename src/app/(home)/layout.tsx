@@ -19,9 +19,15 @@ export default function Layout({ children }: LayoutProps<"/">) {
           url: "/explore",
           active: "url",
         },
+
         {
           text: "Intention",
           url: "/intention",
+          active: "url",
+        },
+        {
+          text: "Journey",
+          url: "/journey",
           active: "url",
         },
         {
