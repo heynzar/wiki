@@ -1,3 +1,39 @@
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+@layer base {
+  .content {
+    h1 {
+      @apply text-2xl tracking-tighter md:text-4xl;
+    }
+
+    h2 {
+      @apply text-xl tracking-tighter md:text-3xl;
+    }
+
+    h3 {
+      @apply text-lg tracking-tighter md:text-2xl;
+    }
+
+    h4 {
+      @apply text-base tracking-tighter md:text-lg;
+    }
+
+    p {
+      @apply text-sm md:text-base opacity-80;
+    }
+
+    hr {
+      @apply !my-10;
+    }
+
+    a {
+      @apply underline transition-colors ml-1 hover:text-fd-muted-foreground;
+    }
+
+    strong {
+      @apply font-normal font-serif bg-[#0000ff]/10 dark:bg-fd-foreground/20 !px-2 !py-0.5 rounded;
+    }
+  }
+}

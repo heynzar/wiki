@@ -1,5 +1,4 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { BookIcon } from "lucide-react";
 import Image from "next/image";
 
 /**
@@ -22,23 +21,5 @@ export function baseOptions(): BaseLayoutProps {
         />
       ),
     },
-
-    links: [
-      {
-        text: "Explore",
-        url: "/explore",
-        active: "url",
-      },
-      {
-        text: "Philosophy",
-        url: "/philosophy",
-        active: "url",
-      },
-      {
-        text: "Visuals",
-        url: "/visuals",
-        active: "url",
-      },
-    ],
   };
 }
