@@ -92,7 +92,7 @@ const frontend = [
   {
     link: "/docs/frontend/motion",
     name: "Motion",
-    icon: "https://cdn.brandfetch.io/idDJv1mfrb/w/1080/h/1080/theme/dark/icon.png?c=1bxid64Mup7aczewSAYMX&t=1753779057992",
+    icon: "/motion.png",
   },
   {
     link: "/docs/frontend/gsap",

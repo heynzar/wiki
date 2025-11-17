@@ -85,9 +85,6 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({
     }
   };
 
-  // Counter for h2 items only
-  let h2Counter = 0;
-
   return (
     <nav className="w-min h-min bg-fd-background rounded-md p-4 space-y-2">
       <ul>

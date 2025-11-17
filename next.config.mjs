@@ -9,10 +9,6 @@ const config = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.brandfetch.io",
-      },
-      {
-        protocol: "https",
         hostname: "cdn.jsdelivr.net",
       },
     ],
