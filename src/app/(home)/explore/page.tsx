@@ -7,12 +7,11 @@ import {
   CodeXml,
   Cpu,
   Database,
-  Gamepad2,
   Globe,
   Globe2,
+  Hash,
   Languages,
   Layout,
-  Monitor,
   Network,
   Palette,
   Search,
@@ -21,6 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import TableOfContentsProps from "@/components/table-of-content";
+import Image from "next/image";
 
 const programming = [
   {
@@ -217,8 +217,9 @@ export default function page() {
       <hr />
 
       <div className="w-full grid grid-cols-3 gap-2">
-        {links.map(({ name, icon: Icon, link }) => (
+        {links.map(({ name, icon: Icon, link }, index) => (
           <Link
+            key={index}
             href={link}
             className="py-2 px-3 rounded-lg flex hover:bg-fd-muted-foreground/10 transition-colors bg-fd-card items-center justify-center gap-2 border"
           >
@@ -237,14 +238,24 @@ export default function page() {
 
       <main className="w-full space-y-8">
         <section id="programming-languages" className="space-y-4 w-full">
-          <h2>Programming Languages</h2>
+          <div className="flex items-center gap-2">
+            <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
+            <h2>Programming Languages</h2>
+          </div>
           <div className="w-full grid grid-cols-3 gap-2">
-            {programming.map(({ name, icon, link }) => (
+            {programming.map(({ name, icon, link }, index) => (
               <Link
+                key={index}
                 href={link}
                 className="py-2 px-3 rounded-lg flex hover:bg-fd-muted-foreground/10 transition-colors bg-fd-card items-center justify-center gap-2 border"
               >
-                <img src={icon} className="h-5 w-auto" />
+                <Image
+                  width={20}
+                  height={20}
+                  alt={`${name} Icon`}
+                  src={icon}
+                  className="h-5 w-auto"
+                />
                 <span>{name}</span>
 
                 <ArrowRight className="size-4 ml-auto  text-fd-muted-foreground" />
@@ -256,14 +267,24 @@ export default function page() {
         <hr />
 
         <section id="frontend" className="space-y-4 -mt-4 w-full">
-          <h2>Frontend</h2>
+          <div className="flex items-center gap-2">
+            <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
+            <h2>Frontend</h2>
+          </div>
           <div className="w-full grid grid-cols-3 gap-2">
-            {frontend.map(({ name, icon, link }) => (
+            {frontend.map(({ name, icon, link }, index) => (
               <Link
+                key={index}
                 href={link}
                 className="py-2 px-3 rounded-lg flex hover:bg-fd-muted-foreground/10 transition-colors bg-fd-card items-center justify-center gap-2 border"
               >
-                <img src={icon} className="size-5" />
+                <Image
+                  width={20}
+                  height={20}
+                  alt={`${name} Icon`}
+                  src={icon}
+                  className="size-5"
+                />
                 <span>{name}</span>
 
                 <ArrowRight className="size-4 ml-auto  text-fd-muted-foreground" />
@@ -275,10 +296,14 @@ export default function page() {
         <hr />
 
         <section id="frontend" className="space-y-4 -mt-4 w-full">
-          <h2>Frontend Concepts</h2>
+          <div className="flex items-center gap-2">
+            <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
+            <h2>Frontend Concepts</h2>
+          </div>
           <div className="w-full grid grid-cols-2 gap-2">
-            {frontend_concepts.map(({ name, icon: Icon, link }) => (
+            {frontend_concepts.map(({ name, icon: Icon, link }, index) => (
               <Link
+                key={index}
                 href={link}
                 className="py-2 px-3 rounded-lg flex hover:bg-fd-muted-foreground/10 transition-colors bg-fd-card items-center justify-center gap-2 border"
               >
@@ -297,14 +322,24 @@ export default function page() {
         <hr />
 
         <section id="frontend" className="space-y-4 -mt-4 w-full">
-          <h2>{"Backend (Js Ecosystem)"}</h2>
+          <div className="flex items-center gap-2">
+            <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
+            <h2>{"Backend (Js Ecosystem)"}</h2>
+          </div>
           <div className="w-full grid grid-cols-3 gap-2">
-            {backend.map(({ name, icon, link }) => (
+            {backend.map(({ name, icon, link }, index) => (
               <Link
+                key={index}
                 href={link}
                 className="py-2 px-3 rounded-lg flex hover:bg-fd-muted-foreground/10 transition-colors bg-fd-card items-center justify-center gap-2 border"
               >
-                <img src={icon} className="h-5 w-auto" />
+                <Image
+                  width={20}
+                  height={20}
+                  alt={`${name} Icon`}
+                  src={icon}
+                  className="h-5 w-auto"
+                />
                 <span>{name}</span>
 
                 <ArrowRight className="size-4 ml-auto  text-fd-muted-foreground" />
