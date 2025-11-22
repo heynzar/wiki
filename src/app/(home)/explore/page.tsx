@@ -1,17 +1,9 @@
+import ContentNavigation from "@/components/content-navigation";
 import { Hash } from "lucide-react";
-import Link from "next/link";
-import { NavButton } from "@/components/nav-button";
-import {
-  backend,
-  frontend,
-  frontend_concepts,
-  categories,
-  programming,
-} from "@/lib/explore-page-data";
 
-export default function page() {
+export default function ExplorePage() {
   return (
-    <div className="content space-y-4">
+    <div className="content space-y-4 max-w-2xl">
       <div className="fixed h-full top-0 flex justify-center items-center right-0"></div>
       <h1>Explore</h1>
       <p>
@@ -20,13 +12,7 @@ export default function page() {
       </p>
       <hr />
 
-      <div className="w-full grid grid-cols-3 gap-2">
-        {categories.map(({ title, icon: Icon, link }, index) => (
-          <Link key={index} href={link}>
-            <NavButton title={title} icon={Icon} />
-          </Link>
-        ))}
-      </div>
+      <ContentNavigation isFullHeight={false} category="categories" />
 
       <hr />
 
@@ -36,13 +22,10 @@ export default function page() {
             <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
             <h2>Programming Languages</h2>
           </div>
-          <div className="w-full grid grid-cols-3 gap-2">
-            {programming.map(({ title, image_url, link }, index) => (
-              <Link key={index} href={link}>
-                <NavButton title={title} image_url={image_url} />
-              </Link>
-            ))}
-          </div>
+          <ContentNavigation
+            isFullHeight={false}
+            category="programming_languages"
+          />
         </section>
 
         <hr />
@@ -52,13 +35,10 @@ export default function page() {
             <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
             <h2>Frontend</h2>
           </div>
-          <div className="w-full grid grid-cols-3 gap-2">
-            {frontend.map(({ title, image_url, link }, index) => (
-              <Link key={index} href={link}>
-                <NavButton title={title} image_url={image_url} />
-              </Link>
-            ))}
-          </div>
+          <ContentNavigation
+            isFullHeight={false}
+            category="frontend_technologies"
+          />
         </section>
 
         <hr />
@@ -68,13 +48,11 @@ export default function page() {
             <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
             <h2>Frontend Concepts</h2>
           </div>
-          <div className="w-full grid grid-cols-2 gap-2">
-            {frontend_concepts.map(({ title, icon: Icon, link }, index) => (
-              <Link key={index} href={link}>
-                <NavButton title={title} icon={Icon} />
-              </Link>
-            ))}
-          </div>
+          <ContentNavigation
+            columnsCount={2}
+            isFullHeight={false}
+            category="frontend_core_concepts"
+          />
         </section>
 
         <hr />
@@ -84,13 +62,10 @@ export default function page() {
             <Hash strokeWidth={1} className="size-8 text-fd-muted-foreground" />
             <h2>{"Backend (Js Ecosystem)"}</h2>
           </div>
-          <div className="w-full grid grid-cols-3 gap-2">
-            {backend.map(({ title, image_url, link }, index) => (
-              <Link key={index} href={link}>
-                <NavButton title={title} image_url={image_url} />
-              </Link>
-            ))}
-          </div>
+          <ContentNavigation
+            isFullHeight={false}
+            category="backend_technologies"
+          />
         </section>
       </main>
     </div>
