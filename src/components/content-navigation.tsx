@@ -18,7 +18,7 @@ type ContentCategory =
   | "backend_technologies"
   | "categories";
 
-const CONTENT_DATA: Record<ContentCategory, any[]> = {
+const CONTENT_DATA: Record<ContentCategory, ContentItem[]> = {
   programming_languages,
   programming_languages_concepts,
   frontend_technologies,
