@@ -2,6 +2,32 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
+.prose h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.prose h2 {
+  font-weight: 500;
+}
+
+.prose h3 {
+  font-weight: 500;
+}
+
+.prose a {
+  text-decoration: none;
+}
+
+.prose h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.05rem;
+}
+
 @layer base {
   ::-webkit-scrollbar {
     width: 4px;
