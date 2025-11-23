@@ -6,7 +6,7 @@ export const updates_by_months = [
         date: "10 June 2026",
         title: "Rust Ownership Deep Dive",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg",
-        link: "/docs/rust/ownership",
+        link: "/docs/languages/rust/ownership",
         changes: [
           "Added visual diagrams explaining borrow checking",
           "Expanded lifetime examples with real-world patterns",
@@ -16,7 +16,7 @@ export const updates_by_months = [
         date: "2 June 2026",
         title: "Advanced TypeScript Generics",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
-        link: "/docs/typescript/generics",
+        link: "/docs/languages/typescript/generics",
         changes: [
           "Added new examples for constrained generics",
           "Created section comparing interfaces vs. type aliases",
@@ -32,7 +32,7 @@ export const updates_by_months = [
         date: "21 June 2025",
         title: "Deep Dive Into Java Fundamentals",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
-        link: "/docs/java/fundamentals",
+        link: "/docs/languages/java/fundamentals",
         changes: [
           "Published an in-depth guide on Java runtime architecture",
           "Added examples explaining the JVM, JDK, and JRE relationship",
@@ -44,7 +44,7 @@ export const updates_by_months = [
         date: "15 June 2025",
         title: "Modern Frontend Patterns Overview",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-        link: "/docs/frontend/patterns",
+        link: "/docs/frontend/concepts/patterns",
         changes: [
           "Added a new chapter on state management strategies (signals, atoms, context, stores)",
           "Introduced a comparison between traditional React patterns vs. React 19 patterns",
@@ -56,7 +56,7 @@ export const updates_by_months = [
         date: "13 June 2025",
         title: "Web Performance Optimization Updates",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-        link: "/docs/performance/intro",
+        link: "/docs/frontend/concepts/performance",
         changes: [
           "Added a new checklist for measuring performance with Lighthouse & Web Vitals",
           "Updated code samples for lazy loading and bundle splitting",
@@ -78,7 +78,7 @@ export const updates_by_months = [
         date: "1 June 2025",
         title: "CSS Architecture Improvements",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
-        link: "/docs/css/architecture",
+        link: "/docs/frontend/css/architecture",
         changes: [
           "Expanded BEM and utility-first comparison with pros and cons",
           "Added new examples for scalable component-based CSS structure",
@@ -94,7 +94,7 @@ export const updates_by_months = [
         date: "29 May 2025",
         title: "JavaScript Core Concepts Refresh",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-        link: "/docs/javascript/core",
+        link: "/docs/languages/javascript/core",
         changes: [
           "Rewrote the Closure section with clearer step-by-step explanations",
           "Added new diagrams explaining the Event Loop and Microtasks",
