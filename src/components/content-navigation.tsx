@@ -7,6 +7,7 @@ import {
   programming_languages,
   programming_languages_concepts,
 } from "@/lib/content-data";
+import { java_chapters } from "@/data/programming-languages";
 import { NavigationButton } from "./navigation-button";
 import Link from "next/link";
 
@@ -16,7 +17,8 @@ type ContentCategory =
   | "frontend_technologies"
   | "frontend_core_concepts"
   | "backend_technologies"
-  | "categories";
+  | "categories"
+  | "java_chapters";
 
 const CONTENT_DATA: Record<ContentCategory, ContentItem[]> = {
   programming_languages,
@@ -25,6 +27,7 @@ const CONTENT_DATA: Record<ContentCategory, ContentItem[]> = {
   frontend_core_concepts,
   backend_technologies,
   categories,
+  java_chapters,
 };
 
 export default function ContentNavigation({
