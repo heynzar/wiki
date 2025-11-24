@@ -29,7 +29,7 @@ export default function NotFound() {
 
         <div className="space-y-1">
           <p className="text-fd-muted-foreground text-md">
-            Sorry! This page hasn't been written yet or may have moved.
+            Sorry! This page hasn&apos;t been written yet or may have moved.
           </p>
           <p className="text-fd-muted-foreground text-sm">
             Try the Docs home, search, or open an issue!
