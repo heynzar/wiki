@@ -1,0 +1,10 @@
+{
+  "pages": [
+    "java-philosophy",
+    "how-java-runs",
+    "java-structure",
+    "data-types-and-variables",
+    "operators-and-expressions",
+    "control-flow"
+  ]
+}
