@@ -62,7 +62,7 @@ const programming_languages: ContentItem[] = [
   },
   {
     link: "/docs/languages/sql",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqldeveloper/sqldeveloper-original.svg",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-plain.svg",
     title: "SQL",
   },
 ];

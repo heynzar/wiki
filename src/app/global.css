@@ -19,6 +19,10 @@
   text-decoration: none;
 }
 
+.img-dev img {
+  @apply border rounded-xl shadow-xs;
+}
+
 .prose h1,
 h2,
 h3,
