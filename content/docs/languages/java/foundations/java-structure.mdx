@@ -1,0 +1,609 @@
+---
+title: Java Structure
+description: Organize Java Code Like a Pro
+icon: FileText
+---
+
+---
+
+# Java Structure: Main Class, Packages, Imports [!toc]
+
+## The Problem
+
+Imagine you're joining a team. You walk into the office. There are files everywhere. No folders. No organization. Nobody knows where anything is. Finding what you need takes hours.
+
+That's what unstructured Java code looks like.
+
+Professional Java code isn't just about functionality. It's about organization. It's about making your code easy to find, easy to understand, and easy to modify.
+
+This section teaches you the conventions that professional Java developers use. These aren't suggestions. They're standards that every Java developer on Earth follows.
+
+---
+
+## Advanced Concepts
+
+While reading this section, you'll find some advanced concepts like `public`, `static`, `void`, and access modifiers. Don't worry, these concepts belong to Object-Oriented Programming (OOP), which is our next chapter.
+
+We included them here on purpose. You need to understand the basics of how Java files are structured and how the main method works to run your code. But the why and the deeper mechanics of these keywords will be super clear Inshallah when we dive into OOP.
+
+For now, just accept them as "the way Java works." Master the details later. Programming knowledge builds in layers.
+
+---
+
+## The Anatomy of a Java File
+
+Let's look at a basic Java file and understand each part:
+
+```java
+package com.mycompany.calculator;      // Package declaration (line 1)
+
+import java.util.Scanner;              // Imports (line 3)
+import java.io.FileWriter;
+
+public class Calculator {              // Class declaration (line 6)
+
+    public static void main(String[] args) {  // Main method (line 8)
+        System.out.println("Hello, World!");
+    }
+}
+```
+
+Don't worry! We'll explain every single word and concept in this code in upcoming chapters. For now, just focus on understanding the overall structure.
+
+**Every Java file has this structure:**
+
+```
+1. Package declaration (optional, but professional code has it)
+2. Import statements (only what you need)
+3. Class declaration
+4. Class body (variables, methods)
+```
+
+**The Equation:** Package first -> then imports -> then code. Always in this order.
+
+Let's understand each part.
+
+**Note**: This section focuses on classes, packages, and imports, the basics of Java structure. Java also has a larger-level system called modules, introduced in Java 9. A module is like a “package of packages,” used to group big parts of an application and explicitly control what code is exposed or hidden.
+
+---
+
+## The Main Method: The Entry Point
+
+Every Java program needs an entry point. This is where execution starts.
+
+That entry point is the **main method**:
+
+```java
+public static void main(String[] args) {
+    // Your code runs here
+}
+```
+
+When you run your program using the **class name** (e.g., `java Calculator`), the **Java Virtual Machine (JVM)** looks for this exact method signature (`public static void main(String[] args)`) inside that class and immediately starts executing the program from the code within it.
+
+**Why this exact signature?**
+
+```java
+public static void main(String[] args)
+```
+
+For now, don't worry about all the keywords here. <br/>
+This is simply the **standard method the JVM looks for** when starting your program.
+
+We'll explain `public`, `static`, and what the rest actually mean later in the **Object Oriented Programming (OOP)** chapter, where it will make much more sense.
+
+**Can a program have multiple main methods?**
+
+Technically yes, but only one is the entry point (the one in the class you're running).
+
+**Real example:**
+
+```java
+public class MyApp {
+    public static void main(String[] args) {
+        System.out.println("This runs when you type: java MyApp");
+    }
+}
+
+public class TestApp {
+    public static void main(String[] args) {
+        System.out.println("This runs when you type: java TestApp");
+    }
+}
+```
+
+Both have `main` methods, but which runs? Whichever one you specify:
+
+- `java MyApp` -> runs MyApp's main
+- `java TestApp` -> runs TestApp's main
+
+**Important rule:** Only one public class per file. If you want multiple classes in one file, only one can be public.
+
+```java
+// Same file
+public class MyApp {
+    public static void main(String[] args) {
+        // ...
+    }
+}
+
+class HelperClass {  // Not public
+    // Helper code
+}
+```
+
+---
+
+## Packages: Organizing Your Code
+
+A package is like a folder for your Java classes.
+
+**Why packages?**
+
+Imagine you have 500 Java files. No packages. Finding anything is a nightmare.
+
+Packages organize related code:
+
+```
+com/
+├── nzarcompany/
+│   ├── calculator/
+│   │   ├── Calculator.java
+│   │   ├── Operation.java
+│   │   └── Result.java
+│   ├── database/
+│   │   ├── Connection.java
+│   │   └── Query.java
+│   └── utils/
+│       ├── Logger.java
+│       └── Validator.java
+```
+
+This structure prevents file naming conflicts and makes the code discoverable.
+
+---
+
+### When to Use Packages
+
+- **1 to 2 files** -> Optional, but good to practice with packages
+- **3 or more files** -> Always use packages
+- **Production code** -> Always use packages (non-negotiable)
+
+**You should use packages when:**
+
+1. **Your project has multiple files:** Even with just 5-10 files, packages keep things organized
+2. **Working in a team:** Prevents naming conflicts and makes code discoverable
+
+   - Your team can quickly find the "user authentication" code in `com.mycompany.auth`
+   - Another team's code won't conflict with yours
+
+3. **You want to separate concerns:** Different packages for different functionality
+4. **You're building professional code:** Every production Java project uses packages
+
+**You can skip packages when:**
+
+1. **Learning beginner concepts:** Your first "Hello, World" program
+2. **Writing quick scripts or prototypes:** Writing code you'll delete tomorrow
+3. **Single-file utility** - A tiny one-off tool that's just practice
+
+**But honestly:** Once you're past "Hello, World," use packages. It's a good habit. Even for learning projects.
+
+---
+
+### Package Naming Convention
+
+Package names follow a specific convention:
+
+```
+reverse domain name + project name + module name
+```
+
+**Example:**
+
+Your company owns `nzarcompany.com`. You're building a calculator:
+
+```
+Package name: com.nzarcompany.calculator
+```
+
+Another company owns `acme.org`. They're building authentication:
+
+```
+Package name: org.acme.auth
+```
+
+**The reverse domain is intentional.** It prevents naming conflicts across companies. Two companies can both have a `calculator` package, but `com.mycompany.calculator` and `com.acme.calculator` are different.
+
+**Rules:**
+
+- Always lowercase
+- Separated by dots
+- Start with reverse domain
+- As specific as needed
+
+### Declaring a Package
+
+At the top of every Java file, declare its package:
+
+```java
+package com.nzarcompany.calculator;
+
+public class Calculator {
+    // ...
+}
+```
+
+**File system requirement:**
+
+Your file must be in the correct folder structure:
+
+```
+src/
+├── com/
+│   └── nzarcompany/
+│       └── calculator/
+│           └── Calculator.java
+```
+
+If your package is `com.nzarcompany.calculator`, your file must be in `com/nzarcompany/calculator/`.
+
+The package structure **must match the folder structure**. This is not optional.
+
+**Why?** When you run `java com.nzarcompany.calculator.Calculator`, the JVM looks for:
+
+- Folder: `com/nzarcompany/calculator/`
+- File: `Calculator.java`
+
+If the folder structure doesn't match the package name, the JVM can't find your file.
+
+---
+
+## Imports: Using Classes from Other Packages
+
+Once you organize code into separate packages (folders), you use imports to bring in and use the classes from those other packages.
+
+That's where `import` comes in.
+
+**Without imports (fully qualified name):**
+
+```java
+package com.nzarcompany.calculator;
+
+public class Calculator {
+    public static void main(String[] args) {
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        java.io.FileWriter writer = new java.io.FileWriter("output.txt");
+    }
+}
+```
+
+This works, but it's too long. `java.util.Scanner` is the fully qualified name (full path to the class).
+
+**With imports (simpler):**
+
+```java
+package com.nzarcompany.calculator;
+
+import java.util.Scanner;
+import java.io.FileWriter;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        FileWriter writer = new FileWriter("output.txt");
+    }
+}
+```
+
+Much cleaner. You import what you need, then use the short name.
+
+### Import Rules
+
+**Rule 1: Import specific classes**
+
+```java
+import java.util.Scanner;      // Good: specific
+import java.util.ArrayList;    // Good: specific
+```
+
+**Rule 2: Don't use `*` imports in real projects**
+
+```java
+import java.util.*;            // Bad: imports everything
+```
+
+Using `*` looks easy, but it's not a good habit because:
+
+- You can't see which classes are actually used
+- Different classes can have the same name and cause problems
+- It can slow the compiler a little
+- It makes the code harder to understand
+
+In professional code, always import the exact classes you need.
+
+**Rule 3: Only import what you use**
+
+```java
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.time.LocalDate;
+import java.math.BigDecimal;
+
+public class Calculator {
+    // Only uses Scanner and FileWriter
+    // Remove the other imports
+}
+```
+
+Unused imports just make your code messy. Most code editors will warn you when you have them.
+
+### Common Java Imports
+
+You'll see these constantly:
+
+```java
+import java.util.ArrayList;      // Lists
+import java.util.HashMap;        // Maps/dictionaries
+import java.util.Scanner;        // User input
+import java.io.FileWriter;       // File writing
+import java.io.BufferedReader;   // File reading
+import java.time.LocalDate;      // Dates
+```
+
+### Importing Your Own Classes
+
+You can import classes from other packages in your own project:
+
+```java
+package com.myapp.calculator;
+
+import com.myapp.tools.MathHelper;
+import com.myapp.tools.Printer;
+
+public class Calculator {
+    // Uses MathHelper and Printer from other packages
+}
+```
+
+---
+
+## Putting It All Together: A Real Example
+
+Let's build a small, easy-to-understand project structure using the simple class names we picked earlier.
+
+**Project structure:**
+
+```
+src/
+└── com/
+    └── myapp/
+        ├── calculator/
+        │   ├── Calculator.java
+        │   └── MathHelper.java
+        └── tools/
+            └── Printer.java
+```
+
+**File 1: Printer.java (utility class)**
+
+```java
+package com.myapp.tools;
+
+public class Printer {
+    public static void print(String message) {
+        System.out.println("[PRINT] " + message);
+    }
+}
+```
+
+**File 2: MathHelper.java (helper class)**
+
+```java
+package com.myapp.calculator;
+
+public class MathHelper {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static int subtract(int a, int b) {
+        return a - b;
+    }
+}
+```
+
+**File 3: Calculator.java (main class with entry point)**
+
+```java
+package com.myapp.calculator;
+
+import com.myapp.tools.Printer;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Printer.print("Calculator started");
+
+        int result = MathHelper.add(5, 3);
+        Printer.print("5 + 3 = " + result);
+
+        result = MathHelper.subtract(10, 4);
+        Printer.print("10 - 4 = " + result);
+    }
+}
+```
+
+**Note**: We don't need to import `MathHelper` inside `Calculator` because both classes are in the same package (`com.myapp.calculator`). Java automatically makes all classes within the same package visible to each other. We only need to use `import` when the class we want to use is located in a different package, like `Printer` in `com.myapp.tools`.
+
+**How to run it:**
+
+```bash
+# From the src/ directory
+java com.myapp.calculator.Calculator
+```
+
+**Output:**
+
+```
+[PRINT] Calculator started
+[PRINT] 5 + 3 = 8
+[PRINT] 10 - 4 = 6
+```
+
+**What happened:**
+
+1. The JVM looks for: `com/myapp/calculator/Calculator.class`
+2. It finds the `main` method and starts running your program
+3. `Calculator` imports and uses `Printer` from another package
+4. `Calculator` also calls `MathHelper` methods from the same package
+5. Program runs successfully
+
+---
+
+## Access Modifiers: Who Can Access What?
+
+When you write a class or method, you control who can access it:
+
+```java
+public class Calculator {           // Anyone can use this
+    public static void add() {}     // Anyone can call this
+
+    private static void helper() {} // Only this class can use
+}
+```
+
+**The access modifiers:**
+
+| Modifier    | Within Class | Same Package | Other Packages   | Everyone |
+| ----------- | ------------ | ------------ | ---------------- | -------- |
+| `public`    | ✓            | ✓            | ✓                | ✓        |
+| `protected` | ✓            | ✓            | ✓ (if inherited) | ✗        |
+| (default)   | ✓            | ✓            | ✗                | ✗        |
+| `private`   | ✓            | ✗            | ✗                | ✗        |
+
+**For now, remember:**
+
+- **public** -> Available to everyone (use for public methods)
+- **private** -> Only within this class (use for helper methods)
+- (default, no modifier) - Only within this package (rarely used)
+
+---
+
+## Best Practices for Java Structure
+
+**1. One public class per file**
+
+```java
+// Good: One public class per file
+public class Calculator {
+    // ...
+}
+```
+
+```java
+// Bad: Multiple public classes in one file
+public class Calculator { }
+public class Operation { }
+```
+
+Because Java requires **each public class to have its own file with the same name**, which makes projects easier to organize, read, and maintain.
+
+**2. Class name matches filename**
+
+```
+Calculator.java contains class Calculator
+Operation.java contains class Operation
+Logger.java contains class Logger
+```
+
+If the class name doesn't match the filename, the Java compiler will **throw an error**. For example, if `Calculator.java` contains `public class Operation`, the compiler won't know which file to associate with the class, and your program **won't compile**.
+
+**3. Organize packages by functionality**
+
+```
+com.myapp.
+├── calculator/          // All calculator-related
+├── database/            // All database-related
+├── authentication/      // All auth-related
+└── utils/              // Shared utilities
+```
+
+**4. Keep packages focused**
+
+One package should have related classes. Don't mix calculator code with authentication code.
+
+**5. Use meaningful names**
+
+```
+com.myapp.calculator     // Clear
+com.myapp.calc          // Not Clear
+
+Database.java               // Clear
+DB.java                     // Not Clear
+```
+
+**6. Avoid deep nesting**
+
+- Good: `com.myapp.calculator`
+- Bad: `com.myapp.calculator.arithmetic.operations.advanced`
+
+Keep it short. 2 to 4 levels is typical.
+
+---
+
+## Common Mistakes
+
+**Mistake 1: Package declaration mismatch**
+
+```java
+// File: src/com/myapp/calculator/Calculator.java
+package com.myapp.calc;  // WRONG! Should be com.myapp.calculator
+
+public class Calculator {
+    // ...
+}
+```
+
+The JVM looks for this file in `com/myapp/calc/` folder. It won't find it.
+
+**Mistake 2: Forgetting the main method signature**
+
+```java
+public static void main() {  // WRONG! Missing String[] args
+    // ...
+}
+```
+
+The JVM specifically looks for `main(String[] args)`. If you're missing the parameter, the JVM won't recognize it as the entry point.
+
+---
+
+## Why This Matters
+
+- **For reading code:** Professional Java code follows these conventions. Understanding them means you can navigate any Java project.
+
+- **For writing code:** When you write code that others will read, structure matters. Poor organization frustrates teammates.
+
+- **For scaling:** As projects grow (thousands of files), good structure keeps things manageable. Bad structure collapses.
+
+- **For interviews:** Interviewers will ask about packages, imports, and the main method. Knowing these shows you understand Java fundamentals.
+
+- **For real projects:** Every company follows these conventions. Learning them now means you can jump into professional codebases immediately.
+
+---
+
+## In Summary
+
+Java structure isn't random. It's a proven system:
+
+1. **Package declaration**: Organizes code into logical groups
+2. **Imports**: Lets you use classes from other packages
+3. **Main method**: Entry point for your program
+4. **Access modifiers**: Control who can access what
+5. **File organization**: Code files match package structure
+
+Following these conventions makes code: <br/>
+**Easy to find, easy to understand, easy to modify and professional.**
+
+Master these fundamentals. They're the foundation for everything else in Java.
+
+---
