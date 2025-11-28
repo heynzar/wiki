@@ -1,6 +1,6 @@
 ---
 title: Data Types & Variables
-description: Your first document
+description: How Java Understands and Stores Data
 icon: FileText
 ---
 
@@ -41,7 +41,7 @@ In this explanation, we'll use Python as our example, but the idea is the same f
 
 Each approach shapes how you write code, how errors are caught, and how programs run.
 
-### Static vs Dynamic Typing
+### Static vs Dynamic Typing [!toc]
 
 **Java (Static Typing):**
 
@@ -58,7 +58,7 @@ age = "hello"  # Fine, now it's a string
 age = 3.14     # Fine, now it's a float
 ```
 
-### Safety vs Flexibility
+### Safety vs Flexibility [!toc]
 
 **Java's Approach (Static, Typed) -> Safety:**
 
@@ -282,11 +282,11 @@ HEAP (slower, larger)
 
 ---
 
-## Java vs C/C++: Why Java Removed Pointers
+## Java vs C++: No More Pointers
 
 You might have heard of "pointers" in C/C++. Java deliberately removed them. Here's why.
 
-### What Are Pointers? (C/C++)
+### What Are Pointers? (C/C++) [!toc]
 
 In C/C++, you manually work with memory addresses:
 
@@ -378,7 +378,7 @@ Java's automatic memory management costs slightly more CPU and RAM (garbage coll
 
 ---
 
-## Primitive vs Reference: The Key Differences
+## Primitive vs Reference
 
 This is the most important section. Really understand this.
 
@@ -543,7 +543,7 @@ ArrayList<String> users = new ArrayList(); // Good
 
 ---
 
-## Constants: Using the `final` Keyword
+## Constants Naming
 
 A constant is a variable that cannot be changed after initialization.
 
@@ -619,9 +619,9 @@ final int MAX_CONCURRENT_USERS = 1000;
 
 ---
 
-## Type Casting: Converting Between Types
+## Converting Between Types
 
-Sometimes you need to convert one type to another.
+Sometimes you need to change one type into another (`String` to `number`,...). This is called **type casting**.
 
 ### Automatic Casting (Widening) [!toc]
 
@@ -739,9 +739,9 @@ public class StudentGrades {
 
 ---
 
-## Common Bugs and How to Avoid Them
+## Common Bugs to Avoid
 
-### Bug 1: NullPointerException
+### Bug 1: NullPointerException [!toc]
 
 ```java
 String name = null;
@@ -757,7 +757,7 @@ if (name != null) {
 }
 ```
 
-### Bug 2: Modifying Through Reference
+### Bug 2: Modifying Through Reference [!toc]
 
 ```java
 ArrayList list1 = new ArrayList();
@@ -782,7 +782,7 @@ System.out.println(list1);  // ["Apple"] - unchanged
 System.out.println(list2);  // ["Apple", "Banana"]
 ```
 
-### Bug 3: Type Mismatch
+### Bug 3: Type Mismatch [!toc]
 
 ```java
 int age = "twenty-five";  // COMPILE ERROR - String to int
@@ -795,7 +795,7 @@ String ageString = "25";
 int age = Integer.parseInt(ageString);  // Convert string to int
 ```
 
-### Bug 4: Integer Overflow
+### Bug 4: Integer Overflow [!toc]
 
 ```java
 int max = Integer.MAX_VALUE;  // 2,147,483,647
@@ -824,7 +824,7 @@ long result = max + 1;  // Safe
 
 ## Quick Cheat Sheet
 
-### The 8 Primitive Types (Print This!)
+### The 8 Primitive Types (Print This!) [!toc]
 
 ```
 ┌─────────────────────────────────────────┐
@@ -846,7 +846,7 @@ long result = max + 1;  // Safe
 └─────────────────────────────────────────┘
 ```
 
-### Primitive vs Reference at a Glance
+### Primitive vs Reference at a Glance [!toc]
 
 ```
 ┌──────────────────────────────────────────┐
@@ -870,7 +870,7 @@ long result = max + 1;  // Safe
 └──────────────────────────────────────────┘
 ```
 
-### Naming Quick Rules
+### Naming Quick Rules [!toc]
 
 ```
 Variable names:    myAge, userName, isActive
@@ -882,7 +882,7 @@ Array names:       names, scores, users
 ✓ Good:            age, userName, profileData
 ```
 
-### Memory Quick Facts
+### Memory Quick Facts [!toc]
 
 ```
 STACK (Fast)              HEAP (Slower)
@@ -892,7 +892,7 @@ STACK (Fast)              HEAP (Slower)
 └─ Limited size          └─ Large space
 ```
 
-### Java vs C/C++ Quick Comparison
+### Java vs C/C++ Quick Comparison [!toc]
 
 ```
 JAVA                           C/C++
