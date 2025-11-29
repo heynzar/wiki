@@ -22,6 +22,8 @@ Here, `age` is a variable. It holds the number `25`.
 
 In the example above, `int` is the data type. It stands for `integer`, which simply means a **number**.
 
+---
+
 But here's where Java gets interesting: **Different types of data are stored differently in memory.**
 
 Java has two main categories of data types:
@@ -160,24 +162,24 @@ Reference types are different. They don't store the actual value, they store a r
 When you create an object:
 
 ```java
-String name = "Alice";
+String name = "Nzar";
 ```
 
 Here, `name` does not hold the text directly. <br />
-Instead, it holds a **reference** to a String object that contains the text `"Alice"`.
+Instead, it holds a **reference** to a String object that contains the text `"Nzar"`.
 
 Java:
 
 1. Creates an object somewhere in memory
-2. Stores the actual "Alice" text in that memory
+2. Stores the actual "Nzar" text in that memory
 3. Stores the _address_ of that memory in the variable `name`
 
 ```
 Variable name: name
 Memory address: 2000
-Value stored: 4000 (address pointing to "Alice")
+Value stored: 4000 (address pointing to "Nzar")
         ↓
-    Actual object "Alice" stored at address 4000
+    Actual object "Nzar" stored at address 4000
 ```
 
 ### Common Reference Types [!toc]
@@ -186,14 +188,14 @@ Value stored: 4000 (address pointing to "Alice")
 
 ```java
 String greeting = "Hello, World!";
-String name = "Alice";
+String name = "Nzar";
 ```
 
 **Arrays (collections of values):**
 
 ```java
 int[] scores = {95, 87, 92};
-String[] names = {"Alice", "Bob", "Charlie"};
+String[] names = {"Nzar", "Bob", "Charlie"};
 ```
 
 **Data Structures (collections for dynamic data):**
@@ -240,7 +242,7 @@ Java divides memory into two regions:
 
 ```java
 int age = 25;
-String name = "Alice";
+String name = "Nzar";
 ArrayList<Integer> scores = new ArrayList();
 scores.add(95);
 ```
@@ -259,7 +261,7 @@ STACK (fast, organized)
 
 HEAP (slower, larger)
 ┌─────────────────────┐
-│ (5000) "Alice"      │ (String object)
+│ (5000) "Nzar"      │ (String object)
 ├─────────────────────┤
 │ (6000) ArrayList    │ (ArrayList object)
 │        [95]         │ (contains values)
@@ -333,7 +335,7 @@ Java kept references but removed manual pointer arithmetic:
 ```java
 // Java: safe references
 String name = null;  // Can be null, but safe
-name = "Alice";      // Now points to object
+name = "Nzar";      // Now points to object
 // Automatic cleanup: when no variables point to it, garbage collector removes it
 ```
 
@@ -536,7 +538,7 @@ boolean isLoggedIn = true;       // Perfect
 ### Array and Collection Names Can Be Plural [!toc]
 
 ```java
-String[] names = {"Alice", "Bob"};      // Good
+String[] names = {"Nzar", "Bob"};      // Good
 int[] scores = {95, 87, 92};            // Good
 ArrayList<String> users = new ArrayList(); // Good
 ```
@@ -695,8 +697,8 @@ public class UserRegistration {
         boolean isPremium = false;
 
         // Reference types
-        String username = "alice_smith";
-        String email = "alice@example.com";
+        String username = "nzar_dev";
+        String email = "heynzar@gmail.com";
 
         // Constants
         final int MIN_AGE = 18;
@@ -721,7 +723,7 @@ public class StudentGrades {
 
         // Reference: ArrayList (data structure for flexible storage)
         ArrayList<String> students = new ArrayList();
-        students.add("Alice");
+        students.add("Nzar");
         students.add("Bob");
         students.add("Charlie");
 
@@ -861,7 +863,7 @@ long result = max + 1;  // Safe
 ├──────────────────────────────────────────┤
 │ REFERENCE                                │
 ├──────────────────────────────────────────┤
-│ String name = "Alice";                   │
+│ String name = "Nzar";                   │
 │ • Address stored in variable            │
 │ • Slower (on heap)                      │
 │ • Can be null                           │
@@ -905,7 +907,7 @@ JAVA                           C/C++
 
 ---
 
-## The Key Takeaway
+## In Summary
 
 Java has two fundamental data storage mechanisms:
 

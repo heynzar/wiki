@@ -155,8 +155,8 @@ if (age == 30) {  // CORRECT! This compares age to 30
 For strings, `==` doesn't work as you expect:
 
 ```java
-String name1 = "Alice";
-String name2 = "Alice";
+String name1 = "Nzar";
+String name2 = "Nzar";
 
 System.out.println(name1 == name2);  // false (compares references, not values)
 System.out.println(name1.equals(name2));  // true (compares actual text)
@@ -310,7 +310,7 @@ Assignment operators update variables with new values.
 
 ```java
 int age = 25;  // Assign 25 to age
-String name = "Alice";  // Assign "Alice" to name
+String name = "Nzar";  // Assign "Nzar" to name
 ```
 
 ### Compound Assignment Operators [!toc]
@@ -465,10 +465,10 @@ The `+` operator has special behavior with strings: it concatenates (joins) them
 String greeting = "Hello" + " " + "World";
 System.out.println(greeting);  // "Hello World"
 
-String name = "Alice";
+String name = "Nzar";
 int age = 25;
 String message = name + " is " + age + " years old";
-System.out.println(message);  // "Alice is 25 years old"
+System.out.println(message);  // "Nzar is 25 years old"
 ```
 
 ### How Type Changing Works [!toc]
@@ -754,15 +754,11 @@ double result = (double) a / b;  // 3.333...
 
 Operators are the tools that make Java do useful things:
 
-**Arithmetic operators** - Do math calculations
-
-**Comparison operators** - Compare values and make decisions
-
-**Logical operators** - Combine conditions for complex decisions
-
-**Assignment operators** - Update variables efficiently
-
-**Precedence** - Controls the order operations happen
+- **Arithmetic operators** -> Do math calculations
+- **Comparison operators** -> Compare values and make decisions
+- **Logical operators** -> Combine conditions for complex decisions
+- **Assignment operators** -> Update variables efficiently
+- **Precedence** -> Controls the order operations happen
 
 Mastering these operators means you can:
 
@@ -771,6 +767,8 @@ Mastering these operators means you can:
 - Write efficient, readable code
 - Avoid common bugs
 
-You'll use operators in almost every line of Java code you write. Understanding them deeply is non-negotiable for proficiency.
+You'll use operators in almost every line of Java code you write. So mastering this section is non-negotiable.
+
+Next up: Master Control Flow (if, switch, loops,...)
 
 ---
