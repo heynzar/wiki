@@ -1,0 +1,776 @@
+---
+title: Operators & Expressions
+description: Master The Art of Java logic
+icon: FileText
+---
+
+---
+
+# Operators & Expressions: The Tools of Java [!toc]
+
+## The Foundation
+
+**What Are Operators** -> an **operator** is a symbol that performs an action on values.
+
+**What Are Expressions** -> an **expression** is a combination of values and operators that produces a result.
+
+```java
+5 + 3              // Expression: 5 (value) + (operator) 3 (value)
+age > 18           // Expression: age (value) > (operator) 18 (value)
+isActive && isPaid // Expression: isActive && isPaid (logical combination)
+```
+
+Operators are the tools. Expressions are how you use them.
+
+Think of it like cooking: operators are your tools (knife, spoon, pan), and expressions are the recipes using those tools.
+
+---
+
+## Math Operations
+
+These do basic math. You already know most of these.
+
+### The Five Arithmetic Operators [!toc]
+
+| Operator | Name                | Example  | Result |
+| -------- | ------------------- | -------- | ------ |
+| `+`      | Addition            | `5 + 3`  | `8`    |
+| `-`      | Subtraction         | `5 - 3`  | `2`    |
+| `*`      | Multiplication      | `5 * 3`  | `15`   |
+| `/`      | Division            | `15 / 3` | `5`    |
+| `%`      | Modulus (remainder) | `17 % 5` | `2`    |
+
+```java
+int a = 10;
+int b = 3;
+
+// Addition
+int sum = a + b;  // 13
+
+// Subtraction
+int diff = a - b;  // 7
+
+// Multiplication
+int product = a * b;  // 30
+
+// Division
+int quotient = a / b;  // 3 (integer division, no decimals)
+
+// Modulus (remainder)
+int remainder = a % b;  // 1 (10 divided by 3 = 3 remainder 1)
+```
+
+### Important: Integer Division [!toc]
+
+Be careful with division:
+
+```java
+int a = 10;
+int b = 3;
+
+int result = a / b;  // 3 (NOT 3.33, decimals are lost!)
+System.out.println(result);  // 3
+```
+
+The decimal part is discarded. If you want decimals:
+
+```java
+double a = 10.0;
+double b = 3.0;
+
+double result = a / b;  // 3.3333...
+System.out.println(result);  // 3.3333...
+```
+
+**Why Convert to Double Before Division, Not After?**
+
+Java's operator behavior depends on operand types. When you divide two integers (`int / int`), Java performs integer division and truncates the decimal **before** assigning the result.
+
+Converting the result to `double` afterward is too late, the decimal is already lost.
+
+**Solution:** Convert to double BEFORE division:
+
+- `double result = (double) a / b;`
+- `double a = 10.0; double b = 3.0; double result = a / b;`
+
+This forces you to be explicit about what type of math you're doing, which prevents bugs.
+
+### The Modulus Operator (%) [!toc]
+
+Personally, this is one of my favorite operators in all programming languages. The modulus operator gives you the remainder after division.
+
+In other words, modulus calculates what's left after dividing one number by another. Conceptually, you can think of it like: `remainder = a - (a / b) * b`
+
+```java
+17 % 5;  // 2 (17 = 5*3 + 2)
+20 % 4;  // 0 (20 = 4*5, no remainder)
+7 % 3;   // 1 (7 = 3*2 + 1)
+```
+
+**Common uses:**
+
+- Check if a number is even: `number % 2 == 0`
+- Check if a number is odd: `number % 2 == 1`
+- Wrap around (like clock hours): `hour % 12`
+- Cycle through array indices: `i % array.length`
+- Create repeating patterns (toggling every N steps)
+
+---
+
+## Comparison Operators
+
+Comparison operators compare two values and return `true` or `false`, it's like making decisions.
+
+### The Six Comparison Operators [!toc]
+
+| Operator | Name                  | Example  | Result  |
+| -------- | --------------------- | -------- | ------- |
+| `==`     | Equal to              | `5 == 5` | `true`  |
+| `!=`     | Not equal to          | `5 != 3` | `true`  |
+| `>`      | Greater than          | `5 > 3`  | `true`  |
+| `<`      | Less than             | `5 < 3`  | `false` |
+| `>=`     | Greater than or equal | `5 >= 5` | `true`  |
+| `<=`     | Less than or equal    | `5 <= 3` | `false` |
+
+### Critical: `==` vs `=` [!toc]
+
+This is a common mistake:
+
+```java
+int age = 25;
+
+if (age = 30) {  // WRONG! This assigns 30 to age
+    // ...
+}
+
+if (age == 30) {  // CORRECT! This compares age to 30
+    // ...
+}
+```
+
+**Rule:** `==` compares, `=` assigns. Use `==` in conditions.
+
+### Comparing Strings (Important!) [!toc]
+
+For strings, `==` doesn't work as you expect:
+
+```java
+String name1 = "Alice";
+String name2 = "Alice";
+
+System.out.println(name1 == name2);  // false (compares references, not values)
+System.out.println(name1.equals(name2));  // true (compares actual text)
+```
+
+**Always use `.equals()` for strings:**
+
+```java
+String input = "password";
+if (input.equals("password")) {  // Correct
+    System.out.println("Match!");
+}
+```
+
+**Why Doesn't Java Have `===` Like JavaScript?**
+
+Java doesn't need `===` because it has **strong static typing**. The compiler forces you to match types explicitly. In Java, you can't accidentally compare an `int` to a `String` -> the compiler prevents it.
+
+JavaScript has `===` because it allows weak typing (comparing different types). Java's philosophy is the opposite: "Let the compiler catch type errors early."
+
+---
+
+## Logical Operators
+
+Logical operators combine multiple conditions. They return `true` or `false`.
+
+### The Three Logical Operators [!toc]
+
+**AND operator (`&&`)**
+
+```java
+int age = 25;
+boolean hasLicense = true;
+
+// Both conditions must be true
+if (age >= 18 && hasLicense) {
+    System.out.println("Can drive");  // This runs
+}
+
+if (age >= 30 && hasLicense) {
+    System.out.println("Can drive");  // This doesn't run (age is not >= 30)
+}
+```
+
+**Truth table for `&&`:**
+
+```java
+true && true   = true
+true && false  = false
+false && true  = false
+false && false = false
+
+// true only if both true
+```
+
+**OR operator (`||`)**
+
+```java
+int age = 16;
+boolean hasPermission = true;
+
+// At least one condition must be true
+if (age >= 18 || hasPermission) {
+    System.out.println("Can enter");  // This runs (hasPermission is true)
+}
+
+if (age >= 18 || hasPermission == false) {
+    System.out.println("Can enter");  // This doesn't run (both false)
+}
+```
+
+**Truth table for `||`:**
+
+```java
+true || true   = true
+true || false  = true
+false || true  = true
+false || false = false
+
+// false only if both false
+```
+
+**NOT operator (`!`)**
+
+```java
+boolean isRaining = true;
+boolean isSnowing = false;
+
+// Inverts the boolean
+if (!isRaining) {
+    System.out.println("Go outside");  // This doesn't run
+}
+
+if (!isSnowing) {
+    System.out.println("Go outside");  // This runs
+}
+```
+
+**Truth table for `!`:**
+
+```java
+!true  = false
+!false = true
+```
+
+### Combining Multiple Conditions [!toc]
+
+You can chain logical operators:
+
+```java
+int age = 25;
+double income = 50000;
+boolean hasCollateral = true;
+
+// Get loan if: 18+, income > 40000, and has collateral
+if (age >= 18 && income > 40000 && hasCollateral) {
+    System.out.println("Loan approved");
+}
+
+// Reject if: under 18 OR income too low
+if (age < 18 || income < 40000) {
+    System.out.println("Loan denied");
+}
+```
+
+### Short-Circuit Evaluation [!toc]
+
+Java evaluates logical operators left-to-right and stops early if possible:
+
+```java
+// AND short-circuit
+if (false && someExpensiveFunction()) {
+    // someExpensiveFunction() is never called (first condition is false)
+}
+
+// OR short-circuit
+if (true || someExpensiveFunction()) {
+    // someExpensiveFunction() is never called (first condition is true)
+}
+```
+
+This is an optimization. If the first condition determines the result, the second isn't evaluated.
+
+---
+
+## Assignment Operators
+
+Assignment operators update variables with new values.
+
+### Basic Assignment [!toc]
+
+```java
+int age = 25;  // Assign 25 to age
+String name = "Alice";  // Assign "Alice" to name
+```
+
+### Compound Assignment Operators [!toc]
+
+Instead of writing the variable twice, use compound operators:
+
+```java
+int score = 10;
+
+// More verbose way
+// I actually prefer this sometimes because it's clear:
+score = score + 5;
+
+// Shorter and more common: the compound operator
+score += 5;  // Same as: score = score + 5
+System.out.println(score);  // 15
+```
+
+**All compound operators:**
+
+```java
+int x = 10;
+
+x += 5;   // x = x + 5;   (now 15)
+x -= 3;   // x = x - 3;   (now 7)
+x *= 2;   // x = x * 2;   (now 14)
+x /= 2;   // x = x / 2;   (now 7)
+x %= 3;   // x = x % 3;   (now 1)
+```
+
+**Quick reference:**
+
+| Operator | Equivalent  | Purpose             |
+| -------- | ----------- | ------------------- |
+| `+=`     | `a = a + b` | Add and assign      |
+| `-=`     | `a = a - b` | Subtract and assign |
+| `*=`     | `a = a * b` | Multiply and assign |
+| `/=`     | `a = a / b` | Divide and assign   |
+| `%=`     | `a = a % b` | Modulus and assign  |
+
+### Increment and Decrement Operators [!toc]
+
+Special operators for adding or subtracting 1:
+
+```java
+int count = 5;
+
+count++;  // count = count + 1; (now 6)
+count--;  // count = count - 1; (now 5)
+
+++count;  // Also adds 1 (now 6)
+--count;  // Also subtracts 1 (now 5)
+```
+
+**Pre vs Post increment** (rarely matters, but good to know):
+
+```java
+int x = 5;
+
+int result = x++;   // result = 5, then x becomes 6
+System.out.println(result);  // 5
+
+int y = 5;
+int result = ++y;   // y becomes 6, then result = 6
+System.out.println(result);  // 6
+```
+
+In most cases, use `x++` (post-increment). The difference rarely matters.
+
+---
+
+## Operator Precedence
+
+When multiple operators appear in one expression, which operates first?
+
+### The Precedence Hierarchy [!toc]
+
+Java has a strict order (like math class "PEMDAS"):
+
+```java
+// Highest precedence (happens first)
+1. Parentheses: ()
+2. Multiplication, Division, Modulus: *, /, %
+3. Addition, Subtraction: +, -
+4. Comparison: <, >, <=, >=
+5. Equality: ==, !=
+6. Logical AND: &&
+7. Logical OR: ||
+8. Assignment: =, +=, -=, etc.
+// Lowest precedence (happens last)
+```
+
+### Examples [!toc]
+
+**Without parentheses:**
+
+```java
+int result = 5 + 3 * 2;
+// Multiplication first: 3 * 2 = 6
+// Then addition: 5 + 6 = 11
+System.out.println(result);  // 11 (not 16)
+```
+
+**With parentheses (override precedence):**
+
+```java
+int result = (5 + 3) * 2;
+// Parentheses first: 5 + 3 = 8
+// Then multiplication: 8 * 2 = 16
+System.out.println(result);  // 16
+```
+
+**Logical operators:**
+
+```java
+boolean result = true || false && false;
+// && has higher precedence than ||
+// First: false && false = false
+// Then: true || false = true
+System.out.println(result);  // true
+
+// With parentheses to change meaning:
+boolean result = (true || false) && false;
+// First: true || false = true
+// Then: true && false = false
+System.out.println(result);  // false
+```
+
+### The Rule is Simple [!toc]
+
+**When in doubt, use parentheses.** They make code clearer and prevent mistakes:
+
+```java
+// Unclear
+if (age > 18 && hasLicense && !isRevoked || hasSpecialPermission) {
+    // ...
+}
+
+// Clear
+if ((age > 18 && hasLicense && !isRevoked) || hasSpecialPermission) {
+    // ...
+}
+```
+
+---
+
+## String Concatenation with `+`
+
+The `+` operator has special behavior with strings: it concatenates (joins) them.
+
+```java
+String greeting = "Hello" + " " + "World";
+System.out.println(greeting);  // "Hello World"
+
+String name = "Alice";
+int age = 25;
+String message = name + " is " + age + " years old";
+System.out.println(message);  // "Alice is 25 years old"
+```
+
+### How Type Changing Works [!toc]
+
+When you use `+` with a string, Java converts the other value to string:
+
+```java
+String result = "Age: " + 25;
+// Java converts: "Age: " + "25"
+System.out.println(result);  // "Age: 25"
+
+String result = 5 + 3 + " apples";
+// First: 5 + 3 = 8 (arithmetic, no string yet)
+// Then: "8" + " apples" = "8 apples"
+System.out.println(result);  // "8 apples"
+
+String result = "apples: " + 5 + 3;
+// First: "apples: " + "5" = "apples: 5" (now string)
+// Then: "apples: 5" + "3" = "apples: 53"
+System.out.println(result);  // "apples: 53"
+```
+
+**Order matters!** Operations happen left-to-right, so the context changes what `+` does.
+
+---
+
+## Practice and Examples
+
+### Example 1: Tasbih Counter (Simple) [!toc]
+
+```java
+public class TasbihCounter {
+    public static void main(String[] args) {
+        final int TARGET = 33;   // Constant value for one type of dhikr
+
+        int currentCount = 27;
+
+        int remaining = TARGET - currentCount;  // Using arithmetic operators
+
+        System.out.println("Remaining tasbih to reach 33: " + remaining);
+    }
+}
+```
+
+### Example 2: Grade Calculator (Medium) [!toc]
+
+```java
+public class GradeCalculator {
+    public static void main(String[] args) {
+        int midterm = 85;
+        int final_exam = 92;
+        int participation = 88;
+
+        // Calculate weighted average
+        double grade = (midterm * 0.3) + (final_exam * 0.5) + (participation * 0.2);
+
+        System.out.println("Final grade: " + grade);  // 88.9
+
+        // Determine letter grade
+        String letterGrade;
+        if (grade >= 90) {
+            letterGrade = "A";
+        } else if (grade >= 80) {
+            letterGrade = "B";
+        } else if (grade >= 70) {
+            letterGrade = "C";
+        } else {
+            letterGrade = "F";
+        }
+
+        System.out.println("Letter grade: " + letterGrade);  // "B"
+    }
+}
+```
+
+### Example 3: Zakat Savings Calculation (Advanced) [!toc]
+
+```java
+public class ZakatSavings {
+    public static void main(String[] args) {
+        final double NISAB = 8500;     // minimum amount before zakat applies
+        final double ZAKAT_RATE = 0.025;
+
+        double goldSavings = 5000;
+        double cashSavings = 7000;
+
+        // Combine all savings
+        double totalSavings = goldSavings + cashSavings;
+
+        // Determine zakat due using operators only
+        double zakatDue = totalSavings * ZAKAT_RATE;
+
+        // Check eligibility (boolean expression only)
+        boolean mustPay = totalSavings >= NISAB;
+
+        System.out.println("Total savings: " + totalSavings);
+        System.out.println("Zakat due: " + zakatDue);
+        System.out.println("Zakat required? " + mustPay);
+    }
+}
+```
+
+---
+
+## Common Mistakes to Avoid
+
+### Mistake 1: Using `=` Instead of `==` [!toc]
+
+```java
+int age = 25;
+
+if (age = 30) {  // WRONG! Assigns 30 to age
+    // This actually runs because non-zero is true
+}
+
+if (age == 30) {  // CORRECT! Compares age to 30
+    // This only runs if age is 30
+}
+```
+
+**Fix:** Use `==` for comparison, `=` for assignment.
+
+### Mistake 2: Forgetting to Use `.equals()` for Strings [!toc]
+
+```java
+String password = "secret";
+
+if (password == "secret") {  // WRONG! Compares references, may fail
+    System.out.println("Match");
+}
+
+if (password.equals("secret")) {  // CORRECT! Compares actual text
+    System.out.println("Match");
+}
+```
+
+**Fix:** Always use `.equals()` for string comparison.
+
+### Mistake 3: Wrong Operator Precedence [!toc]
+
+```java
+boolean result = true || false && false;
+// Oops! && happens first
+// false && false = false
+// true || false = true
+
+// If you wanted || first, use parentheses:
+boolean result = (true || false) && false;
+// true || false = true
+// true && false = false
+```
+
+**Fix:** When uncertain, use parentheses.
+
+### Mistake 4: Integer Division Loses Decimals [!toc]
+
+```java
+int a = 10;
+int b = 3;
+int result = a / b;  // 3 (decimal lost!)
+
+// If you need decimals:
+double result = (double) a / b;  // 3.333...
+```
+
+**Fix:** Use `double` or cast to `double` if you need decimals.
+
+### Mistake 5: Modulus with Negative Numbers [!toc]
+
+```java
+-7 % 3;   // -1 (not 2!)
+7 % -3;   // 1 (result takes sign of dividend)
+```
+
+**The tricky part:** Java's modulus with negative numbers returns a remainder with the sign of the **dividend** (first number). So `-7 % 3 = -1` (negative, takes the sign from -7), while `7 % 3 = 1` (positive). This is because Java's integer division truncates toward zero, not toward negative infinity.
+
+---
+
+## Why This Matters
+
+- **For calculations:** You use arithmetic operators constantly (prices, ages, scores,...).
+- **For decisions:** Control program flow (who can access what, which path to take,...).
+- **For clarity:** Operator precedence prevents bugs. Understanding it avoids surprises.
+- **For efficiency:** Compound operators and short-circuit evaluation make code faster and cleaner.
+- **For everything:** Almost every line of code uses operators in some form.
+
+---
+
+## Quick Cheat Sheet
+
+### Arithmetic Operators [!toc]
+
+```
+┌──────────────────────────────────────┐
+│ +  Addition      5 + 3 = 8           │
+│ -  Subtraction   5 - 3 = 2           │
+│ *  Multiplication 5 * 3 = 15         │
+│ /  Division      15 / 3 = 5          │
+│ %  Modulus       17 % 5 = 2          │
+└──────────────────────────────────────┘
+```
+
+### Comparison Operators (Return true/false) [!toc]
+
+```
+┌──────────────────────────────────────┐
+│ ==  Equal to           5 == 5        │
+│ !=  Not equal         5 != 3         │
+│ >   Greater than      5 > 3          │
+│ <   Less than         5 < 3          │
+│ >=  Greater or equal  5 >= 5         │
+│ <=  Less or equal     5 <= 3         │
+└──────────────────────────────────────┘
+```
+
+### Logical Operators (Return true/false) [!toc]
+
+```
+┌──────────────────────────────────────┐
+│ &&  AND    true && true = true       │
+│ ||  OR     true || false = true      │
+│ !   NOT    !true = false             │
+└──────────────────────────────────────┘
+```
+
+### Assignment Operators [!toc]
+
+```
+┌──────────────────────────────────────┐
+│ =   x = 5    (assign)                │
+│ +=  x += 3   (x = x + 3)             │
+│ -=  x -= 2   (x = x - 2)             │
+│ *=  x *= 4   (x = x * 4)             │
+│ /=  x /= 2   (x = x / 2)             │
+│ %=  x %= 3   (x = x % 3)             │
+│ ++  x++      (add 1)                 │
+│ --  x--      (subtract 1)            │
+└──────────────────────────────────────┘
+```
+
+### Operator Precedence (Top = First) [!toc]
+
+```
+┌──────────────────────────────────────┐
+│ 1. ()         Parentheses            │
+│ 2. * / %      Multiply, Divide       │
+│ 3. + -        Add, Subtract          │
+│ 4. < > <= >=  Comparison             │
+│ 5. == !=      Equality               │
+│ 6. &&         Logical AND            │
+│ 7. ||         Logical OR             │
+│ 8. =          Assignment             │
+└──────────────────────────────────────┘
+```
+
+### String Concatenation [!toc]
+
+```
+┌──────────────────────────────────────┐
+│ "Hello" + " " + "World"              │
+│ "Age: " + 25                         │
+│ 5 + 3 + " apples"  = "8 apples"     │
+│ "Total: " + 5 + 3  = "Total: 53"   │
+│                                      │
+│ Order matters! Left-to-right         │
+└──────────────────────────────────────┘
+```
+
+### Critical Rules [!toc]
+
+```
+✓ Use == for comparison (not = which assigns)
+✓ Use .equals() for string comparison
+✓ Use parentheses when unsure of precedence
+✓ Remember: integer division loses decimals
+✓ Short-circuit: && and || stop early if result known
+✓ Modulus (%) gives remainder, useful for even/odd
+```
+
+---
+
+## In Summary
+
+Operators are the tools that make Java do useful things:
+
+**Arithmetic operators** - Do math calculations
+
+**Comparison operators** - Compare values and make decisions
+
+**Logical operators** - Combine conditions for complex decisions
+
+**Assignment operators** - Update variables efficiently
+
+**Precedence** - Controls the order operations happen
+
+Mastering these operators means you can:
+
+- Calculate anything
+- Make decisions based on conditions
+- Write efficient, readable code
+- Avoid common bugs
+
+You'll use operators in almost every line of Java code you write. Understanding them deeply is non-negotiable for proficiency.
+
+---
