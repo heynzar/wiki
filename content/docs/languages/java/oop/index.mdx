@@ -481,25 +481,33 @@ You will write code that feels organized, clean, and ready for bigger projects.
 
 ---
 
-## Quick Decision Tree: Do I Need OOP?
+## Should I Use OOP?
 
 ```
-Is my program managing objects that persist and change?
-  YES → Use OOP
-  NO → Check next question
+1. Does your program work with things (objects) that stay in memory
+   and change over time?
+     → YES: OOP is a good choice.
+     → NO: Go to next question.
 
-Are my objects interacting with each other?
-  YES → Use OOP
-  NO → Check next question
+2. Do these things (objects) need to talk to each other or work together?
+     → YES: OOP fits well.
+     → NO: Go to next question.
 
-Do I have multiple types with shared behavior?
-  YES → Use OOP
-  NO → Check next question
+3. Do you have different types that share some common behavior?
+     → YES: OOP helps (inheritance / interfaces).
+     → NO: Go to next question.
 
-Is my logic stateless (just transform data)?
-  YES → Use functional/procedural
-  NO → Use OOP
+4. Is your code mostly simple functions that take data and return new data,
+   without storing state?
+     → YES: Use functional or procedural style.
+     → NO: Use OOP.
+
 ```
+
+<div className="img-dev">
+  ![Should I Use OOP, Quick Decision
+  Tree](/visuals/wiki/java/should-i-use-opp.png)
+</div>
 
 ---
 
