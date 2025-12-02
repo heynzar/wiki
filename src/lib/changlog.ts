@@ -1,4 +1,4 @@
-export const updates_by_months = [
+export const UPDATES_DATA = [
   {
     month: "June 2026",
     updates: [
@@ -128,4 +128,4 @@ export const updates_by_months = [
       },
     ],
   },
-] as const;
+];

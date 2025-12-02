@@ -17,7 +17,7 @@ export default function Page() {
           {visuals.map(({ title, link, image_url, category }) => (
             <div
               key={link}
-              className="border dark:border-2 relative rounded overflow-hidden"
+              className="border dark:border-2 relative rounded-lg overflow-hidden"
             >
               <div className="flex items-center p-2 gap-0.5 border-b dark:border-b-2">
                 {category.map((c, i) => (
