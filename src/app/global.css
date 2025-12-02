@@ -20,7 +20,7 @@
 }
 
 .img-dev img {
-  @apply border rounded-xl shadow-xs;
+  @apply border rounded-xl shadow-xs dark:invert-[92%] dark:grayscale-100;
 }
 
 .prose h1,
