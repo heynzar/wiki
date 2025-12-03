@@ -1,3 +1,4 @@
+import { cn } from "fumadocs-ui/utils/cn";
 import { ArrowRight, LucideIcon } from "lucide-react";
 import Image from "next/image";
 
@@ -5,10 +6,11 @@ interface NavigationButtonProps {
   title: string;
   icon?: LucideIcon | string;
   isFullHeight?: boolean;
+  disabled?: boolean;
 }
 
 const BASE_STYLES =
-  "py-2 px-3 cursor-pointer rounded-lg flex items-center w-full justify-center gap-2 border transition-colors bg-fd-card hover:bg-fd-muted-foreground/10";
+  "py-2 px-3 cursor-pointer rounded-lg whitespace-nowrap disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] flex items-center w-full justify-center gap-2 border transition-colors bg-fd-card hover:bg-fd-muted-foreground/10";
 const ICON_STYLES = "size-5 text-fd-muted-foreground";
 const ARROW_STYLES = "size-4 ml-auto text-fd-muted-foreground";
 
@@ -22,7 +24,7 @@ export function NavigationButton({
   const IconComponent = !isImageUrl ? icon : null;
 
   return (
-    <button className={`${BASE_STYLES} ${heightClass}`}>
+    <button className={cn(`${BASE_STYLES} ${heightClass}`)}>
       {isImageUrl ? (
         <Image
           width={20}

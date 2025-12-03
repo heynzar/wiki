@@ -48,9 +48,14 @@ export default function ContentNavigation({
       className="w-full grid gap-2"
       style={{ gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))` }}
     >
-      {items.map(({ title, icon, link }) => (
-        <Link key={`${category}-${link}`} href={link}>
+      {items.map(({ title, disabled, icon, link }) => (
+        <Link
+          className={disabled ? "cursor-default" : "cursor-pointer"}
+          key={`${category}-${link}`}
+          href={link}
+        >
           <NavigationButton
+            disabled={disabled}
             isFullHeight={isFullHeight}
             title={title}
             icon={icon}

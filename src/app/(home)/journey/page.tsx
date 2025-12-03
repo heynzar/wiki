@@ -19,7 +19,7 @@ export default function page() {
 
       {UPDATES_DATA.map(({ month, updates }, index) => (
         <main className="flex mb-8 mx-auto flex-col" key={index + "h"}>
-          <header className="border text-sm flex items-center justify-center w-full h-8">
+          <header className="border text-sm flex items-center justify-center w-full h-12 bg-fd-accent/10">
             <h2 className="uppercase !tracking-normal opacity-80 font-medium">
               {month}
             </h2>

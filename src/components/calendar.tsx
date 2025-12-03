@@ -20,7 +20,7 @@ const MONTHS = [
   "December",
 ];
 
-const YEARS = [2025, 2026];
+const YEARS = [2025];
 
 // Build a flat list of all update dates for quick lookup
 function getUpdateDates() {
