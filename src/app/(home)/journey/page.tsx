@@ -25,7 +25,7 @@ export default function page() {
             </h2>
           </header>
           <section key={index} className="flex border border-t-0 flex-col">
-            {updates.map(({ changes, date, icon, title, link }, i) => {
+            {updates.map(({ changes, date, icon: Icon, title, link }, i) => {
               const [day, monthName, year] = date.split(" ");
               const monthIndex =
                 new Date(`${monthName} 1, 2000`).getMonth() + 1;
@@ -44,33 +44,40 @@ export default function page() {
                   </h3>
                   <div className="flex-1 py-10 flex flex-col relative border-l ml-4 pl-4">
                     <div className="flex items-center gap-2">
-                      <Image
-                        width={20}
-                        height={20}
-                        alt={`${title} icon`}
-                        src={icon}
-                        className="size-4"
-                      />
+                      {typeof Icon === "string" ? (
+                        <Image
+                          width={20}
+                          height={20}
+                          alt={`${title} icon`}
+                          src={Icon}
+                          className="size-4"
+                        />
+                      ) : (
+                        <Icon className="size-4 text-fd-muted-foreground" />
+                      )}
+
                       <Link
                         href={link}
                         className="hover:text-fd-muted-foreground transition-colors"
                       >
-                        <h4 className="text-base tracking-tighter md:text-lg">
+                        <h4 className="text-base capitalize tracking-tighter md:text-lg">
                           {title}
                         </h4>
                       </Link>
                     </div>
-                    <ul className="mt-4 space-y-1 ml-4">
-                      {changes.map((change, x) => (
-                        <li
-                          key={x}
-                          className="flex opacity-80 items-start gap-2"
-                        >
-                          <span>{"->"}</span>
-                          {change}
-                        </li>
-                      ))}
-                    </ul>
+                    {changes.length !== 0 && (
+                      <ul className="mt-4 space-y-1 ml-4">
+                        {changes.map((change, x) => (
+                          <li
+                            key={x}
+                            className="flex opacity-80 items-start gap-2"
+                          >
+                            <span>{"->"}</span>
+                            {change}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </div>
               );
