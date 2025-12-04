@@ -5,15 +5,15 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl tracking-tighter md:text-4xl">Visuals</h1>
+    <div className="space-y-4 px-6">
+      <h1 className="text-3xl tracking-tighter md:text-4xl">Visuals</h1>
       <p className="text-sm md:text-base opacity-80">
         All the visuals from every topic in this Wiki, collected here for quick
         browsing and inspiration.
       </p>
 
       {visuals.length > 0 ? (
-        <div className="columns-1 md:columns-2 space-y-2 gap-2 w-full mt-6">
+        <div className="columns-1 sm:columns-2 space-y-2 gap-2 w-full mt-6">
           {visuals.map(({ title, link, image_url, category }) => (
             <div
               key={link}

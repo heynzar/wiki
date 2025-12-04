@@ -10,6 +10,7 @@ import {
 import { java_chapters } from "@/data/programming-languages";
 import { NavigationButton } from "./navigation-button";
 import Link from "next/link";
+import { cn } from "fumadocs-ui/utils/cn";
 
 type ContentCategory =
   | "programming_languages"
@@ -45,8 +46,12 @@ export default function ContentNavigation({
 
   return (
     <div
-      className="w-full grid gap-2"
-      style={{ gridTemplateColumns: `repeat(${columnsCount}, minmax(0, 1fr))` }}
+      className={cn(
+        "w-full grid gap-2",
+        columnsCount === 2
+          ? "grid-cols-1 md:grid-cols-2"
+          : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+      )}
     >
       {items.map(({ title, disabled, icon, link }) => (
         <Link

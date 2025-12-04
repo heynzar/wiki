@@ -74,7 +74,7 @@ export default function Calendar() {
       </div>
 
       {/* Calendar */}
-      <section className="mb-10 mt-2 grid select-none grid-cols-6 border-t border-r gap-0 w-full">
+      <section className="mb-10 mt-2 grid select-none grid-cols-3 sm:grid-cols-6 border-t border-r gap-0 w-full">
         {MONTHS.map((monthName, mIdx) => {
           const month = mIdx + 1;
           const daysInMonth = new Date(year, month, 0).getDate();

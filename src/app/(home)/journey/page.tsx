@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export default function page() {
   return (
-    <div>
+    <div className="px-6">
       <div className="space-y-4">
-        <h1 className="text-2xl tracking-tighter md:text-4xl">Journey</h1>
+        <h1 className="text-3xl tracking-tighter md:text-4xl">Journey</h1>
         <p className="text-sm md:text-base opacity-80">
           A full history of all the improvements, updates, and changes across
           this Wiki. Organized month by month for easy tracking.
@@ -37,13 +37,13 @@ export default function page() {
                 <div
                   key={i}
                   id={anchorId}
-                  className="flex justify-center items-center border-b last:border-b-0 gap-0 scroll-mt-20"
+                  className="flex flex-col sm:flex-row justify-center sm:items-center border-b last:border-b-0 gap-0 scroll-mt-20"
                 >
-                  <h3 className="w-32 !tracking-normal text-center opacity-80 uppercase text-xs font-medium">
+                  <h3 className="w-32 py-2 sm:py-0 text-center opacity-80 uppercase text-xs font-medium">
                     {date.split(" ").slice(0, 2).join(" ")}
                   </h3>
-                  <div className="flex-1 py-10 flex flex-col relative border-l ml-4 pl-4">
-                    <div className="flex items-center gap-2">
+                  <div className="flex-1 py-6 sm:py-10 flex flex-col relative border-t sm:border-t-0 sm:border-l sm:ml-4 pl-6 sm:pl-4">
+                    <div className="flex items-center gap-2 overflow-hidden">
                       {typeof Icon === "string" ? (
                         <Image
                           width={20}
@@ -60,17 +60,17 @@ export default function page() {
                         href={link}
                         className="hover:text-fd-muted-foreground transition-colors"
                       >
-                        <h4 className="text-base capitalize tracking-tighter md:text-lg">
+                        <h4 className="text-sm pr-2 capitalize tracking-tighter sm:text-lg">
                           {title}
                         </h4>
                       </Link>
                     </div>
                     {changes.length !== 0 && (
-                      <ul className="mt-4 space-y-1 ml-4">
+                      <ul className="mt-3 sm:mt-4 space-y-1 ml-4 pr-2">
                         {changes.map((change, x) => (
                           <li
                             key={x}
-                            className="flex opacity-80 items-start gap-2"
+                            className="flex text-sm sm:text-base opacity-80 items-start gap-2"
                           >
                             <span>{"->"}</span>
                             {change}
