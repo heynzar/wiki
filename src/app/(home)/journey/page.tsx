@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function page() {
   return (
-    <div className="px-6">
+    <div className="px-6 max-w-2xl mx-auto">
       <div className="space-y-4">
         <h1 className="text-3xl tracking-tighter md:text-4xl">Journey</h1>
         <p className="text-sm md:text-base opacity-80">

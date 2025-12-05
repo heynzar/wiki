@@ -3,7 +3,7 @@ import { Hash } from "lucide-react";
 
 export default function ExplorePage() {
   return (
-    <div className="content space-y-4 max-w-2xl">
+    <div className="content space-y-4 max-w-2xl mx-auto">
       <div className="fixed h-full top-0 flex justify-center items-center right-0"></div>
       <h1>Explore</h1>
       <p>

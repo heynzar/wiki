@@ -31,7 +31,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
         },
       ]}
     >
-      <div className="max-w-2xl mx-auto my-10">{children}</div>
+      <div className="my-10">{children}</div>
     </HomeLayout>
   );
 }

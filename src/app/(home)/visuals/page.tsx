@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="space-y-4 px-6">
+    <div className="space-y-4 px-6 max-w-2xl mx-auto">
       <h1 className="text-3xl tracking-tighter md:text-4xl">Visuals</h1>
       <p className="text-sm md:text-base opacity-80">
         All the visuals from every topic in this Wiki, collected here for quick

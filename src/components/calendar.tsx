@@ -49,29 +49,36 @@ function formatHash(day: number, month: number, year: number) {
   )}-${year}`;
 }
 
-export default function Calendar() {
+export default function Calendar({
+  hasYearSelector = true,
+}: {
+  hasYearSelector?: boolean;
+}) {
   const [year, setYear] = useState(YEARS[0]);
 
   return (
     <div>
       {/* Year selector */}
-      <div className="flex ml-auto mt-6 w-full gap-2 items-center">
-        <select
-          className={buttonVariants({
-            variant: "outline",
-            size: "sm",
-            className: "gap-2 ml-auto pr-4 cursor-pointer",
-          })}
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-        >
-          {YEARS.map((y) => (
-            <option key={y} value={y}>
-              {y}
-            </option>
-          ))}
-        </select>
-      </div>
+
+      {hasYearSelector && (
+        <div className="flex ml-auto mt-6 w-full gap-2 items-center">
+          <select
+            className={buttonVariants({
+              variant: "outline",
+              size: "sm",
+              className: "gap-2 ml-auto pr-4 cursor-pointer",
+            })}
+            value={year}
+            onChange={(e) => setYear(Number(e.target.value))}
+          >
+            {YEARS.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {/* Calendar */}
       <section className="mb-10 mt-2 grid select-none grid-cols-3 sm:grid-cols-6 border-t border-r gap-0 w-full">
