@@ -6,14 +6,14 @@ export default function Footer() {
     <footer className="border-t mt-auto bg-white dark:bg-fd-background">
       <div className="max-w-4xl mx-auto px-4 py-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-fd-muted-foreground text-center sm:text-left">
-          © {new Date().getFullYear()} &#10022; V2.0.4 &#10022; Built with the
+          © {new Date().getFullYear()} &#10022; V1.0.4 &#10022; Built with the
           tawfiq of Allah.
         </p>
 
         <div className="flex items-center gap-2 justify-center sm:justify-end">
           <Button asChild className="group">
             <a
-              href="https://github.com"
+              href="https://github.com/heynzar"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2"
