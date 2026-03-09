@@ -2,6 +2,10 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 
+@theme {
+  --color-primary: #0066ff;
+}
+
 .prose h1 {
   font-size: 2rem;
   font-weight: 500;
@@ -11,8 +15,13 @@
   font-weight: 500;
 }
 
+.font-instrument {
+  font-family: var(--font-instrument-serif), serif;
+}
+
 html {
   scroll-behavior: smooth;
+  font-family: var(--font-inter), Arial, sans-serif;
 }
 
 .prose h3 {
@@ -37,6 +46,17 @@ h6 {
 }
 
 @layer base {
+  #home {
+    background-color: transparent;
+    opacity: 1;
+    background-image: radial-gradient(#00000065 0.7px, transparent 0.7px);
+    background-size: 20px 20px;
+
+    &:where(.dark, .dark *) {
+      background-image: radial-gradient(#ffffff40 0.7px, transparent 0.7px);
+    }
+  }
+
   ::-webkit-scrollbar {
     width: 4px;
   }
