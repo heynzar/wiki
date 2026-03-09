@@ -5,6 +5,7 @@ import {
   frontend_core_concepts,
   frontend_technologies,
   programming_languages,
+  fundamentals_chapters,
   programming_languages_concepts,
 } from "@/lib/content-data";
 import { java_chapters } from "@/data/programming-languages";
@@ -16,6 +17,7 @@ type ContentCategory =
   | "programming_languages"
   | "programming_languages_concepts"
   | "frontend_technologies"
+  | "fundamentals_chapters"
   | "frontend_core_concepts"
   | "backend_technologies"
   | "categories"
@@ -26,6 +28,7 @@ const CONTENT_DATA: Record<ContentCategory, ContentItem[]> = {
   programming_languages_concepts,
   frontend_technologies,
   frontend_core_concepts,
+  fundamentals_chapters,
   backend_technologies,
   categories,
   java_chapters,
@@ -50,7 +53,7 @@ export default function ContentNavigation({
         "w-full grid gap-2",
         columnsCount === 2
           ? "grid-cols-1 md:grid-cols-2"
-          : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+          : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
       )}
     >
       {items.map(({ title, disabled, icon, link }) => (

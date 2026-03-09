@@ -2,20 +2,20 @@ import Image from "next/image";
 
 export default function PurposeSection() {
   return (
-    <section className="bg-fd-popover mt-24 relative">
+    <section className="bg-fd-popover mt-12 md:mt-24 relative">
       <div className="max-w-4xl mx-auto overflow-hidden py-10 px-4 space-y-10">
         <h2 className="text-center font-instrument text-primary text-2xl">
           Purpose & Stroy
         </h2>
-        <div className="absolute hidden md:block inset-0 w-full h-full top-0 pt-20 overflow-hidden">
-          <div className=" blur-3xl rotate-[24deg] -translate-x-1/4 w-full h-[6rem] dark:bg-amber-50/20 rounded-[50%]"></div>
+        <div className="absolute inset-0 w-full h-full top-0 pt-20 overflow-hidden">
+          <div className=" blur-3xl rotate-[24deg] -translate-x-1/4 w-full h-[6rem] dark:bg-amber-50/10 lg:dark:bg-amber-50/20 rounded-[50%]"></div>
         </div>
         {/* Decorative birds */}
         <Image
           src="/bird.png"
           width={100}
           height={100}
-          className="hidden lg:block absolute -scale-x-100 top-20 left-10 lg:left-20 opacity-80"
+          className="absolute -scale-x-100 lg:top-16 left-2 size-14 rotate-12 top-10 lg:size-24 lg:left-28 opacity-80"
           alt=""
           aria-hidden="true"
         />
@@ -23,7 +23,7 @@ export default function PurposeSection() {
           src="/bird.png"
           width={85}
           height={85}
-          className="hidden lg:block absolute top-72 right-10 lg:right-32 opacity-80"
+          className="absolute top-[360px] lg:top-72 size-12 lg:size-20 right-2 lg:right-32 opacity-80"
           alt=""
           aria-hidden="true"
         />

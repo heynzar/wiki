@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LetterCard } from "@/components/letter-card";
+import { LetterLineDuotone } from "@solar-icons/react-perf";
 
 export default function NewsletterSection() {
   const [name, setName] = useState("");
@@ -12,7 +13,8 @@ export default function NewsletterSection() {
     <section className="mx-auto max-w-4xl flex flex-col md:flex-row items-center gap-10 mt-12 mb-6 md:my-24 py-12 px-6">
       <div className="w-full md:w-auto md:flex-1 md:pr-10">
         <header className="flex flex-col gap-4 w-full">
-          <h2 className="font-instrument text-4xl sm:text-5xl lg:text-6xl">
+          <h2 className="font-instrument flex items-center gap-2.5 md:gap-3 text-4xl sm:text-5xl lg:text-6xl">
+            <LetterLineDuotone color="#0066ff" className="mb-1" />
             Stay Updated
           </h2>
           <p className="text-fd-muted-foreground leading-relaxed">
@@ -48,7 +50,7 @@ export default function NewsletterSection() {
         </div>
       </div>
 
-      <div className="relative mt-10 md:mt-0  flex group items-center justify-center w-full md:w-auto shrink-0">
+      <div className="relative mt-10 md:mt-0 max-[300px]:hidden flex group items-center justify-center w-full md:w-auto shrink-0">
         <div className="w-60 h-80 absolute rotate-[10deg] group-hover:translate-x-4 bg-white dark:bg-neutral-50 border rounded shadow-lg group-hover:-translate-y-2 duration-500 ease-in-out transition-transform z-20">
           <LetterCard name={name} />
         </div>
