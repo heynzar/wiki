@@ -18,8 +18,8 @@ export default function NewsletterSection() {
             Stay Updated
           </h2>
           <p className="text-fd-muted-foreground leading-relaxed">
-            Every time a new notes, diagrams, or studies are added, you'll be
-            notified. No noise, just knowledge.
+            Every time a new notes, diagrams, or studies are added, you&apos;ll
+            be notified. No noise, just knowledge.
           </p>
         </header>
 
