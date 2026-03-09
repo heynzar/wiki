@@ -1,37 +1,22 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
-import { baseOptions } from "@/lib/layout.shared";
+import CustomNavbar from "@/components/custom-nav-bar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | wiki.nzar.dev",
-    default: "Wiki Nzar Dev",
+    template: "%s ✦ WIKI NZAR DEV",
+    default: "NZAR WIKI ✦ THE ENGINEER'S NOTEBOOK",
   },
 };
 
 export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <HomeLayout
-      {...baseOptions()}
-      links={[
-        {
-          text: "Explore",
-          url: "/docs",
-          active: "url",
-        },
-        {
-          text: "Journey",
-          url: "/journey",
-          active: "url",
-        },
-        {
-          text: "Visuals",
-          url: "/visuals",
-          active: "url",
-        },
-      ]}
+      nav={{
+        component: <CustomNavbar />,
+      }}
     >
-      <div className="my-10">{children}</div>
+      {children}
     </HomeLayout>
   );
 }
