@@ -64,7 +64,7 @@ export default function LearningPathsSection() {
 
           <div />
           <Link
-            href="/explore"
+            href="/docs"
             className={cn(
               buttonVariants({ variant: "primary", size: "md" }),
               "md:hidden h-8 -mt-4 text-sm",

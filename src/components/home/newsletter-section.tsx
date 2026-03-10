@@ -40,7 +40,7 @@ export default function NewsletterSection() {
         {status === "success" ? (
           <div className="flex items-center gap-2 mt-6">
             <Link
-              href="/explore"
+              href="/docs"
               className={cn(
                 buttonVariants({ variant: "primary", size: "md" }),
                 "h-9 text-sm px-4",
