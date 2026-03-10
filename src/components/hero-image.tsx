@@ -29,7 +29,7 @@ export default function HeroImage({ className }: { className?: string }) {
       />
       <div
         style={{
-          backgroundImage: `url(/function-examples.png)`,
+          backgroundImage: `url(/visuals/wiki/java/jdk-jre-jvm.png)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

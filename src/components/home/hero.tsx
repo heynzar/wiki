@@ -14,7 +14,7 @@ export default function Hero() {
             <HeroImage className="scale-90" />
           </div>
         </div>
-        ENGINEER'S
+        ENGINEER&apos;S
         <div className="inline-flex items-center gap-4">
           NOTEBOOK
           <div className="max-[877px]:hidden inline-block">
