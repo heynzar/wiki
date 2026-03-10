@@ -29,6 +29,8 @@ import {
   Sparkles,
   Timer,
   LucideIcon,
+  Folder,
+  FileText,
 } from "lucide-react";
 
 export interface ContentItem {
@@ -37,6 +39,69 @@ export interface ContentItem {
   icon?: string | LucideIcon;
   link: string;
 }
+
+const fundamentals_chapters: ContentItem[] = [
+  {
+    title: "How Computers Work",
+    icon: Folder,
+    link: "/docs/fundamentals/how-computers-work",
+  },
+  {
+    title: "How Operating Systems Work",
+    icon: FileText,
+    link: "/docs/fundamentals/how-operating-systems-work",
+  },
+  {
+    title: "How Programs Work",
+    icon: FileText,
+    link: "/docs/fundamentals/how-programs-work",
+  },
+  {
+    title: "How Programming Languages Work",
+    icon: FileText,
+    link: "/docs/fundamentals/how-programming-languages-work",
+  },
+  {
+    title: "How Software Is Structured",
+    icon: FileText,
+    link: "/docs/fundamentals/how-software-is-structured",
+  },
+  {
+    title: "How the Internet Works",
+    icon: FileText,
+    link: "/docs/fundamentals/how-the-internet-works",
+  },
+  {
+    title: "How the Web Works",
+    icon: FileText,
+    link: "/docs/fundamentals/how-the-web-works",
+  },
+  {
+    title: "How Browsers Work",
+    icon: FileText,
+    link: "/docs/fundamentals/how-browsers-work",
+  },
+  {
+    title: "How Databases Work",
+    icon: FileText,
+    link: "/docs/fundamentals/how-databases-work",
+  },
+  {
+    title: "How Backend Systems Work",
+    icon: FileText,
+    link: "/docs/fundamentals/how-backend-systems-work",
+  },
+  {
+    title: "How Software Runs in Production",
+    icon: FileText,
+    link: "/docs/fundamentals/how-software-runs-in-production",
+  },
+  {
+    title: "How Engineers Think",
+    icon: FileText,
+    link: "/docs/fundamentals/how-engineers-think",
+  },
+];
 
 const programming_languages: ContentItem[] = [
   {
@@ -359,5 +424,6 @@ export {
   backend_technologies,
   frontend_technologies,
   programming_languages,
+  fundamentals_chapters,
   programming_languages_concepts,
 };
