@@ -60,53 +60,6 @@ age = "hello"  # Fine, now it's a string
 age = 3.14     # Fine, now it's a float
 ```
 
-### Safety vs Flexibility [!toc]
-
-**Java's Approach (Static, Typed) -> Safety:**
-
--> **Advantages:**
-
-- Catches errors at compile time (before running)
-- Faster execution (compiler optimizes for known types)
-- Clear documentation (code shows what types exist)
-- Better for large teams (explicit types prevent mistakes)
-- IDE can help better (knows exact types)
-
--> **Disadvantages:**
-
-- More code to write
-- Slower to prototype (need to declare everything)
-- Less flexible (can't change types on the fly)
-
-**Python's Approach (Dynamic, Not Typed) -> Flexibility:**
-
--> **Advantages:**
-
-- Less verbose (quick to write)
-- More flexible (types can change)
-- Faster to prototype (fewer lines)
-
--> **Disadvantages:**
-
-- Errors caught at runtime (program crashes mid-execution)
-- Slower execution (runtime must check types constantly)
-- Less clear (what type is this variable?)
-- Easy to make mistakes (typos discovered too late)
-
-### Why Big Companies Still Use Java [!toc]
-
-Netflix, Google, Amazon, banks, they use Java specifically because of static typing.
-
-Why? **Safety at scale.**
-
-When you have: 1 million lines of code, 500 developers and systems handling billions of dollars
-
-You want a compiler to catch mistakes before they happen. Python's flexibility becomes a liability. Type errors that would crash production systems get caught during compilation in Java.
-
-Java's data types aren't a limitation. They're a feature that prevents entire categories of bugs. And this difference is exactly why TypeScript was created, to bring optional typing to JavaScript.
-
----
-
 ## Primitive Types: Simple Values
 
 Primitive types store simple values directly. The value is stored in the **variable itself**.
