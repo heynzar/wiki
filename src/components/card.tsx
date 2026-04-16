@@ -2,6 +2,7 @@ import { cn } from "fumadocs-ui/utils/cn";
 import type { HTMLAttributes, PropsWithChildren } from "react";
 import type { ReactNode } from "react";
 import Link from "fumadocs-core/link";
+import Image from "next/image";
 
 type CardsProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>;
 
@@ -45,7 +46,9 @@ export function Cardd({
   const baseContent = (
     <div className={cn("flex gap-4", image && "items-start -mb-8")}>
       {image && (
-        <img
+        <Image
+          width={80}
+          height={160}
           src={image}
           alt={title}
           className="h-auto w-20 mt-0 flex-shrink-0 rounded-lg object-cover"
