@@ -3,11 +3,14 @@ import type { MDXComponents } from "mdx/types";
 import ContentNavigation from "@/components/content-navigation";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { ImageProps } from "next/image";
+import { Cardd, Cardds } from "@/components/card";
 
 // use this function to get MDX components, you will need it for rendering MDX
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
+    Cardd,
+    Cardds,
     ContentNavigation,
     img: (props: ImageProps) => <ImageZoom {...props} />,
     ...components,

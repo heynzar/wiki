@@ -38,12 +38,8 @@ function Button({
   variant,
   rounded,
   size,
-  asChild = false,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  }) {
+}: React.ComponentProps<"button"> & VariantProps<typeof buttonVariants>) {
   return (
     <button
       data-slot="button"
