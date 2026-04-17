@@ -1,5 +1,12 @@
 import { Redis } from "@upstash/redis";
-import { source } from "@/lib/source";
+
+export type PageRecord = {
+  title: string;
+  url: string;
+  createdAt: string;
+  allDates: string[];
+  deletedAt?: string | null;
+};
 
 export type PageWithHistory = {
   title: string;
@@ -8,6 +15,8 @@ export type PageWithHistory = {
   tag?: string;
   createdAt: Date;
   allDates: Date[];
+  deletedAt?: Date | null;
+  isDeleted: boolean;
 };
 
 const redis = Redis.fromEnv();
@@ -15,110 +24,99 @@ const redis = Redis.fromEnv();
 export const PAGE_KEY = (slug: string) => `logbook:page:${slug}`;
 export const INDEX_KEY = "logbook:index";
 
-export async function getPageHistory(): Promise<PageWithHistory[]> {
-  const slugs = await redis.zrange(INDEX_KEY, "+inf", "-inf", {
+function urlToSlugs(url: string): string[] {
+  return url
+    .replace(/^\/docs\//, "")
+    .split("/")
+    .filter(Boolean);
+}
+
+function slugLabel(s: string) {
+  return s
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+function slugsToTag(slugs: string[]): string | undefined {
+  const [cat, sub] = slugs;
+  if (!cat) return undefined;
+  return sub ? `${slugLabel(cat)} // ${slugLabel(sub)}` : slugLabel(cat);
+}
+
+function hydrate(record: PageRecord): PageWithHistory {
+  const slugs = urlToSlugs(record.url);
+  return {
+    title: record.title,
+    url: record.url,
+    slugs,
+    tag: slugsToTag(slugs),
+    createdAt: new Date(record.createdAt),
+    allDates: record.allDates.map((d) => new Date(d)),
+    deletedAt: record.deletedAt ? new Date(record.deletedAt) : null,
+    isDeleted: !!record.deletedAt,
+  };
+}
+
+export async function getPageHistory(
+  limit?: number,
+): Promise<PageWithHistory[]> {
+  const allSlugs = await redis.zrange(INDEX_KEY, "+inf", "-inf", {
     byScore: true,
     rev: true,
   });
 
-  if (!slugs.length) return [];
+  if (!allSlugs.length) return [];
+
+  const slugs = limit
+    ? (allSlugs as string[]).slice(0, limit)
+    : (allSlugs as string[]);
 
   const pipeline = redis.pipeline();
-  for (const slug of slugs) {
-    pipeline.get(PAGE_KEY(slug as string));
-  }
+  for (const slug of slugs) pipeline.get(PAGE_KEY(slug));
   const results = await pipeline.exec();
 
-  const pages: PageWithHistory[] = [];
-
-  for (const raw of results) {
-    if (!raw) continue;
-
-    const record = raw as {
-      title: string;
-      url: string;
-      slugs: string[];
-      tag?: string;
-      createdAt: string;
-      allDates: string[];
-    };
-
-    pages.push({
-      title: record.title,
-      url: record.url,
-      slugs: record.slugs,
-      tag: record.tag,
-      createdAt: new Date(record.createdAt),
-      allDates: record.allDates.map((d) => new Date(d)),
-    });
-  }
-
-  return pages;
+  return results
+    .filter((r): r is PageRecord => !!r)
+    .map(hydrate)
+    .filter((p) => !p.isDeleted); // hide deleted by default
 }
 
-export type PageRecord = {
-  title: string;
-  url: string;
-  slugs: string[];
-  tag?: string;
-  createdAt: string;
-  allDates: string[];
-};
+export async function getFullPageHistory(
+  limit?: number,
+): Promise<PageWithHistory[]> {
+  const allSlugs = await redis.zrange(INDEX_KEY, "+inf", "-inf", {
+    byScore: true,
+    rev: true,
+  });
 
-export async function upsertPage(slug: string, record: PageRecord) {
-  const createdAtTs = new Date(record.createdAt).getTime();
+  if (!allSlugs.length) return [];
+
+  const slugs = limit
+    ? (allSlugs as string[]).slice(0, limit)
+    : (allSlugs as string[]);
 
   const pipeline = redis.pipeline();
+  for (const slug of slugs) pipeline.get(PAGE_KEY(slug));
+  const results = await pipeline.exec();
 
+  return results.filter((r): r is PageRecord => !!r).map(hydrate);
+}
+
+export async function upsertPage(slug: string, record: PageRecord) {
+  const score = new Date(record.createdAt).getTime();
+  const pipeline = redis.pipeline();
   pipeline.set(PAGE_KEY(slug), JSON.stringify(record));
-
-  pipeline.zadd(INDEX_KEY, { score: createdAtTs, member: slug });
-
+  pipeline.zadd(INDEX_KEY, { score, member: slug });
   await pipeline.exec();
 }
 
-export async function seedAllPages() {
-  const pages = source.getPages();
-  const token = process.env.GITHUB_TOKEN ?? "";
+export async function markPageDeleted(slug: string) {
+  const raw = await redis.get<PageRecord>(PAGE_KEY(slug));
+  if (!raw) return;
 
-  console.log(`Seeding ${pages.length} pages…`);
-
-  for (const page of pages) {
-    const dates = await fetchFileCommitDates(
-      "heynzar",
-      "wiki",
-      `content/docs/${page.path}`,
-      token,
-    );
-
-    if (!dates.length) {
-      console.warn(`  skip (no commits): ${page.path}`);
-      continue;
-    }
-
-    const slug = page.slugs.join("/");
-    const [cat, sub] = page.slugs;
-    const tag =
-      cat && sub
-        ? `${slugLabel(cat)} // ${slugLabel(sub)}`
-        : cat
-          ? slugLabel(cat)
-          : undefined;
-
-    const record: PageRecord = {
-      title: page.data.structuredData.headings[0]?.content ?? page.data.title,
-      url: page.url,
-      slugs: page.slugs,
-      tag,
-      createdAt: dates[dates.length - 1].toISOString(),
-      allDates: dates.map((d) => d.toISOString()),
-    };
-
-    await upsertPage(slug, record);
-    console.log(`  ✓ ${slug}`);
-  }
-
-  console.log("Seed complete.");
+  const updated: PageRecord = { ...raw, deletedAt: new Date().toISOString() };
+  await redis.set(PAGE_KEY(slug), JSON.stringify(updated));
 }
 
 export async function fetchFileCommitDates(
@@ -128,7 +126,6 @@ export async function fetchFileCommitDates(
   token: string,
 ): Promise<Date[]> {
   const url = `https://api.github.com/repos/${owner}/${repo}/commits?path=${encodeURIComponent(path)}&per_page=100`;
-
   const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -141,15 +138,7 @@ export async function fetchFileCommitDates(
 
   const commits: Array<{ commit: { author: { date: string } } }> =
     await res.json();
-
   return commits
     .map((c) => new Date(c.commit.author.date))
     .filter((d) => !isNaN(d.getTime()));
-}
-
-function slugLabel(s: string) {
-  return s
-    .split("-")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
 }

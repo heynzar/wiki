@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
-import { source } from "@/lib/source";
 import {
   fetchFileCommitDates,
   upsertPage,
+  markPageDeleted,
   type PageRecord,
 } from "@/lib/logbook";
 
@@ -16,10 +16,7 @@ async function verifySignature(
   rawBody: string,
 ): Promise<boolean> {
   const secret = process.env.GITHUB_WEBHOOK_SECRET;
-  if (!secret) {
-    console.error("GITHUB_WEBHOOK_SECRET is not set");
-    return false;
-  }
+  if (!secret) return false;
 
   const signature = req.headers.get("x-hub-signature-256");
   if (!signature) return false;
@@ -38,21 +35,35 @@ function slugLabel(s: string) {
     .join(" ");
 }
 
-function findPageByPath(filePath: string) {
-  const stripped = filePath
+function pathToMeta(filePath: string): {
+  slug: string;
+  url: string;
+  title: string;
+} {
+  const clean = filePath
     .replace(CONTENT_PREFIX, "")
-    .replace(/\.(mdx?|md)$/, "");
+    .replace(/\.(mdx?|md)$/, "")
+    .replace(/\/index$/, "");
 
-  return source.getPages().find((page) => page.path === stripped) ?? null;
+  const slugs = clean.split("/").filter(Boolean);
+  const slug = slugs.join("/");
+  const url = "/docs/" + slug;
+  const title = slugLabel(slugs[slugs.length - 1] ?? "");
+
+  return { slug, url, title };
 }
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
 
-  const valid = await verifySignature(req, rawBody);
-  if (!valid) {
+  if (!(await verifySignature(req, rawBody))) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
   }
+
+  const event = req.headers.get("x-github-event");
+  if (event === "ping") return NextResponse.json({ ok: true, message: "pong" });
+  if (event !== "push")
+    return NextResponse.json({ ok: true, message: "ignored" });
 
   let payload: GitHubPushPayload;
   try {
@@ -61,71 +72,55 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const event = req.headers.get("x-github-event");
-  if (event === "ping") {
-    return NextResponse.json({ ok: true, message: "pong" });
-  }
-  if (event !== "push") {
-    return NextResponse.json({ ok: true, message: "ignored" });
-  }
+  const token = process.env.GITHUB_TOKEN ?? "";
 
   const changedFiles = new Set<string>();
+  const removedFiles = new Set<string>();
+
   for (const commit of payload.commits ?? []) {
     for (const file of [...(commit.added ?? []), ...(commit.modified ?? [])]) {
-      if (file.startsWith(CONTENT_PREFIX)) {
-        changedFiles.add(file);
-      }
+      if (file.startsWith(CONTENT_PREFIX)) changedFiles.add(file);
+    }
+    for (const file of commit.removed ?? []) {
+      if (file.startsWith(CONTENT_PREFIX)) removedFiles.add(file);
     }
   }
 
-  if (changedFiles.size === 0) {
-    return NextResponse.json({ ok: true, message: "no content files changed" });
-  }
-
-  const token = process.env.GITHUB_TOKEN ?? "";
   const updated: string[] = [];
+  const deleted: string[] = [];
   const skipped: string[] = [];
 
   for (const filePath of changedFiles) {
-    const page = findPageByPath(filePath);
-    if (!page) {
-      skipped.push(filePath);
-      continue;
-    }
+    const { slug, url, title } = pathToMeta(filePath);
 
     const dates = await fetchFileCommitDates(OWNER, REPO, filePath, token);
     if (!dates.length) {
-      skipped.push(filePath);
+      skipped.push(slug);
       continue;
     }
 
-    const slug = page.slugs.join("/");
-    const [cat, sub] = page.slugs;
-    const tag =
-      cat && sub
-        ? `${slugLabel(cat)} // ${slugLabel(sub)}`
-        : cat
-          ? slugLabel(cat)
-          : undefined;
-
     const record: PageRecord = {
-      title: page.data.structuredData.headings[0]?.content ?? page.data.title,
-      url: page.url,
-      slugs: page.slugs,
-      tag,
+      title,
+      url,
       createdAt: dates[dates.length - 1].toISOString(),
       allDates: dates.map((d) => d.toISOString()),
+      deletedAt: null,
     };
 
     await upsertPage(slug, record);
     updated.push(slug);
   }
 
-  console.log(
-    `Webhook processed — updated: [${updated.join(", ")}], skipped: [${skipped.join(", ")}]`,
-  );
+  for (const filePath of removedFiles) {
+    const { slug } = pathToMeta(filePath);
+    await markPageDeleted(slug);
+    deleted.push(slug);
+  }
 
-  return NextResponse.json({ ok: true, updated, skipped });
+  console.log(
+    `Webhook: updated=[${updated}] deleted=[${deleted}] skipped=[${skipped}]`,
+  );
+  return NextResponse.json({ ok: true, updated, deleted, skipped });
 }
 
 type GitHubPushPayload = {
