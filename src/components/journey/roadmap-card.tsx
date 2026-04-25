@@ -10,7 +10,7 @@ import {
   webDevPhases,
 } from "@/data/roadmap";
 import { useState } from "react";
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 interface Topic {
   title: string;
@@ -19,7 +19,6 @@ interface Topic {
 
 export interface RoadmapCardProps {
   id: number;
-  index: number;
   title: string;
   link?: string;
   description: string;
@@ -50,7 +49,7 @@ function isTopicCompleted(id: number, topicIndex: number): boolean {
 }
 
 function formatIndex(index: number): string {
-  return index < 9 ? `0${index + 1}` : `${index + 1}`;
+  return index < 9 ? ` 0${index + 1}` : `${index + 1}`;
 }
 
 interface TopicItemProps {
@@ -98,7 +97,6 @@ function TopicItem({ topic, completed }: TopicItemProps) {
 
 export function RoadmapCard({
   id,
-  index,
   link,
   title,
   description,
@@ -121,7 +119,7 @@ export function RoadmapCard({
       >
         <div className="flex items-center justify-between">
           <span className="uppercase font-medium text-xs text-primary">
-            {`${formatIndex(index)} ✦ (${progress}%) ✦ ${getPhaseTag(id)}`}
+            {`${formatIndex(id)} ✦ (${progress}%) ✦ ${getPhaseTag(id)}`}
           </span>
 
           {link && (
