@@ -1,90 +1,31 @@
-import Calendar from "@/components/calendar";
-import { UPDATES_DATA } from "@/lib/changlog";
+import React from "react";
+import { calculate_total_progress } from "@/data/roadmap";
+import { JourneyClient } from "@/components/journey";
 
-import Image from "next/image";
-import Link from "next/link";
+const [completed_topics, total_topics, total_progress] =
+  calculate_total_progress();
+const progress = Math.round(total_progress);
 
-export default function page() {
+export default function Page() {
   return (
-    <div className="px-6 max-w-2xl mx-auto">
-      <div className="space-y-4">
-        <h1 className="text-3xl tracking-tighter md:text-4xl">Journey</h1>
-        <p className="text-sm md:text-base opacity-80">
-          A full history of all the improvements, updates, and changes across
-          this Wiki. Organized month by month for easy tracking.
+    <section className="space-y-10 my-12 px-6 max-w-4xl mx-auto">
+      <header className="flex max-w-4xl mx-auto flex-col gap-4 w-full">
+        <h2 className="font-instrument flex items-center gap-2.5 text-4xl sm:text-5xl lg:text-6xl leading-tight">
+          The Full Journey
+        </h2>
+
+        <p className="text-sm md:text-base text-fd-muted-foreground leading-relaxed">
+          Track and explore the full roadmap, see what's already covered, what's
+          actively being worked on, and what's coming. A clear vision of where
+          we've been and where we're going.{" "}
+          <span className="bg-fd-secondary px-2 py-0.5 rounded">
+            {completed_topics} of {total_topics} topics
+          </span>{" "}
+          completed. Click any card to explore more.
         </p>
-      </div>
+      </header>
 
-      <Calendar />
-
-      {UPDATES_DATA.map(({ month, updates }, index) => (
-        <main className="flex mb-8 mx-auto flex-col" key={index + "h"}>
-          <header className="border text-sm flex items-center justify-center w-full h-12 bg-fd-accent/10">
-            <h2 className="uppercase !tracking-normal opacity-80 font-medium">
-              {month}
-            </h2>
-          </header>
-          <section key={index} className="flex border border-t-0 flex-col">
-            {updates.map(({ changes, date, icon: Icon, title, link }, i) => {
-              const [day, monthName, year] = date.split(" ");
-              const monthIndex =
-                new Date(`${monthName} 1, 2000`).getMonth() + 1;
-              const anchorId = `${String(day).padStart(2, "0")}-${String(
-                monthIndex
-              ).padStart(2, "0")}-${year}`;
-
-              return (
-                <div
-                  key={i}
-                  id={anchorId}
-                  className="flex flex-col sm:flex-row justify-center sm:items-center border-b last:border-b-0 gap-0 scroll-mt-20"
-                >
-                  <h3 className="w-32 py-2 sm:py-0 text-center opacity-80 uppercase text-xs font-medium">
-                    {date.split(" ").slice(0, 2).join(" ")}
-                  </h3>
-                  <div className="flex-1 py-6 sm:py-10 flex flex-col relative border-t sm:border-t-0 sm:border-l sm:ml-4 pl-6 sm:pl-4">
-                    <div className="flex items-center gap-2 overflow-hidden">
-                      {typeof Icon === "string" ? (
-                        <Image
-                          width={20}
-                          height={20}
-                          alt={`${title} icon`}
-                          src={Icon}
-                          className="size-4"
-                        />
-                      ) : (
-                        <Icon className="size-4 text-fd-muted-foreground" />
-                      )}
-
-                      <Link
-                        href={link}
-                        className="hover:text-fd-muted-foreground transition-colors"
-                      >
-                        <h4 className="text-sm pr-2 capitalize tracking-tighter sm:text-lg">
-                          {title}
-                        </h4>
-                      </Link>
-                    </div>
-                    {changes.length !== 0 && (
-                      <ul className="mt-3 sm:mt-4 space-y-1 ml-4 pr-2">
-                        {changes.map((change, x) => (
-                          <li
-                            key={x}
-                            className="flex text-sm sm:text-base opacity-80 items-start gap-2"
-                          >
-                            <span>{"->"}</span>
-                            {change}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </section>
-        </main>
-      ))}
-    </div>
+      <JourneyClient progress={progress} />
+    </section>
   );
 }
