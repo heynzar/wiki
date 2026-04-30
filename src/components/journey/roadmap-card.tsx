@@ -4,34 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  calculate_step_progress,
-  complted_article,
-  webDevPhases,
-} from "@/data/roadmap";
 import { useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
-
-interface Topic {
-  title: string;
-  link: string;
-}
-
-export interface RoadmapCardProps {
-  id: number;
-  title: string;
-  link?: string;
-  description: string;
-  icon: string;
-  what_we_gonna_cover: Topic[];
-}
-
-function getPhaseTag(id: number): string {
-  const phase = webDevPhases.find(
-    ({ steps }) => steps[0] <= id && steps[1] >= id,
-  );
-  return phase?.title ?? "";
-}
+import { Roadmap } from "@/data/roadmap";
+import { calculate_step_progress, complted_article } from "@/lib/roadmap";
 
 function isTopicCompleted(id: number, topicIndex: number): boolean {
   const step = complted_article.find((item) => item.id === id);
@@ -48,16 +24,17 @@ function isTopicCompleted(id: number, topicIndex: number): boolean {
   return topicIndex >= start && topicIndex <= end;
 }
 
-function formatIndex(index: number): string {
-  return index < 9 ? ` 0${index + 1}` : `${index + 1}`;
+function formatIndex(id: number): string {
+  return id <= 9 ? `0${id}` : `${id}`;
 }
 
 interface TopicItemProps {
-  topic: Topic;
+  name: string;
+  url: string;
   completed: boolean;
 }
 
-function TopicItem({ topic, completed }: TopicItemProps) {
+function TopicItem({ name, url, completed }: TopicItemProps) {
   const indicator = (
     <div
       className={cn(
@@ -71,18 +48,13 @@ function TopicItem({ topic, completed }: TopicItemProps) {
     </div>
   );
 
-  const label = <span className="truncate">{topic.title}</span>;
-
   const sharedClass = "px-1 flex items-center gap-1.5 text-sm py-0.5 rounded";
 
   if (completed) {
     return (
-      <Link
-        href={topic.link}
-        className={cn(sharedClass, "hover:bg-fd-popover")}
-      >
+      <Link href={url} className={cn(sharedClass, "hover:bg-fd-popover")}>
         {indicator}
-        {label}
+        <span className="truncate">{name}</span>
       </Link>
     );
   }
@@ -90,21 +62,28 @@ function TopicItem({ topic, completed }: TopicItemProps) {
   return (
     <div className={cn(sharedClass, "cursor-default select-none")}>
       {indicator}
-      <span className="truncate opacity-80">{topic.title}</span>
+      <span className="truncate opacity-80">{name}</span>
     </div>
   );
 }
 
+interface RoadmapCardProps extends Roadmap {
+  sectionName: string;
+}
+
 export function RoadmapCard({
   id,
-  link,
-  title,
+  url,
+  name,
   description,
   icon,
-  what_we_gonna_cover,
+  children,
+  sectionName,
 }: RoadmapCardProps) {
-  const [, , progress] = calculate_step_progress(id);
+  const [, , progress] = calculate_step_progress(id ?? 0);
   const [isOpen, setIsOpen] = useState(false);
+
+  const IconComponent = icon && typeof icon !== "string" ? icon : null;
 
   return (
     <div
@@ -119,12 +98,12 @@ export function RoadmapCard({
       >
         <div className="flex items-center justify-between">
           <span className="uppercase font-medium text-xs text-primary">
-            {`${formatIndex(id)} ✦ (${progress}%) ✦ ${getPhaseTag(id)}`}
+            {`${formatIndex(id ?? 0)} ✦ (${progress}%) ✦ ${sectionName}`}
           </span>
 
-          {link && (
+          {url && (
             <Link
-              href={link}
+              href={url}
               onClick={(e) => e.stopPropagation()}
               className={cn(buttonVariants({ size: "icon" }), "size-5")}
             >
@@ -134,15 +113,20 @@ export function RoadmapCard({
         </div>
 
         <div className="flex items-center gap-2">
-          <Image
-            alt={title}
-            width={20}
-            height={20}
-            className="h-7 w-auto shrink-0"
-            src={icon}
-          />
+          {typeof icon === "string" ? (
+            <Image
+              alt={name}
+              width={20}
+              height={20}
+              className="h-7 w-auto shrink-0"
+              src={icon}
+            />
+          ) : IconComponent ? (
+            <IconComponent className="size-7 shrink-0" />
+          ) : null}
+
           <h2 className="font-instrument truncate text-3xl leading-tight">
-            {title}
+            {name}
           </h2>
         </div>
 
@@ -159,11 +143,12 @@ export function RoadmapCard({
       >
         <div className="overflow-hidden">
           <div className="p-4 border-t flex flex-col gap-0 w-full">
-            {what_we_gonna_cover.map((topic, idx) => (
+            {children?.map(({ name, url }, idx) => (
               <TopicItem
-                key={topic.title}
-                topic={topic}
-                completed={isTopicCompleted(id, idx)}
+                key={url}
+                name={name}
+                url={url}
+                completed={isTopicCompleted(id ?? 0, idx)}
               />
             ))}
           </div>

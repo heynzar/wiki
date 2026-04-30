@@ -1,5 +1,5 @@
 import React from "react";
-import { calculate_total_progress } from "@/data/roadmap";
+import { calculate_total_progress } from "@/lib/roadmap";
 import { JourneyClient } from "@/components/journey";
 
 const [completed_topics, total_topics, total_progress] =

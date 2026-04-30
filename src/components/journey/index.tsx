@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { webDevRoadmap, complted_article } from "@/data/roadmap";
-import { RoadmapCard } from "@/components/journey/roadmap-card";
 import { Button } from "@/components/ui/button";
+import { roadmap } from "@/data/roadmap";
+import { RoadmapCard } from "./roadmap-card";
+import { complted_article } from "@/lib/roadmap";
 
 type StatusFilter = "All" | "Done" | "In progress" | "Not started";
 
@@ -28,13 +29,29 @@ interface JourneyClientProps {
 export function JourneyClient({ progress }: JourneyClientProps) {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
 
+  const flatSteps = useMemo(
+    () =>
+      roadmap.flatMap((section) =>
+        (section.children ?? []).map((sub) => ({
+          ...sub,
+          url: `docs/${section.url}/${sub.url}`,
+          sectionName: section.name,
+          children: (sub.children ?? []).map((article) => ({
+            ...article,
+            url: `docs/${section.url}/${sub.url}/${article.url}`,
+          })),
+        })),
+      ),
+    [],
+  );
+
   const filtered = useMemo(
     () =>
-      webDevRoadmap.filter(
+      flatSteps.filter(
         (step) =>
-          statusFilter === "All" || getStepStatus(step.id) === statusFilter,
+          statusFilter === "All" || getStepStatus(step.id!) === statusFilter,
       ),
-    [statusFilter],
+    [statusFilter, flatSteps],
   );
 
   return (
@@ -76,14 +93,16 @@ export function JourneyClient({ progress }: JourneyClientProps) {
 
       <div className="max-w-4xl mx-auto grid grid-cols-2 gap-4 items-start">
         {filtered.map(
-          ({ id, title, description, icon, what_we_goona_cover }) => (
+          ({ id, url, sectionName, name, description, icon, children }) => (
             <RoadmapCard
               key={id}
               id={id}
-              title={title}
+              url={url}
+              name={name}
               description={description}
               icon={icon}
-              what_we_gonna_cover={what_we_goona_cover}
+              children={children}
+              sectionName={sectionName}
             />
           ),
         )}
