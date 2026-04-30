@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+import { flattenRoadmapLeaves, type CompletedArticle } from "@/lib/roadmap";
 
 export type PageRecord = {
   title: string;
@@ -141,4 +142,56 @@ export async function fetchFileCommitDates(
   return commits
     .map((c) => new Date(c.commit.author.date))
     .filter((d) => !isNaN(d.getTime()));
+}
+
+export async function deriveAndStoreCompleted(): Promise<void> {
+  const leaves = flattenRoadmapLeaves();
+  const pages = await getPageHistory();
+
+  // Build a lookup: leaf url → { subsectionId, index }
+  const leafMap = new Map(
+    leaves.map((l) => [
+      l.url,
+      { subsectionId: l.subsectionId, index: l.index },
+    ]),
+  );
+
+  // Group completed indices by subsectionId
+  const grouped = new Map<number, Set<number>>();
+
+  for (const page of pages) {
+    // page.url is like "/docs/foundation/how-computing-works/article-slug"
+    // leaf.url is like "article-slug"
+    const leafUrl = page.url.split("/").filter(Boolean).pop() ?? "";
+    const match = leafMap.get(leafUrl);
+    if (!match) continue;
+
+    const existing = grouped.get(match.subsectionId) ?? new Set();
+    existing.add(match.index);
+    grouped.set(match.subsectionId, existing);
+  }
+
+  // Get total articles per subsection to detect "all" case
+  const { roadmap } = await import("@/data/roadmap");
+  const subsectionTotals = new Map<number, number>();
+  for (const section of roadmap) {
+    for (const subsection of section.children ?? []) {
+      if (subsection.id) {
+        subsectionTotals.set(subsection.id, subsection.children?.length ?? 0);
+      }
+    }
+  }
+
+  // Build the final CompletedArticle array
+  const result: CompletedArticle[] = [];
+  for (const [id, indices] of grouped.entries()) {
+    const total = subsectionTotals.get(id) ?? 0;
+    const sortedIndices = [...indices].sort((a, b) => a - b);
+    result.push({
+      id,
+      done: sortedIndices.length === total && total > 0 ? "all" : sortedIndices,
+    });
+  }
+
+  await redis.set("logbook:completed", JSON.stringify(result));
 }

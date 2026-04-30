@@ -1,12 +1,13 @@
 import React from "react";
-import { calculate_total_progress } from "@/lib/roadmap";
+import { calculate_total_progress, getCompletedArticles } from "@/lib/roadmap";
 import { JourneyClient } from "@/components/journey";
 
-const [completed_topics, total_topics, total_progress] =
-  calculate_total_progress();
-const progress = Math.round(total_progress);
+export default async function Page() {
+  const completed = await getCompletedArticles();
+  const [completed_topics, total_topics, total_progress] =
+    calculate_total_progress(completed);
+  const progress = Math.round(total_progress);
 
-export default function Page() {
   return (
     <section className="space-y-10 my-12 px-6 max-w-4xl mx-auto">
       <header className="flex max-w-4xl mx-auto flex-col gap-4 w-full">
@@ -25,7 +26,7 @@ export default function Page() {
         </p>
       </header>
 
-      <JourneyClient progress={progress} />
+      <JourneyClient progress={progress} completed={completed} />
     </section>
   );
 }

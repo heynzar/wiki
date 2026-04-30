@@ -1,14 +1,51 @@
 import { roadmap, Roadmap } from "@/data/roadmap";
 
-export type __CompltedArticle__ = {
+export type CompletedArticle = {
   id: number;
-  done: string;
+  done: number[] | "all";
 };
 
-export const complted_article: __CompltedArticle__[] = [
-  { id: 1, done: "all" },
-  { id: 2, done: "0..2" },
-];
+type RoadmapLeaf = {
+  url: string;
+  subsectionId: number;
+  index: number;
+};
+
+export function flattenRoadmapLeaves(): RoadmapLeaf[] {
+  const leaves: RoadmapLeaf[] = [];
+
+  for (const section of roadmap) {
+    for (const subsection of section.children ?? []) {
+      if (!subsection.id) continue;
+      const articles = subsection.children ?? [];
+      articles.forEach((article, index) => {
+        if (article.url) {
+          leaves.push({
+            url: article.url,
+            subsectionId: subsection.id!,
+            index,
+          });
+        }
+      });
+    }
+  }
+
+  return leaves;
+}
+
+export async function getCompletedArticles(): Promise<CompletedArticle[]> {
+  const { Redis } = await import("@upstash/redis");
+  const redis = Redis.fromEnv();
+  const raw = await redis.get<string>("logbook:completed");
+  if (!raw) return [];
+  try {
+    return typeof raw === "string"
+      ? JSON.parse(raw)
+      : (raw as CompletedArticle[]);
+  } catch {
+    return [];
+  }
+}
 
 function getArticles(subsection: Roadmap): Roadmap[] {
   return subsection.children ?? [];
@@ -26,13 +63,16 @@ function getAllSubsections(): Roadmap[] {
   return roadmap.flatMap((section) => section.children ?? []);
 }
 
-export const calculate_step_progress = (id: number): number[] => {
+export const calculate_step_progress = (
+  id: number,
+  completed: CompletedArticle[],
+): number[] => {
   const subsection = findSubsection(id);
   if (!subsection) return [0, 0, 0];
 
   const articles = getArticles(subsection);
   const total = articles.length;
-  const progress = complted_article.find((item) => item.id === id);
+  const progress = completed.find((item) => item.id === id);
 
   if (!progress) return [0, total, 0];
 
@@ -40,28 +80,27 @@ export const calculate_step_progress = (id: number): number[] => {
     return [total, total, 100];
   }
 
-  const [start, end] = progress.done.split("..").map(Number);
-  const completedCount = end - start + 1;
+  const completedCount = progress.done.length;
   return [completedCount, total, Math.min((completedCount / total) * 100, 100)];
 };
 
-export const calculate_total_progress = (): number[] => {
+export const calculate_total_progress = (
+  completed: CompletedArticle[],
+): number[] => {
   let totalTopics = 0;
   let completedTopics = 0;
 
   getAllSubsections().forEach((subsection) => {
     const articles = getArticles(subsection);
-    const stepTotal = articles.length;
-    totalTopics += stepTotal;
+    totalTopics += articles.length;
 
-    const progress = complted_article.find((item) => item.id === subsection.id);
+    const progress = completed.find((item) => item.id === subsection.id);
     if (!progress) return;
 
     if (progress.done === "all") {
-      completedTopics += stepTotal;
+      completedTopics += articles.length;
     } else {
-      const [start, end] = progress.done.split("..").map(Number);
-      completedTopics += end - start + 1;
+      completedTopics += progress.done.length;
     }
   });
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import {
   fetchFileCommitDates,
+  deriveAndStoreCompleted,
   upsertPage,
   markPageDeleted,
   type PageRecord,
@@ -120,6 +121,12 @@ export async function POST(req: NextRequest) {
   console.log(
     `Webhook: updated=[${updated}] deleted=[${deleted}] skipped=[${skipped}]`,
   );
+
+  // Re-derive completed articles from current page history + roadmap
+  if (updated.length > 0 || deleted.length > 0) {
+    await deriveAndStoreCompleted();
+  }
+
   return NextResponse.json({ ok: true, updated, deleted, skipped });
 }
 

@@ -47,7 +47,7 @@ export default function LearningPathsSection() {
             The Learning Paths
           </h2>
           <Link
-            href="/docs"
+            href="/journey"
             className={cn(
               buttonVariants({ variant: "primary", size: "md" }),
               "hidden md:flex h-8 text-sm",
@@ -111,7 +111,7 @@ export default function LearningPathsSection() {
 
           <div />
           <Link
-            href="/docs"
+            href="/journey"
             className={cn(
               buttonVariants({ variant: "primary", size: "md" }),
               "md:hidden h-8 -mt-4 text-sm",

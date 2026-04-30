@@ -4,19 +4,17 @@ import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { roadmap } from "@/data/roadmap";
 import { RoadmapCard } from "./roadmap-card";
-import { complted_article } from "@/lib/roadmap";
+import { CompletedArticle } from "@/lib/roadmap";
 
 type StatusFilter = "All" | "Done" | "In progress" | "Not started";
 
-const STATUS_FILTERS: StatusFilter[] = [
-  "All",
-  "Done",
-  "In progress",
-  "Not started",
-];
+const STATUS_FILTERS: StatusFilter[] = ["All", "Done", "In progress"];
 
-function getStepStatus(id: number): Exclude<StatusFilter, "All"> {
-  const entry = complted_article.find((a) => a.id === id);
+function getStepStatus(
+  id: number,
+  completed: CompletedArticle[],
+): Exclude<StatusFilter, "All"> {
+  const entry = completed.find((a) => a.id === id);
   if (!entry) return "Not started";
   if (entry.done === "all") return "Done";
   return "In progress";
@@ -24,9 +22,10 @@ function getStepStatus(id: number): Exclude<StatusFilter, "All"> {
 
 interface JourneyClientProps {
   progress: number;
+  completed: CompletedArticle[];
 }
 
-export function JourneyClient({ progress }: JourneyClientProps) {
+export function JourneyClient({ progress, completed }: JourneyClientProps) {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
 
   const flatSteps = useMemo(
@@ -49,9 +48,10 @@ export function JourneyClient({ progress }: JourneyClientProps) {
     () =>
       flatSteps.filter(
         (step) =>
-          statusFilter === "All" || getStepStatus(step.id!) === statusFilter,
+          statusFilter === "All" ||
+          getStepStatus(step.id!, completed) === statusFilter,
       ),
-    [statusFilter, flatSteps],
+    [statusFilter, flatSteps, completed],
   );
 
   return (
@@ -69,10 +69,20 @@ export function JourneyClient({ progress }: JourneyClientProps) {
               {filter}
             </Button>
           ))}
+          <Button
+            key={"Not started"}
+            variant={statusFilter === "Not started" ? "primary" : "secondary"}
+            size="md"
+            className="text-sm hidden md:flex"
+            onClick={() => setStatusFilter("Not started")}
+          >
+            Not started
+          </Button>
         </div>
 
         <Button
           variant="secondary"
+          size="md"
           className="ml-auto gap-2 pointer-events-none hover:bg-current"
         >
           <div className="w-20 h-1.5 flex rounded bg-white dark:bg-fd-background items-center overflow-hidden">
@@ -91,7 +101,7 @@ export function JourneyClient({ progress }: JourneyClientProps) {
         </p>
       )}
 
-      <div className="max-w-4xl mx-auto grid grid-cols-2 gap-4 items-start">
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
         {filtered.map(
           ({ id, url, sectionName, name, description, icon, children }) => (
             <RoadmapCard
@@ -103,6 +113,7 @@ export function JourneyClient({ progress }: JourneyClientProps) {
               icon={icon}
               items={children}
               sectionName={sectionName}
+              completed={completed}
             />
           ),
         )}

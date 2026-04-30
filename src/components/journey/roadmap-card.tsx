@@ -7,21 +7,17 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { Roadmap } from "@/data/roadmap";
-import { calculate_step_progress, complted_article } from "@/lib/roadmap";
+import { calculate_step_progress, CompletedArticle } from "@/lib/roadmap";
 
-function isTopicCompleted(id: number, topicIndex: number): boolean {
-  const step = complted_article.find((item) => item.id === id);
+function isTopicCompleted(
+  id: number,
+  topicIndex: number,
+  completed: CompletedArticle[],
+): boolean {
+  const step = completed.find((item) => item.id === id);
   if (!step) return false;
   if (step.done === "all") return true;
-
-  const parts = step.done.split("..");
-  if (parts.length !== 2) return false;
-
-  const start = Number(parts[0]);
-  const end = Number(parts[1]);
-  if (isNaN(start) || isNaN(end)) return false;
-
-  return topicIndex >= start && topicIndex <= end;
+  return step.done.includes(topicIndex);
 }
 
 function formatIndex(id: number): string {
@@ -70,6 +66,7 @@ function TopicItem({ name, url, completed }: TopicItemProps) {
 interface RoadmapCardProps extends Omit<Roadmap, "children"> {
   sectionName: string;
   items?: Roadmap[];
+  completed: CompletedArticle[];
 }
 
 export function RoadmapCard({
@@ -80,8 +77,9 @@ export function RoadmapCard({
   icon,
   items,
   sectionName,
+  completed,
 }: RoadmapCardProps) {
-  const [, , progress] = calculate_step_progress(id ?? 0);
+  const [, , progress] = calculate_step_progress(id ?? 0, completed);
   const [isOpen, setIsOpen] = useState(false);
 
   const IconComponent = icon && typeof icon !== "string" ? icon : null;
@@ -149,7 +147,7 @@ export function RoadmapCard({
                 key={url}
                 name={name}
                 url={url}
-                completed={isTopicCompleted(id ?? 0, idx)}
+                completed={isTopicCompleted(id ?? 0, idx, completed)}
               />
             ))}
           </div>
