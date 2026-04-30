@@ -67,8 +67,9 @@ function TopicItem({ name, url, completed }: TopicItemProps) {
   );
 }
 
-interface RoadmapCardProps extends Roadmap {
+interface RoadmapCardProps extends Omit<Roadmap, "children"> {
   sectionName: string;
+  items?: Roadmap[];
 }
 
 export function RoadmapCard({
@@ -77,7 +78,7 @@ export function RoadmapCard({
   name,
   description,
   icon,
-  children,
+  items,
   sectionName,
 }: RoadmapCardProps) {
   const [, , progress] = calculate_step_progress(id ?? 0);
@@ -143,7 +144,7 @@ export function RoadmapCard({
       >
         <div className="overflow-hidden">
           <div className="p-4 border-t flex flex-col gap-0 w-full">
-            {children?.map(({ name, url }, idx) => (
+            {items?.map(({ name, url }, idx) => (
               <TopicItem
                 key={url}
                 name={name}

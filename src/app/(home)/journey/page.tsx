@@ -15,9 +15,9 @@ export default function Page() {
         </h2>
 
         <p className="text-sm md:text-base text-fd-muted-foreground leading-relaxed">
-          Track and explore the full roadmap, see what's already covered, what's
-          actively being worked on, and what's coming. A clear vision of where
-          we've been and where we're going.{" "}
+          Track and explore the full roadmap, see what&apos;s already covered,
+          what&apos;s actively being worked on, and what&apos;s coming. A clear
+          vision of where we&apos;ve been and where we&apos;re going.{" "}
           <span className="bg-fd-secondary px-2 py-0.5 rounded">
             {completed_topics} of {total_topics} topics
           </span>{" "}

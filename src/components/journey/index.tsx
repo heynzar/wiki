@@ -101,7 +101,7 @@ export function JourneyClient({ progress }: JourneyClientProps) {
               name={name}
               description={description}
               icon={icon}
-              children={children}
+              items={children}
               sectionName={sectionName}
             />
           ),
