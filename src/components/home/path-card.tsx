@@ -44,7 +44,7 @@ export default function PathCard({
 
             <Icon
               strokeWidth={1.5}
-              className="size-20 text-white/90 absolute mr-4 z-20 "
+              className="size-20 drop-shadow-sm text-white/90 absolute mr-4 z-20 "
             />
           </div>
         ) : (

@@ -1,6 +1,7 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import CustomNavbar from "@/components/custom-nav-bar";
 import { Metadata } from "next";
+import Footer from "@/components/home/footer";
 
 export const metadata: Metadata = {
   title: {
@@ -17,6 +18,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
       }}
     >
       {children}
+      <Footer />
     </HomeLayout>
   );
 }

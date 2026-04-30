@@ -607,8 +607,7 @@ export const roadmap: Roadmap[] = [
         id: 10,
         url: "react",
         name: "React",
-        description:
-          "Build modern, dynamic and component-driven user interfaces.",
+        description: "Build modern and dynamic user interfaces.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
 
         children: [
@@ -688,8 +687,7 @@ export const roadmap: Roadmap[] = [
         id: 11,
         url: "react-alternatives",
         name: "React Alternatives: Vue & Svelte",
-        description:
-          "Explore modern frontend frameworks beyond React with Vue 3 and Svelte.",
+        description: "Explore modern frontend frameworks beyond React.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg",
 
         children: [
@@ -850,8 +848,7 @@ export const roadmap: Roadmap[] = [
         id: 14,
         url: "nextjs",
         name: "Next.js",
-        description:
-          "Build production-grade fullstack React apps with routing, SSR, server components, APIs, and deployment.",
+        description: "Build production-grade fullstack React apps.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
 
         children: [
@@ -930,8 +927,7 @@ export const roadmap: Roadmap[] = [
         id: 15,
         url: "remix",
         name: "Remix",
-        description:
-          "Build fast web apps with nested routing, progressive enhancement, loaders, and actions.",
+        description: "Build fast web apps using remix framework.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/remix/remix-original.svg",
 
         children: [
@@ -1056,8 +1052,7 @@ export const roadmap: Roadmap[] = [
         id: 17,
         url: "orms-query-builders",
         name: "ORMs & Query Builders",
-        description:
-          "Interact with databases using type-safe and productive tooling.",
+        description: "Interact with databases using type-safe.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg",
 
         children: [
@@ -1209,7 +1204,7 @@ export const roadmap: Roadmap[] = [
         name: "Authentication & Authorization",
         description:
           "Identity, security and access control for real applications.",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/auth0/auth0-original.svg",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oauth/oauth-original.svg",
 
         children: [
           {
@@ -1349,8 +1344,7 @@ export const roadmap: Roadmap[] = [
         id: 21,
         url: "unit-integration-testing",
         name: "Unit & Integration Testing",
-        description:
-          "Build confidence with fast unit tests and realistic integration tests.",
+        description: "Build confidence with fast unit tests.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitest/vitest-original.svg",
         children: [
           {
@@ -1412,8 +1406,7 @@ export const roadmap: Roadmap[] = [
         id: 22,
         url: "e2e-ci-testing",
         name: "E2E & CI Testing",
-        description:
-          "Automate browser flows and continuous integration pipelines for reliable releases.",
+        description: "Automate browser flows and continuous integration.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg",
         children: [
           {
@@ -1627,9 +1620,8 @@ export const roadmap: Roadmap[] = [
         id: 26,
         url: "cloud-infrastructure",
         name: "Cloud & Infrastructure",
-        description:
-          "Deploy and scale applications on the world's cloud platforms.",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
+        description: "Deploy and scale applications.",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
 
         children: [
           {
@@ -1706,9 +1698,8 @@ export const roadmap: Roadmap[] = [
         id: 27,
         url: "security-networking-deep",
         name: "Security & Networking Deep Dive",
-        description:
-          "Understand how systems are attacked and how to defend them.",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg",
+        description: "How systems are attacked and how to defend them.",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redhat/redhat-original.svg",
         children: [
           {
             name: "Networking Fundamentals: OSI Model, IP, TCP, UDP",
@@ -1800,9 +1791,8 @@ export const roadmap: Roadmap[] = [
         id: 28,
         url: "react-native",
         name: "Mobile Development with React Native",
-        description:
-          "Build cross-platform mobile apps for iOS and Android using JavaScript and React.",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+        description: "Build cross-platform mobile apps.",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg",
 
         children: [
           {
@@ -1868,8 +1858,7 @@ export const roadmap: Roadmap[] = [
         id: 29,
         url: "desktop",
         name: "Desktop App Development",
-        description:
-          "Build cross-platform desktop applications with web technologies.",
+        description: "Build cross-platform desktop applications.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/electron/electron-original.svg",
 
         children: [
@@ -2047,7 +2036,7 @@ export const roadmap: Roadmap[] = [
         name: "System Design",
         description:
           "Design scalable, fault-tolerant, production-grade systems.",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ros/ros-original.svg",
 
         children: [
           {
@@ -2194,9 +2183,8 @@ export const roadmap: Roadmap[] = [
         id: 34,
         url: "ai-llm-engineering",
         name: "AI & LLM Engineering",
-        description:
-          "Build intelligent, AI-powered features into your applications",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/openai/openai-original.svg",
+        description: "Build intelligent, AI-powered features",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/markdown/markdown-original.svg",
         children: [
           {
             name: "How Large Language Models Work (Without the Math)",
@@ -2329,7 +2317,7 @@ export const roadmap: Roadmap[] = [
         url: "career-mastery",
         name: "Career & Engineering Mastery",
         description: "Operate at a senior level, get hired and keep growing",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg",
         children: [
           {
             name: "Clean Code in Practice: Naming, Functions, Comments",

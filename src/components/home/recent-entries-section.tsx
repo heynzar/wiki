@@ -2,17 +2,17 @@ import Link from "next/link";
 import React from "react";
 import ArchiveCard from "./archive-card";
 import { CleanTitle, formatDate, slugsToCategory } from "@/lib/format-page";
-import { getRecentPages } from "@/lib/get-recent-pages";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   ArrowRightLinear,
   ArrowRightUpLinear,
   HashtagSquareLineDuotone,
 } from "@solar-icons/react-perf";
+import { getPageHistory } from "@/lib/logbook";
 
 export default async function RecentEntriesSection() {
-  const recentPages = await getRecentPages(4);
+  const recentPages = await getPageHistory(4);
 
   return (
     <section className="space-y-10 mt-12 md:mt-24 py-6">
@@ -22,13 +22,13 @@ export default async function RecentEntriesSection() {
           Recent Entries
         </h2>
         <Link
-          href="/journey"
+          href="/logbook"
           className={cn(
             buttonVariants({ variant: "primary", size: "md" }),
             "hidden md:flex h-8 text-sm",
           )}
         >
-          Full Journey
+          View All Entries
           <ArrowRightUpLinear className="size-4" />
         </Link>
       </header>
@@ -38,20 +38,20 @@ export default async function RecentEntriesSection() {
           <ArchiveCard
             key={page.url}
             link={page.url}
-            date={formatDate(page.lastModified!)}
+            date={formatDate(page.createdAt)}
             category={slugsToCategory(page.slugs)}
             title={CleanTitle(page.title)}
           />
         ))}
 
         <Link
-          href="/journey"
+          href="/logbook"
           className={cn(
             buttonVariants({ variant: "primary", size: "md" }),
             "md:hidden h-8 text-sm m-4",
           )}
         >
-          Full Journey
+          View All Entries
           <ArrowRightLinear className="size-4" />
         </Link>
       </div>

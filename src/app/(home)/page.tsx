@@ -1,4 +1,3 @@
-import Footer from "@/components/home/footer";
 import Hero from "@/components/home/hero";
 import LearningPathsSection from "@/components/home/learning-paths-section";
 import NewsletterSection from "@/components/home/newsletter-section";
@@ -13,7 +12,6 @@ export default function HomePage() {
       <RecentEntriesSection />
       <PurposeSection />
       <NewsletterSection />
-      <Footer />
     </div>
   );
 }

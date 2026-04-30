@@ -117,7 +117,7 @@ export default function CustomNavbar() {
       {/* Mobile Drawer */}
       <div
         className={cn(
-          "md:hidden fixed inset-x-0 rounded-b-lg top-14 z-30 bg-white dark:bg-fd-background border-b  transition-all duration-300 ease-in-out overflow-hidden",
+          "md:hidden fixed inset-x-0 rounded-b-lg top-14 z-50 bg-white dark:bg-fd-background border-b  transition-all duration-300 ease-in-out overflow-hidden",
           menuOpen
             ? "translate-y-0 shadow"
             : "-translate-y-full pointer-events-none",
