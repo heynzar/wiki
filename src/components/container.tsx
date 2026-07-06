@@ -9,7 +9,7 @@ export default function Container({
   children,
   rows = 1,
   cols = 1,
-  gap = 4,
+  gap = 2,
 }: ContainerProps) {
   return (
     <div

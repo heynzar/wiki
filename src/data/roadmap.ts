@@ -36,10 +36,10 @@ export const roadmap: Roadmap[] = [
     children: [
       {
         id: 1,
-        name: "How Computing Works",
+        name: "How Systems Work",
         description: "Understand the machine before you command it",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg",
-        url: "how-computing-works",
+        url: "how-systems-work",
         children: [
           {
             name: "How a Computer Works: CPU, RAM, Storage & I/O",
@@ -66,7 +66,7 @@ export const roadmap: Roadmap[] = [
             url: "how-browsers-work-parsing-rendering-dom",
           },
           {
-            name: "How Web Applications Work: Client ↔ Server Model",
+            name: "How Web Applications Work: Client <-> Server Model",
             url: "how-web-applications-work-client-server-model",
           },
           {
@@ -78,7 +78,7 @@ export const roadmap: Roadmap[] = [
             url: "binary-hexadecimal-and-how-computers-store-data",
           },
           {
-            name: "The Abstraction Ladder: Hardware → OS → Runtime → App",
+            name: "The Abstraction Ladder: Hardware -> OS -> Runtime  App",
             url: "the-abstraction-ladder-hardware-os-runtime-app",
           },
         ],
@@ -317,7 +317,7 @@ export const roadmap: Roadmap[] = [
             url: "event-loop-call-stack-microtasks-macrotasks",
           },
           {
-            name: "Asynchronous JS: Callbacks → Promises → Async/Await",
+            name: "Asynchronous JS: Callbacks -> Promises -> Async/Await",
             url: "async-js-callbacks-promises-async-await",
           },
           {

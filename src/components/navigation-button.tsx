@@ -25,7 +25,7 @@ export function NavigationButton({
   disabled = false,
   href,
 }: NavigationButtonProps) {
-  const heightClass = isFullHeight ? "h-10" : "";
+  const heightClass = isFullHeight ? "h-10" : "h-12";
   const isImageUrl = typeof icon === "string";
   const IconComponent = !isImageUrl ? icon : null;
 
