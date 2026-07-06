@@ -6,60 +6,375 @@ icon: Compass
 
 # Explore
 
-Welcome to the **Explore** page, your map for the entire Wiki.
+Welcome to the map of this wiki.
 
-Every topic, every concept, everything is organized here for quick browsing and inspiration.
-
----
-
-<ContentNavigation isFullHeight category="categories" />
+Every chapter, part, and article is organized into a single learning path. Start from the beginning to build a strong foundation, or jump directly to the topic you want to explore.
 
 ---
 
-## Programming Languages
+## All Chapters
 
-A collection of all languages covered in this Wiki, deep dives, summaries, diagrams, and everything you need to master them:
+The chapters are designed to be read in order, with each one building on the previous. As you move forward, you'll gradually go from understanding how computers work to designing and shipping production-scale software.
 
-<ContentNavigation isFullHeight category="programming_languages" />
-
----
-
-## Programming Languages Concepts
-
-The core ideas behind how programming languages work, from paradigms to types, memory, execution models, and more:
-
-<ContentNavigation
-  columnsCount={2}
-  isFullHeight
-  category="programming_languages_concepts"
-/>
-
----
-
-## Frontend Technologies
-
-The tools, frameworks, and technologies that form the modern frontend ecosystem:
-
-<ContentNavigation isFullHeight category="frontend_technologies" />
+<Container cols={2}>
+  <NavigationButton href="/docs/foundation" title="The Foundation" />
+  <NavigationButton href="/docs/web-basics" title="Web Basics" />
+  <NavigationButton href="/docs/programming" title="Programming" />
+  <NavigationButton href="/docs/frontend" title="Frontend" />
+  <NavigationButton href="/docs/fullstack" title="Fullstack" />
+  <NavigationButton href="/docs/databases" title="Databases" />
+  <NavigationButton href="/docs/backend" title="Backend" />
+  <NavigationButton href="/docs/testing" title="Testing" />
+  <NavigationButton href="/docs/devops" title="DevOps" />
+  <NavigationButton href="/docs/security" title="Security" />
+  <NavigationButton href="/docs/ecosystem" title="Ecosystem" />
+  <NavigationButton href="/docs/system-design" title="System Design" />
+  <NavigationButton href="/docs/ai" title="AI Engineering" />
+  <NavigationButton href="/docs/career" title="Career" />
+</Container>
 
 ---
 
-## Frontend Core Concepts
+## 01. The Foundation
 
-The deeper principles behind the frontend world, rendering, performance, state, architecture, patterns, and more:
+<div className="img-dev">
+  ![The Foundation Chapter Cover](/visuals/wiki/foundation/cover.png)
+</div>
 
-<ContentNavigation
-  columnsCount={2}
-  isFullHeight
-  category="frontend_core_concepts"
-/>
+Everything starts here. Before writing applications, you'll understand the computer beneath them and learn how engineers approach problems with clear, structured thinking.
+
+**Topics:** Systems • Computer Architecture • Networking • Browser • Engineering Mindset
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+    href="/docs/foundation/how-systems-work"
+    title="How Systems Work"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
+    href="/docs/foundation/the-engineer-mindset"
+    title="The Engineer's Mindset"
+  />
+</Container>
 
 ---
 
-## Backend Technologies
+## 02. Web Basics
 
-Server-side tools, ecosystems, frameworks, and everything powering backend development:
+Learn the language of the web. HTML provides structure, CSS creates presentation, and together they form the foundation of every interface you'll build.
 
-<ContentNavigation isFullHeight category="backend_technologies" />
+**Topics:** HTML • CSS
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+    href="/docs/web-basics/html"
+    title="HTML"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
+    href="/docs/web-basics/css"
+    title="CSS"
+  />
+</Container>
+
+---
+
+## 03. Programming
+
+Once you understand the web, it's time to make it interactive. Learn the languages, tools, and problem-solving skills that every software engineer relies on.
+
+**Topics:** JavaScript • TypeScript • Data Structures • Git • Tooling
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+    href="/docs/programming/javascript"
+    title="JavaScript"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+    href="/docs/programming/data-structures-algorithms"
+    title="Data Structures & Algorithms"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
+    href="/docs/programming/typescript"
+    title="TypeScript"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+    href="/docs/programming/version-control-git"
+    title="Version Control & Git"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pnpm/pnpm-original.svg"
+    href="/docs/programming/tooling-developer-environment"
+    title="Tooling & Developer Environment"
+  />
+</Container>
+
+---
+
+## 04. Frontend
+
+Build interfaces that people actually use. Learn modern frameworks, organize growing codebases, and create applications that remain maintainable over time.
+
+**Topics:** React • Vue • Svelte • State Management • Architecture
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+    href="/docs/frontend/react"
+    title="React"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg"
+    href="/docs/frontend/react-alternatives"
+    title="React Alternatives: Vue & Svelte"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg"
+    href="/docs/frontend/state-management"
+    title="State Management"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/storybook/storybook-original.svg"
+    href="/docs/frontend/advanced-frontend-architecture"
+    title="Advanced Frontend Architecture"
+  />
+</Container>
+
+---
+
+## 05. Fullstack
+
+Expand beyond the browser and build complete applications. Learn modern fullstack frameworks that connect the frontend and backend into a seamless experience.
+
+**Topics:** Next.js • Remix • Server Rendering • Data Fetching
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"
+    href="/docs/fullstack/nextjs"
+    title="Next.js"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/remix/remix-original.svg"
+    href="/docs/fullstack/remix"
+    title="Remix"
+  />
+</Container>
+
+---
+
+## 06. Databases
+
+Applications need data that lasts. Learn how information is stored, organized, queried, and accessed efficiently in modern systems.
+
+**Topics:** SQL • NoSQL • Redis • ORMs
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
+    href="/docs/databases/databases"
+    title="Databases"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg"
+    href="/docs/databases/orms-query-builders"
+    title="ORMs & Query Builders"
+  />
+</Container>
+
+---
+
+## 07. Backend
+
+Power your applications with reliable servers, secure authentication, and well-designed APIs that allow systems to communicate effectively.
+
+**Topics:** Node.js • APIs • Authentication • REST • WebSockets
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
+    href="/docs/backend/backend-fundamentals"
+    title="Backend Fundamentals"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oauth/oauth-original.svg"
+    href="/docs/backend/auth"
+    title="Authentication & Authorization"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg"
+    href="/docs/backend/apis-protocols"
+    title="APIs & Communication Protocols"
+  />
+</Container>
+
+---
+
+## 08. Testing
+
+Learn how to verify your software before your users do. Build confidence with automated testing and continuous integration.
+
+**Topics:** Unit Testing • Integration Testing • E2E • CI
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitest/vitest-original.svg"
+    href="/docs/testing/unit-integration-testing"
+    title="Unit & Integration Testing"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg"
+    href="/docs/testing/e2e-ci-testing"
+    title="E2E & CI Testing"
+  />
+</Container>
+
+---
+
+## 09. DevOps
+
+Move from development to production. Learn the tools and workflows that keep applications running reliably at scale.
+
+**Topics:** Linux • Docker • CI/CD • Cloud
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+    href="/docs/devops/linux-cli"
+    title="Linux & Command Line"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+    href="/docs/devops/docker"
+    title="Docker & Containerization"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg"
+    href="/docs/devops/cicd"
+    title="CI/CD & Automation"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+    href="/docs/devops/cloud-infrastructure"
+    title="Cloud & Infrastructure"
+  />
+</Container>
+
+---
+
+## 10. Security
+
+Understand how software is attacked so you can build systems that stay secure. Learn networking, common vulnerabilities, and practical defenses.
+
+**Topics:** Networking • Security • XSS • SQL Injection
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redhat/redhat-original.svg"
+    href="/docs/security/security-networking-deep"
+    title="Security & Networking Deep Dive"
+  />
+</Container>
+
+---
+
+## 11. Ecosystem
+
+Take your skills beyond the browser. Use familiar technologies to build mobile and desktop applications for different platforms.
+
+**Topics:** React Native • Electron • Tauri
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg"
+    href="/docs/ecosystem/react-native"
+    title="Mobile Development with React Native"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/electron/electron-original.svg"
+    href="/docs/ecosystem/desktop"
+    title="Desktop App Development"
+  />
+</Container>
+
+---
+
+## 12. System Design
+
+Learn how software grows from one application into systems serving millions of users. Focus on architecture, scalability, performance, and observability.
+
+**Topics:** Performance • Monitoring • Scalability • Architecture
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/chrome/chrome-original.svg"
+    href="/docs/system-design/performance-optimization"
+    title="Performance & Optimization"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg"
+    href="/docs/system-design/monitoring-observability"
+    title="Monitoring & Observability"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ros/ros-original.svg"
+    href="/docs/system-design/system-design"
+    title="System Design"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/codepen/codepen-original.svg"
+    href="/docs/system-design/software-architecture"
+    title="Software Architecture"
+  />
+</Container>
+
+---
+
+## 13. AI Engineering
+
+Learn how modern AI systems work and how to integrate them into real products using reliable engineering practices.
+
+**Topics:** LLMs • RAG • Agents • AI Products
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/markdown/markdown-original.svg"
+    href="/docs/ai/ai-llm-engineering"
+    title="AI & LLM Engineering"
+  />
+</Container>
+
+---
+
+## 14. Career
+
+Technical skills are only part of the journey. Learn how to contribute to open source, succeed in interviews, and continue growing as an engineer.
+
+**Topics:** Open Source • Interviews • Career Growth
+
+<Container cols={2}>
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
+    href="/docs/career/open-source"
+    title="Open Source & Community"
+  />
+  <NavigationButton
+    icon="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg"
+    href="/docs/career/career-mastery"
+    title="Career & Engineering Mastery"
+  />
+</Container>
+
+---
+
+## Ready to Explore?
+
+Whether you're following the journey from the beginning or jumping into a specific topic, this page is your map. Come back whenever you want to see where you are, where you're going, and what comes next.
 
 ---
