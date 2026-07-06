@@ -1,0 +1,119 @@
+---
+title: How Computing Works
+description: Understand the machine before you command it
+icon: Folder
+---
+
+---
+
+# Part 1: How Computing Works
+
+<div className="img-dev">
+  ![How Computing Works
+  Cover](/visuals/wiki/foundation/how-computing-works/cover.png)
+</div>
+
+Every app you'll ever build feels like a small lie. You write one line of code, and it feels like you're just telling the computer what to do.
+
+But under that line, a lot is happening. A CPU is pulling instructions one at a time. Memory is holding data that disappears the second the power goes out. A storage device is slowly writing bits to a disk so they survive after the power is gone.
+
+You don't need to know any of this to write your first "Hello World." But you need it for two reasons.
+
+First, one day something will break in a way that makes no sense, or your app will be slow for no clear reason, or someone will ask why a page takes half a second to load. You need this ground under you for that day.
+
+Second, and just as important: it's genuinely cool to know how this stuff actually works. You use a computer every single day. Understanding what's really happening inside it, and inside the internet, is one of the most satisfying "aha" moments you'll get as an engineer.
+
+That's what this part is for.
+
+---
+
+## What Actually Happens Under the Hood
+
+Before you can call yourself an engineer, you need a real mental model of the machine you're commanding. Not a vague one. A real one.
+
+What is a CPU actually doing when your code "runs"? Why does a computer need both RAM and storage? What is a file, really, once you strip away the folder icon? When you type a URL and hit Enter, what actually happens between your keyboard and the pixels on your screen?
+
+Most people who write code every day have never answered these questions. They copy, they paste, they ship. It works, until it doesn't. This part exists so that when it doesn't, you're not lost.
+
+---
+
+## What You'll Learn Here
+
+<Container cols={2}>
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-a-computer-works-cpu-ram-storage-io"
+    title="How a Computer Works"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-operating-systems-work-processes-threads-memory"
+    title="How Operating Systems Work"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-file-systems-work"
+    title="How File Systems Work"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-networking-works-ip-dns-tcp-udp-http"
+    title="How Networking Works"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-the-internet-works-routers-packets-protocols"
+    title="How the Internet Works"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-browsers-work-parsing-rendering-dom"
+    title="How Browsers Work"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-web-applications-work-client-server-model"
+    title="How Web Applications Work"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/how-servers-work-what-happens-when-you-hit-a-url"
+    title="How Servers Work"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/binary-hexadecimal-and-how-computers-store-data"
+    title="How Computers Store Data (Binary)"
+  />
+  <NavigationButton
+    file
+    href="/docs/foundation/how-computing-works/the-abstraction-ladder-hardware-os-runtime-app"
+    title="Hardware -> OS -> Runtime -> App"
+  />
+</Container>
+
+---
+
+We'll move from the inside out. First, the physical machine: the CPU, RAM, storage, and I/O working together every time you run a single line of code.
+
+Then the operating system sitting on top of that hardware. It juggles processes, threads, and memory so a dozen apps can each act like they own the whole machine.
+
+From there we zoom into the file system, the thing quietly deciding what a "file" even means to your computer. Then we zoom way out into networking: how machines find each other, how the internet moves your data around the planet in tiny packets, and how your browser turns all of that into a page you can read and click on.
+
+We'll follow a single request all the way to a server and back. By the end, you'll understand binary and hex well enough to know why computers "think" the way they do. Then we'll tie it all together with the abstraction ladder: the idea that every layer you use, from hardware to your app, is just someone else's complexity hidden behind a simpler interface.
+
+---
+
+## Why This Part Matters
+
+You'll never manually manage memory addresses or hand-craft network packets in your day job. But every framework, every language, every tool you use is built on top of these ideas. That shows the moment something goes wrong.
+
+A memory leak makes sense once you understand RAM. A CORS error makes sense once you understand the client-server model. A "connection refused" makes sense once you understand ports and networking.
+
+Without this part, those are just cryptic messages you Google and copy a fix for. With it, they're puzzles you can actually solve.
+
+This is the most exciting part! You are going to learn how the computer you are using right now actually works. After this, you will look at technology in a whole new way.
+
+Let's get started.
+
+---
