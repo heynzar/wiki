@@ -1,0 +1,73 @@
+---
+title: How File Systems Work
+description: What a "file" actually is once you strip away the folder icon, and how your computer keeps track of every single one.
+icon: FileText
+---
+
+# How File Systems Work
+
+<div className="img-dev">
+  ![How File Systems Work
+  Cover](/visuals/wiki/foundation/how-systems-work/how-file-systems-work.png)
+</div>
+
+You've been using files your whole life. Photos, documents, songs, code. You drag them, rename them, drop them into folders without a second thought.
+
+But what actually is a file? Not the icon. Not the little thumbnail. What is it, really, once you strip all that away?
+
+That's what a **file system** answers. It's the invisible worker running the filing cabinet we talked about back in the [**How Computers Work**](https://wiki.nzar.dev/docs/foundation/how-systems-work/how-a-computer-works-cpu-ram-storage-io) article. Let's meet it properly.
+
+## A File Is Just Bytes With a Story
+
+Underneath everything, your storage device is just a massive stretch of empty space, broken up into tiny slots that can each hold a 1 or a 0. There's no such thing as a "photo" or a "document" down there. There's only bytes, sitting next to other bytes.
+
+A file system is the layer that gives those raw bytes meaning. It decides where a file's data starts and ends, what to call it, who's allowed to open it, and how to find it again later. Without a file system, your storage device would just be a pile of bits with no way to tell where one file stops and the next begins.
+
+In short: a file is really just a name, some metadata, and a pointer to where its actual bytes live on the disk. Everything else, the folder icon, the thumbnail preview, is just your operating system dressing that up to be human-friendly.
+
+## Files and Folders: A Tree, Not a Pile
+
+Your files aren't stored in a disorganized mess. They're organized into a **tree structure**: folders inside folders, all branching out from one root.
+
+On Windows, that root usually looks like `C:\`. On macOS and Linux, it's simply `/`. Every file on your computer can be described as a path down that tree, like `/Users/Nzar/Documents/resume.pdf`, a trail of folders leading to one specific file.
+
+This tree isn't just for humans to browse. It's how the file system actually organizes its data. Each folder is really just a special kind of file that stores a list of the other files and folders inside it, pointers all the way down.
+
+## Metadata: The Sticky Note on Every File
+
+Every file carries more information than just its raw content. This extra information is called **metadata**, and it's how your computer answers questions like "when was this created?" or "who's allowed to edit this?" without ever opening the file itself.
+
+Common metadata includes:
+
+- **Name and extension**, like `resume.pdf`, telling both you and your apps what kind of file this is.
+- **Size**, how many bytes the file actually takes up.
+- **Timestamps**, when it was created, last modified, and last opened.
+- **Permissions**, who can read, write, or run this file, especially important on multi-user systems like Linux and macOS.
+
+This is also why renaming a file or changing its extension doesn't change what's inside it. You're only editing the sticky note. The actual bytes underneath don't move at all.
+
+## How Storage Actually Tracks Where Files Live
+
+Here's the part most people never think about: a file usually isn't stored in one single, neat, unbroken chunk. As you create, delete, and resize files over time, storage gets messy, small gaps open up between files, and a large file might get split into several pieces just to fit into the free space available.
+
+The file system keeps a master index, sometimes called a **file allocation table** or, on modern systems, something more advanced like an **inode table**, that tracks exactly which pieces belong to which file, and in what order to reassemble them. When you open a file, the file system isn't grabbing one clean block of data, it's stitching together a bunch of scattered puzzle pieces, instantly, without you ever noticing.
+
+This scattering is also why deleting a file doesn't always erase it right away. Most of the time, deleting a file just removes its entry from that master index and marks the space as "free to reuse." The actual bytes are often still physically sitting on the disk until something else overwrites them, which is exactly how file recovery tools manage to bring "deleted" files back.
+
+## Different Systems, Different File Systems
+
+Not every operating system uses the same file system under the hood:
+
+- **NTFS**, used by Windows, built for permissions, security, and large drives.
+- **APFS**, used by modern macOS, optimized for SSDs and features like fast file duplication.
+- **ext4**, common on Linux, known for being fast, stable, and battle-tested on servers.
+
+They all solve the same core problem, tracking names, metadata, and where bytes live, just with different rules and optimizations under the hood. This is also why a drive formatted for one operating system sometimes can't be read directly by another, they're literally speaking a different filing language.
+
+## Why This Matters
+
+You'll rarely think about file systems directly while coding, but you'll bump into their effects constantly. Why does deleting a huge file sometimes finish instantly, while copying it takes forever? Why can two files have the exact same name in different folders, but never in the same one? Why does a corrupted file sometimes mean the data underneath is actually fine, just the index pointing to it got scrambled?
+
+Once you understand that a file is really just bytes, a name, and a pointer, held together by an index the file system maintains, all of this stops feeling random. You're looking straight through the folder icon, at the actual machinery underneath.
+
+---
