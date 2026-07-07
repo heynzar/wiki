@@ -1,0 +1,104 @@
+---
+title: How OS Works
+description: The invisible manager juggling every app on your computer, and how it keeps them all from crashing into each other.
+icon: FileText
+---
+
+---
+
+# How Operating Systems Work: Processes, Threads & Memory
+
+<div className="img-dev">
+  ![How Operating Systems Work: Processes, Threads & Memory
+  Cover](/visuals/wiki/foundation/how-systems-work/how-operating-systems-work-processes-threads-memory.png)
+</div>
+
+In the last article, we talked about the CPU, RAM, storage, and I/O, the four raw parts that make up a computer. But raw parts don't organize themselves. Something has to decide which app gets to use the CPU right now, where each app's data lives in RAM, and what happens when you click something.
+
+That something is the **operating system**: Windows, macOS, Linux, Android, iOS. It's the manager running the whole show, and most of the time, you never even think about it.
+
+Let's open it up and see what it's actually doing.
+
+## What an Operating System Actually Does
+
+Imagine a CPU as a single chef in a kitchen, and every open app as a customer who ordered food. Without a manager, customers would just barge into the kitchen and grab the chef whenever they felt like it. Chaos.
+
+The operating system is that manager. It decides whose order the chef works on, for how long, and in what order, so that from the outside, it looks like every customer is being served at once, even though the chef can really only cook one thing at a time.
+
+It does this through two key ideas: **processes** and **threads**.
+
+## Processes: Each App Gets Its Own Box
+
+A **process** is a running instance of a program. When you open your browser, the operating system creates a process for it. Open a code editor, and that's another process. Each process gets its own private slice of RAM, its own space to work in, completely separate from every other process.
+
+This separation is what keeps your computer stable. If your browser crashes, your code editor doesn't care, because it was never sharing memory with the browser in the first place. The operating system built a wall between them from the start.
+
+You can actually see this in action. Open your Task Manager (Windows) or Activity Monitor (macOS), and you'll see a list of processes, each one an app or a system service, each one getting its own chunk of memory and CPU time.
+
+## Threads: Splitting the Work Inside a Process
+
+A process on its own can only do one thing at a time. But most apps need to do several things at once. A code editor needs to let you type, spell-check your code, and auto-save, all without freezing up.
+
+This is where **threads** come in. A thread is a smaller unit of work inside a process. A single process can spin up multiple threads, and each one can run a different task. Since modern CPUs have multiple cores, different threads can genuinely run at the exact same time, on different cores.
+
+Here's the key difference: threads inside the same process **share** that process's memory. That makes them fast to create and easy to coordinate, but it also means one thread can accidentally mess up data another thread was using, which is exactly why multi-threaded programming has a reputation for being tricky to get right.
+
+## Memory Management: Giving Every Process Its Own Illusion
+
+Remember RAM from the previous article, the desk the CPU works on? Here's the catch: dozens of processes are running at once, and none of them can be allowed to see or touch each other's memory. So how does the operating system make that work with one shared desk?
+
+It uses a trick called **virtual memory**. Every process is given the illusion that it has its own private, huge chunk of memory, all to itself, starting at address zero. Behind the scenes, the operating system is quietly translating those fake addresses into real spots in physical RAM, keeping every process's data separated and safe.
+
+This trick also lets the operating system do something clever: if RAM fills up, it can temporarily move rarely-used data out to storage, in a space called a **swap file** or **page file**, freeing up room for whatever you're actively using. It's slower than real RAM, which is why a computer can feel sluggish when you have too many apps open at once, it's quietly shuffling things between the desk and the filing cabinet just to keep up.
+
+## Scheduling: Deciding Who Goes Next
+
+With potentially hundreds of processes and thousands of threads all wanting the CPU's attention, something has to decide who actually gets it, and for how long. That's the job of the **scheduler**, a core part of the operating system.
+
+The scheduler gives each thread a tiny slice of CPU time, often just milliseconds, then switches to the next one. It happens so fast that it creates the illusion of everything running simultaneously, even on a CPU with far fewer cores than you have open apps. This constant switching is called a **context switch**, and it's happening thousands of times per second on your computer right now, even while you sit still and read this sentence.
+
+## Windows, macOS, Linux and Android: Same Job, Different Style
+
+Every operating system we've talked about, whether it's Windows, macOS, Linux, or Android, is solving the exact same problem: managing processes, threads, and memory so your apps don't collide.
+
+The differences are mostly in who controls them and how open they are:
+
+- **Windows** is built by Microsoft and dominates traditional desktop computers, especially for gaming and business software, but it's closed-source, meaning you can't see or modify the code behind it.
+- **macOS**, built by Apple, powers Macs and is also closed-source, but it's tightly designed to work with Apple's own hardware, which is part of why Macs tend to feel so smooth.
+- **Linux** is different in a big way: it's open-source, meaning anyone can read, modify, and distribute it for free, which is exactly why it quietly runs most of the world's servers, cloud infrastructure, and even Android phones under the hood.
+- **Android**, built by Google, is actually based on the Linux kernel, just adapted and rebuilt for touchscreens and mobile hardware.
+
+So next time someone asks which OS is "best," the honest answer is that they're all managing the same processes, threads, and memory, just with different priorities, different owners, and different trade-offs.
+
+## Why This Matters
+
+You'll probably never write your own scheduler or manage virtual memory by hand. Frameworks and languages handle almost all of this for you.
+
+But this is exactly why one browser tab crashing doesn't take down your whole computer, why opening too many apps makes everything feel slow, and why some bugs only show up when two threads touch the same piece of data at the same time. Once you understand processes, threads, and memory, "the app is frozen" or "why is my computer slow" stop being mysteries. They become questions you can actually answer.
+
+## Go Deeper
+
+If you want to actually get your hands dirty with these ideas instead of just reading about them, here are two doors worth walking through:
+
+<Cardds>
+  <Cardd
+    href="https://pages.cs.wisc.edu/~remzi/OSTEP/"
+    image="https://m.media-amazon.com/images/I/61UIpzqnkRL._SL1499_.jpg"
+    title="Operating Systems: Three Easy Pieces. by Remzi and Andrea Arpaci-Dusseau"
+  >
+     Free to read online, and widely considered one of the clearest operating systems books ever written.
+
+  </Cardd>
+  <Cardd
+    href="https://linux.harshkapadia.me/files/books/tanenbaum-modern-operating-systems-4th-edition.pdf"
+    image="https://m.media-amazon.com/images/I/71nBWJXx5cL._SL1360_.jpg"
+    title="Modern Operating Systems. by Andrew S. Tanenbaum"
+  >
+   A classic, written by someone who's built operating systems himself. It goes deeper into how real systems are actually built.
+
+  </Cardd>
+</Cardds>
+
+Neither book expects you to already know how any of this works. They just build on exactly what you learned here.
+
+---

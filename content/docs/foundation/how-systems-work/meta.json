@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "how-a-computer-works-cpu-ram-storage-io",
+    "how-operating-systems-work-processes-threads-memory",
+    "how-file-systems-work",
+    "how-networking-works-ip-dns-tcp-udp-http",
+    "how-the-internet-works-routers-packets-protocols",
+    "how-browsers-work-parsing-rendering-dom",
+    "how-web-applications-work-client-server-model",
+    "how-servers-work-what-happens-when-you-hit-a-url",
+    "binary-hexadecimal-and-how-computers-store-data",
+    "the-abstraction-ladder-hardware-os-runtime-app"
+  ]
+}
