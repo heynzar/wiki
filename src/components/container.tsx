@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 interface ContainerProps {
   children: React.ReactNode;
   rows?: number;
@@ -13,9 +15,11 @@ export default function Container({
 }: ContainerProps) {
   return (
     <div
-      className="w-full grid items-center"
+      className={cn(
+        "grid w-full items-center grid-cols-1",
+        `sm:grid-cols-${cols}`,
+      )}
       style={{
-        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
         gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
         gap: `${gap * 0.25}rem`,
       }}
