@@ -1,0 +1,91 @@
+---
+title: How the Internet Works
+description: The physical journey your data takes, from your WiFi router to a server on the other side of the world, and back.
+icon: FileText
+---
+
+---
+
+# How the Internet Works: Routers, Packets & Protocols
+
+<div className="img-dev">
+  ![How the Internet Works: Routers, Packets & Protocols
+  Cover](/visuals/wiki/foundation/how-systems-work/how-the-internet-works-routers-packets-protocols.png)
+</div>
+
+In the last article, we glossed over one thing on purpose: how your request actually gets from your device to a server somewhere else in the world, physically, through wires, routers, and cables you'll never see.
+
+That's what this article is for. We already know IP gives every device an address, and TCP breaks data into pieces and makes sure they arrive. Now let's follow that data on its actual physical journey, hop by hop, all the way there and back.
+
+## Packets: Data Doesn't Travel in One Piece
+
+When you send anything over the internet, a webpage request, a photo, a message, it doesn't travel as one single, giant chunk. It gets broken up into small pieces called **packets**, and each one takes the journey separately.
+
+Think of it like mailing a long letter by tearing it into a dozen postcards, numbering each one, and mailing them separately, sometimes even through different post offices. Each postcard, or packet, carries a small piece of the original message, along with some extra information: where it came from, where it's going, and where it fits in the overall sequence.
+
+Breaking data into packets like this has a real advantage. If one packet gets lost or delayed, only that small piece needs to be resent, not the entire file. It also means different packets from the same file can take completely different physical paths to get to the same destination, and still get reassembled correctly once they all arrive, exactly the reliability trick we saw TCP handling in the last article.
+
+## Routers: The Traffic Directors
+
+A **router** is a device whose entire job is to look at a packet, check where it's headed, and forward it one step closer to its destination. Your home WiFi router is one example, but it's just the very first stop. Behind it sits a massive, interconnected chain of other routers, all owned by different companies, all around the world.
+
+We touched on this briefly before: no single router knows the full path from your laptop to a server on the other side of the planet. Each router only keeps a **routing table**, a local list that says, roughly, "packets headed for this range of addresses should go out through this connection." When a packet arrives, the router checks its table, picks the best next hop, and passes it along. The next router does the exact same thing, and the one after that, until the packet finally reaches its destination.
+
+This is why the internet doesn't have one master map sitting somewhere. It's thousands of routers, each making a small, local, fast decision, and the pattern that emerges from all those tiny decisions strung together is a packet finding its way across the entire planet in a fraction of a second.
+
+## The Physical Journey: From Your Room to the World
+
+Let's ground all of this in something real: what actually happens, physically, when you send a request from your house.
+
+1. Your device connects to your **home WiFi router**, over radio waves, no cable required. The router's job here is just to get your packet off your device and onto your home network.
+2. Your router is plugged into a **modem**, which connects your home network to your **Internet Service Provider (ISP)**, a company like Comcast, Orange, or Vodafone, whose entire business is maintaining the wires (or fiber, or cellular towers) that connect homes and businesses to the wider internet.
+3. Your ISP forwards your packet onto the internet's **backbone**, a web of extremely high-capacity connections between major networks, often running through undersea fiber-optic cables that physically connect entire continents.
+4. Along the way, your packet passes through **Internet Exchange Points (IXPs)**, physical locations where many different networks, ISPs, cloud providers, companies, all plug into each other directly, so traffic doesn't have to take a longer, slower route just because two networks are owned by different companies.
+5. Eventually, your packet reaches the network hosting the destination server, gets handed off through that network's own routers, and finally lands on the actual machine you were trying to reach.
+6. The server sends its response back, and the entire relay runs in reverse, hop by hop, router by router, back through the backbone, back through your ISP, back through your modem and router, and onto your screen.
+
+All of this, dozens of routers, undersea cables, exchange points, happens in a timeframe so short you never notice a single hop. You just see a page load.
+
+## What Happens When a Path Is Broken
+
+Here's something that makes this system genuinely impressive: the internet has no single point that everything must pass through. It was actually designed this way on purpose, so that if one connection goes down, a storm damages a cable, a router fails, traffic can still get through by taking a different path.
+
+Since every router is constantly making its own local "what's the best next hop" decision, if its usual path suddenly disappears, it simply updates its routing table and starts sending packets a different way. You'll never see this happen. Your page might load a few milliseconds slower during the reroute, and that's usually the only sign anything happened at all.
+
+You can actually watch this hopping happen yourself. Most computers have a built-in tool called `traceroute` (or `tracert` on Windows) that shows you every single router your packets pass through on the way to a destination, hop by hop, along with how long each hop took. It's one of the few times you can actually see the invisible machinery of the internet laid out in front of you.
+
+## Why This Matters
+
+You'll never configure a router's routing table or lay down fiber-optic cable yourself. But this is exactly why the internet can survive outages, congestion, and hardware failing somewhere on the other side of the planet, without you ever noticing.
+
+It's also why a slow website isn't always the website's fault. Sometimes it's your WiFi, sometimes it's your ISP, sometimes it's a congested route several hops away that has nothing to do with the server at all. Now that you know the internet isn't one big pipe but a huge, self-healing relay of independent routers, "why is this slow" becomes a question you can actually investigate, one hop at a time, instead of a shrug.
+
+## Go Deeper
+
+If watching a packet find its way across the planet made you want to understand the plumbing even better, here are two doors worth walking through:
+
+<Container cols={2}>
+  <BookCard
+    href="https://a.co/d/096LNucW"
+    image="https://m.media-amazon.com/images/I/710I56gjhWL._SL1500_.jpg"
+    title="How the Internet Really Works. by Article19 and Ulrich Speidel"
+  >
+A short, clear, genuinely enjoyable read that walks through routers, undersea cables, and internet exchange points. 
+  </BookCard>
+
+   <BookCard
+    href="https://a.co/d/0iuSunux"
+    image="https://m.media-amazon.com/images/I/51vT3X2tdtL.jpg"
+    title="Computer Networking: A Top-Down Approach. by James and Keith Ross"
+  >
+    The most widely used networking book in the world, It's approachable, well-paced, and doesn't assume you're already an engineer.
+  </BookCard>
+  
+</Container>
+
+- **"How the Internet Really Works" by Article19 and Ulrich Speidel.** A short, clear, genuinely enjoyable read that walks through routers, undersea cables, and internet exchange points without drowning you in jargon. It's illustrated and written for curious beginners, making it one of the best "so that's how it actually works" books out there.
+- **"Computer Networking: A Top-Down Approach" by James Kurose and Keith Ross.** You've seen this one recommended before, and it earns a second mention here. Its chapters on the network layer and routing go deep into exactly what we covered in this article, routing tables, packet forwarding, and how networks stay resilient, with real diagrams and real examples to back it up.
+
+If you want the quick, story-like version, start with Article19 and Speidel. If you want to properly master routing and packet forwarding, Kurose and Ross is where you go next.
+
+---
