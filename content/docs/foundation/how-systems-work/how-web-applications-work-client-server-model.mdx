@@ -1,0 +1,78 @@
+---
+title: How Web Apps Work
+description: Why every website you use is really a conversation between two separate programs, and how that back-and-forth actually plays out.
+icon: FileText
+---
+
+---
+
+# How Web Applications Work: Client/Server Model
+
+<div className="img-dev">
+  ![How Web Applications Work: Client-Server Model
+  Cover](/visuals/wiki/foundation/how-systems-work/how-web-applications-work-client-server-model.png)
+</div>
+
+Open your banking app, check your email, scroll a feed. Every single one of those feels like you're just "using an app." But none of them are one single program running on your device. They're all a conversation between two separate programs that don't even live in the same place.
+
+We've already met both sides of that conversation. The browser article covered what happens on your machine, parsing HTML, building the DOM, painting pixels. Now we're zooming out one level, to look at the relationship itself: who says what, in what order, and why it's split this way at all.
+
+## Why Split It Into Two Programs At All
+
+Before we get into how the client and server talk, it's worth asking why this split exists in the first place. Why not just have one program that does everything?
+
+Imagine a banking app that kept your entire account balance, transaction history, and password stored only on your phone. Nothing on any server. That sounds fast, no network requests, no waiting. But it falls apart immediately: lose your phone, lose your money. Two people can't see the same shared data. Nobody can update the interest rate for every customer at once, they'd have to individually patch millions of phones.
+
+That's the problem the client-server model solves. The **server** holds the one true copy of everything that matters, your balance, your messages, your posts, on a machine (or many machines) that the company controls and keeps running around the clock. The **client**, your browser or your phone's app, holds nothing permanent. It just asks the server for what it needs, shows it to you, and sends back whatever you do. Lose your phone, log in on a new one, everything's still there, because it was never really on your old phone to begin with.
+
+## What the Client Actually Is
+
+The client is simply whatever program is running on your device and initiating the conversation. Most of the time that's your browser, which we already covered in detail, it parses HTML, builds the DOM and CSSOM, and paints the result to your screen. But a client doesn't have to be a browser at all. A native mobile app is a client. A desktop app checking for updates is a client. Even a smart fridge pinging a weather API is a client.
+
+What makes something "a client" isn't what it's built with, it's its role in the conversation. A client is the side that reaches out first, asks a question, and waits for an answer. It rarely has the full picture on its own, and it isn't trusted to.
+
+## What the Server Actually Is
+
+The server is the other half, the program sitting on a machine somewhere, listening for requests, and answering them. We'll go deep on exactly what happens on that machine, the process, the port, the code that runs, in the next article, How Servers Work. For now, the important thing is its role: the server holds the real data and the real logic, and it decides what the client is and isn't allowed to see.
+
+That last part matters more than it sounds. Your browser could technically ask a banking server "give me every account's balance," but the server checks who's asking, using the authentication concepts we'll cover later, and refuses. The client can ask for anything. The server decides what actually gets handed over.
+
+## The Conversation: Request and Response
+
+So how do these two programs actually talk? Through the same protocol we introduced back in the networking article: HTTP. Every single interaction follows one repeating pattern, called a **request-response cycle**.
+
+The client sends a **request**: here's what I want, here's who I am, here's any data I'm sending along. The server processes that request, however long that takes, then sends back a **response**: here's the data you asked for, or here's why I'm refusing, using status codes like 200 for success or 404 for not found. Then the conversation ends. Not paused, not left open, ended.
+
+That last detail trips people up the first time they hear it. The client can't just keep talking. If it wants something else, it has to send a whole new request. Your browser isn't holding one long phone call with the server, it's sending a new letter every single time it needs something, and the server writes a fresh reply for each one.
+
+## Stateless By Default
+
+Here's a question worth sitting with: if every request is its own separate conversation, how does a website know you're still logged in when you click to a new page?
+
+The honest answer is that, by default, it doesn't. HTTP is **stateless**, meaning the server treats every incoming request as if it's never seen you before, with no built-in memory connecting one request to the next. That's not a bug, it's a deliberate simplicity that made the web easy to scale, any server can answer any request without needing to remember your entire history.
+
+The fix is that the client hands the server a little piece of proof with every single request, usually a cookie, so the server can recognize "oh, this is the same person as before" even though it technically has no memory of you. That mechanism, and the whole world of sessions, tokens, and login flows built on top of it, gets its own proper treatment in the Authentication & Authorization chapter later on. For now, just know the illusion of "staying logged in" is built entirely on top of a system that fundamentally forgets you after every single request.
+
+## Two Kinds of Answers: Pages vs Data
+
+When the client asks for something, the server can answer in two very different ways, and the difference matters a lot in practice.
+
+The old-school way: the server sends back a full HTML page, ready to be parsed and rendered exactly as covered in the browser article. Click a link, get a whole new page, browser starts the DOM-building process again from scratch. This is how the web worked for its first couple of decades, and it's still exactly how a huge number of sites work today.
+
+The modern alternative: the server sends back just the data, usually as **JSON**, a lightweight text format for structured information, no HTML at all. The page you're already looking at stays exactly where it is, and JavaScript quietly updates just the piece that changed, a new comment appearing, a cart total updating, without a full page reload. This is what people mean when they say a site is calling an "API," which we'll get into properly in the APIs & Communication Protocols chapter. Same request-response cycle underneath, just a different kind of reply.
+
+## Where Rendering Actually Happens
+
+Given those two kinds of answers, a natural question follows: does the server build the page, or does the browser?
+
+The honest answer is: it depends, and this single decision is one of the biggest forks in how a web app gets built. Some apps have the server do almost all the work, assembling a finished HTML page and handing it over ready to display. Others have the server just ship data and a bundle of JavaScript, and let the browser assemble the actual page on the client's own machine, using everything from the browser article, DOM building, layout, paint, all happening locally instead of on the server.
+
+Neither approach is simply "better." Server-built pages tend to show up faster on first load and work fine with JavaScript disabled. Client-built pages can feel snappier once loaded, since they don't need a full server round trip for every little update. This tradeoff has an entire name, SSR versus CSR, and it deserves its own deep dive, which comes later in the Next.js chapter.
+
+## Why This Matters
+
+Once this split clicks, a whole category of confusing behavior stops being confusing. Why does refreshing a page sometimes lose data you just typed? Because you triggered a brand new request, and the server has no memory of the old one unless something like a cookie carried that context forward. Why does a site work fine on your phone's data but break weirdly on flaky wifi? Because that one request-response cycle got interrupted somewhere in the middle, and neither side automatically recovers from that.
+
+It also explains why "the site is down" and "my internet is down" are two completely different problems, one is a broken client, the other is a server that isn't answering requests at all. Every bug you'll ever debug in a web app lives on one side of this line: either the client asked for the wrong thing, or the server answered wrong, or the conversation between them broke somewhere in the middle. Knowing which side you're even looking at is most of the battle.
+
+---
