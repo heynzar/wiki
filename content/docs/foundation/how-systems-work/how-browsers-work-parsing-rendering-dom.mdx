@@ -1,0 +1,126 @@
+---
+title: How Browsers Work
+description: What your browser actually does with the HTML, CSS, and JavaScript it receives, turning raw text into the page you see and click on.
+icon: FileText
+---
+
+---
+
+# How Browsers Work: Parsing, Rendering & the DOM
+
+<div className="img-dev">
+  ![How Browsers Work: Parsing, Rendering & the DOM
+  Cover](/visuals/wiki/foundation/how-systems-work/how-browsers-work-parsing-rendering-dom.png)
+</div>
+
+In the last two articles, we followed a request all the way from your device to a server and back. The server's response finally arrives: a pile of HTML, CSS, and JavaScript, just text, sitting in your browser's hands.
+
+So how does that pile of text turn into a page with colors, buttons, and images you can actually click? That's the browser's job, and it happens in a very specific, very fast sequence. Let's walk through it.
+
+## Why Browsers Exist At All
+
+Before we get into how a browser works, it's worth asking a more basic question: why does this program exist in the first place? Why not just have a separate app for every website, the way you have a separate app for your bank, your email, and your calendar?
+
+The answer is universality. A browser is a single program that can safely display and run content from millions of different websites, built by millions of different people, without you ever needing to install anything, trust anyone in advance, or worry about which operating system you're on. A website built once works on Windows, macOS, Linux, your phone, all through the exact same browser, because they all agree to follow the same standards, HTML, CSS, and JavaScript, that we covered back in the networking articles.
+
+Compare that to the native app model. If a company wants to ship a real installed app, they need a separate build for Windows, another for macOS, another for iPhone, another for Android, and you have to trust and install each one individually. The browser flips that entirely. It's one universal runtime that any website can plug into, and it's also the reason the web became the biggest software platform in history, publishing something is as simple as putting it at an address, no installation required.
+
+## What Is a Browser, Really?
+
+Underneath the tabs and the address bar, a browser is just a program, and a genuinely complicated one. At its core, it does something similar to what a database engine does with a SQL query: it takes text that follows certain rules, HTML, CSS, JavaScript, and **parses** it, breaking it down into a structured, meaningful format the program can actually act on. That's exactly what building the DOM and the CSSOM, which we're about to walk through, really is: parsing raw text into a structure the browser can reason about.
+
+Browsers are mostly written in **C++**, for speed and low-level control over memory, which matters enormously when you're processing huge amounts of text and graphics many times per second. Some newer parts are written in **Rust**, a language built specifically to catch memory-related bugs at compile time, since browsers historically had a long, painful history of security bugs coming from exactly those kinds of mistakes. Firefox, for example, rewrote parts of its CSS engine in Rust for both speed and safety.
+
+## HTML Text Becomes the DOM
+
+The HTML your browser receives is just a string of text, tags like `<div>` and `<p>` sitting next to each other. On its own, text can't be clicked, styled, or updated. The browser needs to turn it into something it can actually work with.
+
+That something is called the **DOM**, the Document Object Model. The browser reads through the HTML text, tag by tag, and builds a tree out of it, where every tag becomes an object, connected to its parent and its children. A `<div>` containing a `<p>` becomes a parent object with a child object, and so on, all the way down.
+
+This matters because a tree of objects, unlike raw text, can actually be manipulated. JavaScript can reach into the DOM, grab a specific object, and change it, add a new one, remove one, all without reloading the page. The DOM is what makes a webpage feel alive instead of just a printed document.
+
+## CSS Becomes the CSSOM
+
+While the browser is building the DOM out of your HTML, it's also reading your CSS and building a very similar structure out of it, called the **CSSOM**, the CSS Object Model. It's the same idea as the DOM, a tree, except instead of representing your page's structure, it represents every style rule and which elements they apply to.
+
+The browser needs both trees before it can figure out what anything should actually look like. The DOM says "here's a paragraph, inside a div." The CSSOM says "paragraphs inside a div with this class should be blue and have 16 pixels of padding." Neither tree alone is enough. The browser needs to combine them.
+
+## Combining Them: The Render Tree
+
+Once the browser has both the DOM and the CSSOM, it merges them into a single structure called the **render tree**. This tree only includes what will actually be visible on the page, so anything hidden with `display: none`, for example, gets left out entirely, since there's no point calculating a look for something nobody will ever see.
+
+The render tree is essentially the DOM, but now every element also knows exactly how it should look, its color, its size, its font, everything the CSSOM described. This is the point where "structure" and "style" finally become one combined plan for what the page should look like.
+
+## Layout: Figuring Out Where Everything Goes
+
+Knowing what an element should look like isn't the same as knowing where it should sit on the screen. That's the next step, called **layout**, sometimes also called **reflow**.
+
+During layout, the browser walks through the render tree and calculates the exact size and position of every single element, in pixels, based on the size of the browser window, the box model rules, and how elements affect each other. A box that's set to 50% width needs to know how wide its parent is first. A paragraph that wraps onto three lines instead of one pushes everything below it further down. Layout is where all of that gets resolved into exact coordinates.
+
+This step is also why resizing your browser window, or a JavaScript change that affects size, can be expensive. If one element's size changes, everything around it might need to be recalculated too, which is exactly why doing this constantly, over and over, is a common source of a slow, janky-feeling page.
+
+## Paint: Turning the Plan Into Pixels
+
+Once the browser knows exactly what every element looks like and exactly where it sits, the final step is **paint**, actually filling in pixels on your screen, colors, text, images, shadows, borders, everything.
+
+Modern browsers often split this work across multiple **layers**, almost like transparent sheets stacked on top of each other, so that only the layer that actually changed needs to be repainted, instead of redrawing the entire page from scratch every single time something small updates. This is part of why animations can feel smooth even on a fairly modest computer, the browser is being smart about repainting only what actually needs it.
+
+## Where JavaScript Fits In
+
+JavaScript is the one piece that can reach into any part of this process and change it, at any time, after the page has already loaded. It can grab an element straight out of the DOM and change its text, add a brand new element that didn't exist before, or update a style directly, which can trigger layout and paint to run all over again for whatever changed.
+
+This is also exactly why heavy, poorly written JavaScript can make a page feel sluggish. Every DOM change you make can potentially trigger the browser to redo layout and paint, and if your code is doing that constantly, in a loop, the browser ends up recalculating and repainting far more than it needs to.
+
+## Why You Sometimes See Unstyled HTML First
+
+If you've ever loaded a page on a slow connection and watched plain, unstyled HTML flash on screen, then get its styling a moment later, then finally become interactive once the JavaScript kicks in, you've actually seen this whole pipeline happen in slow motion.
+
+This doesn't contradict anything we just covered, it's really about timing, not a different process. A browser doesn't wait for absolutely everything, HTML, CSS, and JavaScript, to fully arrive before showing you anything at all. It starts parsing HTML into the DOM as soon as bytes start arriving, and by default, it holds off actually painting the page until it also has the CSSOM ready, specifically to avoid flashing unstyled content. On a slow connection, though, you can still catch that gap, HTML has arrived and been parsed, but the CSS file is still crawling in, so for a brief moment there's genuinely nothing ready to paint correctly yet, or in some setups, an early partial paint slips through before styles finish applying.
+
+JavaScript showing up last follows the same logic. Scripts are often placed at the bottom of the page, or deliberately marked to load after everything else, specifically so they don't block the page from appearing at all. Once the script finally downloads and runs, it can reach into the DOM and start adding the dynamic behavior, dropdowns working, buttons responding, content updating without a reload. On a fast connection, this entire sequence happens so quickly it looks instant. On a slow one, you're simply watching each stage of the render tree, layout, and paint pipeline arrive late, one piece at a time, instead of all at once.
+
+## Putting It All Together
+
+Let's walk through the whole sequence, start to finish, the moment your browser receives a server's response:
+
+1. The browser reads the HTML and builds the **DOM**, a tree representing the page's structure.
+2. At the same time, it reads the CSS and builds the **CSSOM**, a tree representing every style rule.
+3. It combines both into a **render tree**, which only includes what will actually be visible.
+4. It runs **layout**, calculating the exact size and position of every element in pixels.
+5. It runs **paint**, actually filling in colors, text, and images onto your screen.
+6. **JavaScript** runs alongside all of this, capable of reaching back into the DOM and CSSOM at any point, and triggering layout and paint to happen again wherever something changed.
+
+All of that happens in milliseconds, repeatedly, every time something on the page changes. It's why a webpage can feel as responsive and alive as a real application, even though underneath, it started out as nothing more than plain text.
+
+## Why This Matters
+
+You'll use frameworks that hide most of this from you, React, Vue, and others all manage the DOM on your behalf. But this is exactly why some UI changes feel instant while others feel choppy, why a page can flicker when styles load late, and why "just add more JavaScript" isn't a free action, every change has to flow back through layout and paint to actually show up on screen. Once you understand this pipeline, you stop treating browser performance as a mystery, and start seeing exactly where the slowdown is really coming from.
+
+## Go Deeper
+
+If you want to see this pipeline in even more detail, here are two doors worth walking through:
+
+<Container cols={2}>
+  <BookCard
+    href="https://developer.chrome.com/blog/inside-browser-part1"
+    title="Inside look at modern web browser. by the Chrome team"
+  >
+  Written by the actual engineers building Chrome, it walks through the browser's architecture, parsing, rendering, and compositing, in more depth than almost anything else publicly available.
+  </BookCard>
+
+   <BookCard
+    href="https://hpbn.co/"
+    image="https://m.media-amazon.com/images/I/91UPPjIl2SL._SL1500_.jpg"
+    title="High Performance Browser Networking. by Ilya Grigorik"
+  >
+   Free to read online. While it leans heavily into the networking side we covered earlier.
+  </BookCard>
+  
+</Container>
+
+- **"Inside look at modern web browser," a four-part series by the Chrome team (web.dev).** Written by the actual engineers building Chrome, it walks through the browser's architecture, parsing, rendering, and compositing, in more depth than almost anything else publicly available, with helpful diagrams throughout.
+- **"High Performance Browser Networking" by Ilya Grigorik.** Free to read online. While it leans heavily into the networking side we covered earlier, its chapters on browser rendering and optimization connect directly to everything in this article, and it's an excellent next step if you want to actually make pages faster, not just understand why they're slow.
+
+Start with the Chrome team's series if you want to see the engine's internals laid out visually. Reach for Grigorik's book once you're ready to apply all of this to make real pages faster.
+
+---
