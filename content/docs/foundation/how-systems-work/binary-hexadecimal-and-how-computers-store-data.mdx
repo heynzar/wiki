@@ -1,0 +1,94 @@
+---
+title: How Computers Store Data
+description: Why computers only ever deal in two states, how binary actually works, and why hexadecimal keeps showing up everywhere once you start looking for it.
+icon: FileText
+---
+
+---
+
+# Binary, Hexadecimal and How Computers Store Data
+
+<div className="img-dev">
+  ![How Computers Store Data: Binary, Hexadecimal
+  Cover](/visuals/wiki/foundation/how-systems-work/binary-hexadecimal-and-how-computers-store-data.png)
+</div>
+
+Pick a color in any design tool and you'll see something like `#FF5733` sitting next to it. Check a file's size and you'll see it in KB or MB. Open a git commit and you'll see a long string like `a3f5e9c`. All three of those are the same underlying idea wearing different outfits, and this article is about what that idea actually is.
+
+We've talked about RAM and storage since the very first article in this wiki, the desk the CPU works on, and the filing cabinet where things live long-term. Now let's open the drawer and look at what's actually sitting inside them.
+
+## Why Computers Only Understand On and Off
+
+Why does any of this start with binary at all? Why not just have computers work in the same decimal numbers, 0 through 9, that you already use every day?
+
+The honest answer comes down to physics, not preference. Deep inside your CPU and RAM are billions of tiny transistors, and electrically, a transistor is really only reliable at telling apart two states: current is flowing, or it isn't. Trying to reliably detect ten different voltage levels instead of two would be slower, more expensive, and far more prone to error. Two states, on and off, is simply what silicon does well and cheaply, at a scale of billions of them, over and over, billions of times a second.
+
+So every single thing a computer does, every calculation, every saved file, every pixel on your screen, ultimately gets reduced down to patterns of on and off. That's it. That's the entire foundation everything else in this wiki sits on top of.
+
+## Binary: Counting With Only Two Digits
+
+We call this on-and-off system **binary**, a number system with only two digits, 0 and 1, instead of the ten you grew up with. Each individual 0 or 1 is called a **bit**, short for "binary digit," and it's the smallest possible unit of information a computer can store, one single on/off switch.
+
+Here's the part that trips people up at first: binary isn't a different kind of math, it's the exact same place-value idea you already know from decimal, just with a smaller alphabet.
+
+Before binary, think about how decimal actually works, something you've done automatically since childhood without noticing the mechanics. The number `247` means 2 hundreds, plus 4 tens, plus 7 ones, each position worth ten times the one before it.
+
+After switching the base to binary, the exact same logic applies, just with each position worth two times the one before it instead of ten. The binary number `1011` means: one 8, plus zero 4s, plus one 2, plus one 1, adding up to 11 in decimal. Same idea as `247`, just smaller building blocks.
+
+## From Bits to Bytes
+
+A single bit, one 0 or 1, can't represent much on its own, just two possible states. So computers group them together. Eight bits grouped together form a **byte**, and a byte can represent 256 different values (every combination of eight 0s and 1s, from `00000000` to `11111111`).
+
+This is the exact unit we glossed over back in the RAM and storage articles. When we said RAM is like a desk with labeled slots, each of those slots holds bytes, and when we talked about file sizes in KB, MB, and GB, we were really just talking about thousands, millions, and billions of these same byte-sized units, stacked up. A single byte can hold one keyboard character. A photo might be a few million of them. A movie, a few billion.
+
+## Why Hexadecimal Exists At All
+
+If everything is really just binary underneath, why do you see hex codes like `#FF5733` instead of a long string of 0s and 1s?
+
+Because binary, while accurate, is miserable for a human to read. Here's the same single byte, shown two different ways.
+
+Before hex, as raw binary:
+
+```
+11111111 01010011 00110011
+```
+
+That's technically correct, and completely unreadable at a glance. Nobody's spotting a typo in that.
+
+After converting to hexadecimal:
+
+```
+FF 53 33
+```
+
+Same exact data, just far easier on human eyes. Hexadecimal, or "hex," is a base-16 number system, using digits 0 through 9 and then letters A through F to represent 10 through 15. It exists purely as a convenience for humans, because each hex digit maps perfectly onto exactly 4 bits, so two hex digits always represent exactly one byte, cleanly, with no messy conversion math involved. Computers don't need hex. You do.
+
+## Where You Actually See Hex in the Wild
+
+Once you know what you're looking at, hex shows up constantly. That `#FF5733` color code from the very start of this article is three bytes in hex, one each for red, green, and blue, each one ranging from `00` (none of that color) to `FF` (as much as possible).
+
+Memory addresses, the specific "slot number" on the RAM desk we described back in the CPU article, are almost always shown in hex too, because a raw address in binary would be dozens of digits long and completely unreadable. Git commit hashes, MAC addresses on network hardware, and color values in CSS all lean on hex for the exact same reason: it's the most human-friendly way to look directly at raw binary data without losing your mind.
+
+## How Text Becomes Numbers
+
+So far this has all been about numbers. But how does a computer, which only understands 0s and 1s, store the letter "A," or an emoji, or a Chinese character?
+
+The answer is a lookup table, an agreed-upon mapping between numbers and characters. The earliest and simplest of these is **ASCII**, which assigns every English letter, digit, and basic punctuation mark a specific number between 0 and 127. The letter "A" is always the number 65. The letter "a" is always 97. Your keyboard sends these numbers, and your screen looks them up and draws the matching shape.
+
+ASCII only covers 128 characters though, nowhere near enough for every language, emoji, and symbol in the world. That gap is what **Unicode** exists to close, a much larger standard covering essentially every character humans use, encoded in formats like UTF-8. This is also exactly why you occasionally see broken text online, little boxes or question marks instead of letters, that's usually a program misreading which lookup table it's supposed to be using.
+
+## How Everything Else Is Just Numbers Too
+
+Once you've seen text reduced down to numbers, the rest stops feeling mysterious. An image is really just a huge grid of numbers, one small group of bytes per pixel, describing its exact red, green, and blue values. Audio is a long sequence of numbers describing the exact position of a speaker thousands of times per second. Video is really just a very fast sequence of images, which are themselves just grids of numbers, one after another.
+
+There's no separate "picture format" happening at the hardware level. It's binary, all the way down, and the only thing that changes between a photo, a song, and a spreadsheet is which lookup table and which set of rules your software uses to make sense of that same raw pile of bytes.
+
+## Why This Matters
+
+Once this clicks, a bunch of real, practical situations stop feeling like magic or misfortune. Ever seen a number silently become wrong after some calculation, like `0.1 + 0.2` not quite equaling `0.3`? That's a direct consequence of trying to represent certain decimal fractions in binary, a topic we'll dig into properly when we cover floating-point numbers and data types in the JavaScript chapter.
+
+Ever copied a hex color code and needed to tweak it slightly? Now you know why `#FF0000` is pure red, `#00FF00` is pure green, and why nudging one pair of digits shifts exactly one color channel, because each pair is literally just one byte.
+
+And next time you're debugging something low-level, a memory address in a stack trace, a strange character showing up as a question mark, a git hash you need to shorten safely, you're not looking at some separate arcane system. You're looking at the exact same on/off, byte-sized, hex-displayed foundation that every single thing in this wiki, and every piece of software you'll ever touch, is quietly built on top of.
+
+---
