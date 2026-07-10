@@ -1,0 +1,114 @@
+---
+title: How Servers Work
+description: A full walk-through of everything that happens on the server's side, from the moment a request arrives to the moment a response gets sent back.
+icon: FileText
+---
+
+---
+
+# How Servers Work: Request/Response Cycle
+
+<div className="img-dev">
+  ![How Servers Work: Request/Response Cycle
+  Cover](/visuals/wiki/foundation/how-systems-work/how-servers-work-request-response-cycle.png)
+</div>
+
+You type `google.com` into the address bar and press enter. Less than a second later, a page full of search results shows up. We've covered what your browser does with that response, and we've covered the back-and-forth conversation between client and server in general terms. Now let's walk into the other room and see what actually happens on the server's side of that conversation.
+
+## First, Where Even Is "The Server"?
+
+When people say "the server," it's easy to picture something abstract, almost mystical, like the request just vanishes into a cloud and a page appears. It's not mystical at all. A server is a real computer, with a real CPU and real RAM, exactly like the one on your desk, just usually sitting in a data center somewhere, built to stay on and stay reachable around the clock instead of being turned off at the end of the day.
+
+That machine is running a program, usually written in something like Node.js, Python, or Go, that does one very specific job: it listens for incoming requests and knows how to answer them. "The server" is really shorthand for that combination, a machine plus a program on it, the same way we'd describe your laptop as "your machine" without needing to separately name every app running on it.
+
+## Finding the Right House: DNS
+
+Before any request can even reach that machine, your computer needs to know its address. We covered DNS properly in the networking article, so here's just the quick recap: typing `google.com` triggers a lookup that translates that human-friendly name into an actual IP address, the numeric address of the specific machine that should receive your request. No different from looking up a street address before a letter can be delivered.
+
+## Knocking on the Right Door: Ports
+
+Knowing which machine to reach isn't quite enough. A single server can run many different programs at once, a website, an email service, a database, all listening on the same machine. So how does an incoming request know which one it's actually meant for?
+
+That's what a **port** is for. Think of the machine's IP address as the building's street address, and the port number as the specific office extension inside that building. Web traffic almost always knocks on port 80 for regular HTTP or port 443 for secure HTTPS, and the server's operating system routes the incoming request straight to whatever program is listening on that particular port. Get the address right but the port wrong, and you'd be handed to the wrong department entirely, if anyone answers at all.
+
+## The Request Actually Arrives
+
+Once the request has found the right machine and the right port, it lands as data the server program can read, the exact same kind of HTTP request we described in the client-server article: a method like GET or POST, a path like `/search`, some headers, and maybe a body of data. From the server's point of view, this is the starting gun. Everything from here on is the server figuring out how to answer it.
+
+## Handing the Request to the Right Code
+
+A server almost never has just one single block of code that handles every possible request. Instead, it has **routes**, rules that map a specific path and method to a specific piece of code that knows how to handle it. A request for `GET /search` runs different code than `POST /login`, even though both arrived at the exact same machine, through the exact same port.
+
+This routing step is one of the main jobs of backend frameworks like Express or Fastify, which we'll cover properly in the Backend Fundamentals chapter. For now, just picture it like a receptionist reading the request, then walking it down the hall to the one desk that actually knows how to deal with it.
+
+## Doing the Actual Work
+
+This is where the real logic runs, and it's different for every single request. Maybe the server needs to check who you are, using the authentication concepts we'll dig into later. Maybe it needs to reach out to a database to fetch your data, a topic that gets its own entire chapter. Maybe it just needs to read a file off disk, the same storage concept from the very first article in this wiki.
+
+Whatever the work is, this is the step that takes actual time, milliseconds, sometimes longer, and it's usually the part developers spend the most effort optimizing, because it's the part most likely to be slow.
+
+## Building the Response
+
+Once the server has done whatever work the request needed, it doesn't just hand back raw results. It packages them into a proper HTTP response, the same shape we described from the client's side: a status code (200 for success, 404 for not found, 500 for a server error, among others), some headers, and a body, which might be a full HTML page, or might just be JSON data, depending on which of those two answer styles we covered in the client-server article actually applies here.
+
+Before that HTML answer:
+
+```
+Client asked for a page.
+Server has raw data sitting in a database.
+```
+
+After the server builds the response:
+
+```
+Client receives one clean HTTP response.
+Status: 200. Body: a finished HTML page, or a JSON payload, ready to use.
+```
+
+The client never sees the messy middle, the database queries, the checks, the logic. It only ever sees this one final, clean package.
+
+## Sending It Back
+
+That response then travels back over the exact same network path the request came in on, through the internet's routers and protocols we covered in the earlier internet article, until it lands back at your browser. From there, everything from the browser article kicks in again: parsing, building the DOM and CSSOM, layout, paint.
+
+The whole round trip, DNS lookup, finding the right port, routing to the right code, doing the work, building the response, sending it back, usually happens in well under a second. Often in a few dozen milliseconds. It's easy to forget just how much is actually happening in that gap, precisely because it happens so fast.
+
+## One Machine, Many Requests
+
+Here's a detail worth sitting with: that same server isn't just handling your request. It might be answering thousands of requests from completely different people, all at nearly the same instant.
+
+How a single machine manages to do that without requests stepping on each other is really a story about the event loop and how Node.js handles many things at once without blocking, which gets its own proper explanation in the JavaScript and Backend chapters. For now, just know that "the server" you're picturing as one thing answering you personally is actually juggling a constant stream of unrelated conversations, all day, every day.
+
+## Why This Matters
+
+Once you can picture this whole chain, DNS lookup, port, routing, logic, response, you stop treating server errors as mysterious. A 404 means the routing step couldn't find any code mapped to that path. A 500 means the server found the right code, but something broke while it was actually doing the work. A request that hangs forever often means the server's logic step, maybe a slow database call, never finished at all.
+
+This is also the mental model you'll lean on for the rest of your career whenever something is "slow" or "broken" on a real production app. Is DNS resolving? Is the right port even open? Is the request reaching the right route? Is the actual logic taking too long? Every single one of those is a distinct, checkable step, not a single black box labeled "the server." Knowing where to look first is most of what separates a fast debugging session from an hours-long one.
+
+## Go Deeper
+
+If this topic clicked for you and you want a proper foundation to build on, these two are worth owning:
+
+<Container cols={2}>
+  <BookCard
+    href="https://developer.chrome.com/blog/inside-browser-part1"
+    image="https://m.media-amazon.com/images/I/71W5FQMX8LL._SL1360_.jpg"
+    title="Node.js Design Patterns. by Mario Casciaro and Luciano Mammino"
+  >
+  Goes far beyond syntax, it explains how a single Node.js server actually juggles thousands of requests without falling over, straight from the same event-driven model real production servers run on.
+  </BookCard>
+
+   <BookCard
+    href="https://youtu.be/AlkDbnbv7dk"
+    title="What happens when you type a URL into your browser? By ByteByteGo"
+  >
+  An engaging, visual breakdown of the entire lifecycle. It guides you step-by-step through the process, covering URL anatomy, DNS lookups, TCP handshakes, and how the browser handles and renders the server's response.  
+  </BookCard>
+</Container>
+
+- **"Node.js Design Patterns" by Mario Casciaro and Luciano Mammino.** Goes far beyond syntax, it explains how a single Node.js server actually juggles thousands of requests without falling over, straight from the same event-driven model real production servers run on. A genuinely great next step once this article's "one machine, many requests" idea has you curious.
+- **"What happens when you type a URL into your browser?", a YouTube Video by ByteByteGo.** An engaging, visual breakdown of the entire lifecycle. It guides you step-by-step through the process, covering URL anatomy, DNS lookups, TCP handshakes, and how the browser handles and renders the server's response.
+
+Start with the ByteByteGo video if you want a clear, visual overview of the entire end-to-end journey. Pick up the Casciaro and Mammino book once you're ready to actually understand how a real server handles that constant stream of requests under the hood.
+
+---

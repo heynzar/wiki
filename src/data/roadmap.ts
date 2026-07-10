@@ -70,8 +70,8 @@ export const roadmap: Roadmap[] = [
             url: "how-web-applications-work-client-server-model",
           },
           {
-            name: "How Servers Work: What Happens When You Hit a URL",
-            url: "how-servers-work-what-happens-when-you-hit-a-url",
+            name: "How Servers Work: Request/Response Cycle",
+            url: "how-servers-work-request-response-cycle",
           },
           {
             name: "Binary, Hexadecimal and How Computers Store Data",
