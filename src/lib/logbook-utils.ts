@@ -24,16 +24,6 @@ export type CommitRow = {
   isUpdate: boolean;
 };
 
-export type CleanRow = {
-  title: string;
-  url: string;
-  tag?: string;
-  createdAt: Date;
-  editCount: number;
-};
-
-export type Tab = "all" | "clean";
-
 export function buildCommitRows(pages: PageWithHistory[]): CommitRow[] {
   const rows: CommitRow[] = [];
   for (const page of pages) {
@@ -52,15 +42,7 @@ export function buildCommitRows(pages: PageWithHistory[]): CommitRow[] {
   return rows.sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
-export function buildCleanRows(pages: PageWithHistory[]): CleanRow[] {
-  return pages.map((p) => ({
-    title: p.title,
-    url: p.url,
-    tag: p.tag,
-    createdAt: p.createdAt,
-    editCount: p.allDates.length,
-  }));
-}
+export type DayCount = { day: number; date: Date; count: number };
 
 export function groupRowsByMonthYear<T>(rows: T[], getDate: (r: T) => Date) {
   const map = new Map<string, { month: string; year: number; rows: T[] }>();
@@ -79,12 +61,28 @@ export function groupRowsByMonthYear<T>(rows: T[], getDate: (r: T) => Date) {
   return Array.from(map.values());
 }
 
-export function buildHeatmap(pages: PageWithHistory[], year: number): number[] {
-  const counts = Array(12).fill(0);
-  for (const page of pages)
-    for (const d of page.allDates)
-      if (d.getFullYear() === year) counts[d.getMonth()]++;
-  return counts;
+export function buildHeatmapDays(
+  pages: PageWithHistory[],
+  year: number,
+): DayCount[][] {
+  const daysInMonth = (m: number) => new Date(year, m + 1, 0).getDate();
+
+  const months: DayCount[][] = Array.from({ length: 12 }, (_, m) =>
+    Array.from({ length: daysInMonth(m) }, (_, d) => ({
+      day: d + 1,
+      date: new Date(year, m, d + 1),
+      count: 0,
+    })),
+  );
+
+  for (const page of pages) {
+    for (const d of page.allDates) {
+      if (d.getFullYear() !== year) continue;
+      months[d.getMonth()][d.getDate() - 1].count++;
+    }
+  }
+
+  return months;
 }
 
 export function intensityClass(count: number, max: number): string {

@@ -9,47 +9,55 @@ import { Timeline } from "./timeline";
 
 export function LogbookClient({ pages }: { pages: PageWithHistory[] }) {
   const {
-    tab,
-    setTab,
     activeYear,
     toggleYear,
+    showAllYears,
     search,
     setSearch,
     showSearch,
     setShowSearch,
     allYears,
     heatmapYears,
-    groups,
+    groupsByYear,
   } = useLogbookFilters(pages);
 
+  const totalCommits = pages.reduce((sum, p) => sum + p.allDates.length, 0);
+
   return (
-    <div className="space-y-10 my-12 px-6 max-w-4xl mx-auto">
-      <header className="flex flex-col gap-4 w-full">
+    <section className="space-y-10 my-12 px-6 max-w-4xl mx-auto">
+      <header className="flex max-w-4xl mx-auto flex-col gap-4 w-full">
         <h2 className="font-instrument flex items-center gap-2.5 text-4xl sm:text-5xl lg:text-6xl leading-tight">
-          The Art of Journey
+          The Story Log
         </h2>
+
         <p className="text-sm md:text-base text-fd-muted-foreground leading-relaxed">
-          A living record of every page touched — commits turned into a
-          cartography of curiosity.
+          Every page has a story. This logbook keeps track of every draft, edit,
+          and revision that shaped the docs over time. Instead of a formal
+          changelog, it shows the full history of the work. Browse by year to
+          explore the timeline, or search to find a specific page.{" "}
+          <span className="bg-fd-secondary px-2 py-0.5 rounded">
+            {pages.length} pages
+          </span>{" "}
+          and{" "}
+          <span className="bg-fd-secondary px-2 py-0.5 rounded">
+            {totalCommits} commits
+          </span>{" "}
+          logged across{" "}
+          <span className="bg-fd-secondary px-2 py-0.5 rounded">
+            {allYears.length} year{allYears.length !== 1 ? "s" : ""}
+          </span>
+          .
         </p>
       </header>
 
       <nav className="flex flex-wrap items-center gap-2">
         <Button
-          variant={tab === "all" ? "primary" : "secondary"}
+          variant={activeYear === "all" ? "primary" : "secondary"}
           size="md"
           className="text-sm"
-          onClick={() => setTab("all")}
+          onClick={showAllYears}
         >
           Every Time
-        </Button>
-        <Button
-          variant={tab === "clean" ? "primary" : "secondary"}
-          size="md"
-          className="text-sm"
-          onClick={() => setTab("clean")}
-        >
-          Clean
         </Button>
 
         {allYears.map((y) => (
@@ -85,17 +93,14 @@ export function LogbookClient({ pages }: { pages: PageWithHistory[] }) {
         />
       )}
 
-      <hr />
-
-      <div className="flex flex-col gap-4">
-        {heatmapYears.map((y) => (
-          <YearHeatmap key={y} year={y} pages={pages} />
-        ))}
-      </div>
-
-      <hr />
-
-      <Timeline tab={tab} groups={groups} />
-    </div>
+      {heatmapYears.map((y) => (
+        <div key={y} className="flex flex-col gap-6">
+          <hr />
+          <YearHeatmap year={y} pages={pages} />
+          <hr />
+          <Timeline groups={groupsByYear.get(y) ?? []} />
+        </div>
+      ))}
+    </section>
   );
 }

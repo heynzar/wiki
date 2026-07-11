@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import type { PageWithHistory } from "@/lib/logbook";
 import Image from "next/image";
-import { buildHeatmap, intensityClass, MONTH_NAMES } from "@/lib/logbook-utils";
+import { buildHeatmapDays, intensityClass } from "@/lib/logbook-utils";
 
 export function YearHeatmap({
   year,
@@ -12,8 +12,8 @@ export function YearHeatmap({
   year: number;
   pages: PageWithHistory[];
 }) {
-  const counts = buildHeatmap(pages, year);
-  const max = Math.max(...counts, 1);
+  const months = buildHeatmapDays(pages, year);
+  const max = Math.max(...months.flat().map((d) => d.count), 1);
   const total = pages.filter((p) => p.createdAt.getFullYear() === year).length;
 
   return (
@@ -37,18 +37,21 @@ export function YearHeatmap({
             {total} page{total !== 1 ? "s" : ""}
           </span>
         )}
-        {counts.map((count, monthIdx) => (
+        {months.map((days, monthIdx) => (
           <div
             key={monthIdx}
-            title={`${MONTH_NAMES[monthIdx]}: ${count} commit${count !== 1 ? "s" : ""}`}
-            className="aspect-square flex flex-wrap gap-0.5 size-full"
+            className="flex flex-wrap content-start gap-0.5 size-full"
           >
-            {Array.from({ length: 30 }).map((_, cellIdx) => (
+            {days.map(({ day, date, count }) => (
               <div
-                key={cellIdx}
+                key={day}
+                title={`${count} contribution${count !== 1 ? "s" : ""} on ${date.toLocaleDateString(
+                  "en-US",
+                  { month: "short", day: "numeric", year: "numeric" },
+                )}`}
                 className={cn(
                   "aspect-square size-[11px] rounded border dark:border-none bg-fd-muted transition-colors hover:opacity-80",
-                  cellIdx < count ? intensityClass(count, max) : "",
+                  intensityClass(count, max),
                 )}
               />
             ))}

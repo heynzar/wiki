@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { CommitRow, CleanRow } from "@/lib/logbook-utils";
+import type { CommitRow } from "@/lib/logbook-utils";
 
 function RowItem({
   title,
@@ -19,7 +19,7 @@ function RowItem({
   return (
     <Link
       href={url}
-      className="border border-b-0 last:border-b group bg-fd-popover hover:bg-fd-background flex h-14"
+      className="border border-b-0 last:border-b group bg-fd-popover hover:bg-fd-background flex w-full h-14"
     >
       <span className="size-14 flex items-center text-fd-muted-foreground justify-center border-r text-2xl font-instrument shrink-0">
         {day}
@@ -51,18 +51,6 @@ export function CommitRowItem({ row }: { row: CommitRow }) {
       tag={row.tag}
       date={row.date}
       badge={row.isUpdate ? <Badge>v{row.version}</Badge> : null}
-    />
-  );
-}
-
-export function CleanRowItem({ row }: { row: CleanRow }) {
-  return (
-    <RowItem
-      title={row.title}
-      url={row.url}
-      tag={row.tag}
-      date={row.createdAt}
-      badge={row.editCount > 1 ? <Badge>×{row.editCount}</Badge> : null}
     />
   );
 }

@@ -2,13 +2,13 @@ import { useMemo, useState } from "react";
 import type { PageWithHistory } from "@/lib/logbook";
 import {
   buildCommitRows,
-  buildCleanRows,
   groupRowsByMonthYear,
-  type Tab,
+  type CommitRow,
 } from "@/lib/logbook-utils";
 
+type Group<T> = { month: string; year: number; rows: T[] };
+
 export function useLogbookFilters(pages: PageWithHistory[]) {
-  const [tab, setTab] = useState<Tab>("all");
   const [activeYear, setActiveYear] = useState<number | "all">("all");
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -33,34 +33,49 @@ export function useLogbookFilters(pages: PageWithHistory[]) {
     return yearFiltered.filter((p) => p.title.toLowerCase().includes(q));
   }, [yearFiltered, search]);
 
-  const commitGroups = useMemo(
-    () => groupRowsByMonthYear(buildCommitRows(searchFiltered), (r) => r.date),
-    [searchFiltered],
-  );
-  const cleanGroups = useMemo(
-    () =>
-      groupRowsByMonthYear(buildCleanRows(searchFiltered), (r) => r.createdAt),
+  const commitRows = useMemo(
+    () => buildCommitRows(searchFiltered),
     [searchFiltered],
   );
 
+  const groupsByYear = useMemo(() => {
+    const byYear = new Map<number, CommitRow[]>();
+    for (const row of commitRows) {
+      const y = row.date.getFullYear();
+      if (!byYear.has(y)) byYear.set(y, []);
+      byYear.get(y)!.push(row);
+    }
+
+    const result = new Map<number, Group<CommitRow>[]>();
+    for (const [y, rows] of byYear) {
+      result.set(
+        y,
+        groupRowsByMonthYear(rows, (r) => r.date),
+      );
+    }
+    return result;
+  }, [commitRows]);
+
   const heatmapYears = activeYear === "all" ? allYears : [activeYear];
-  const groups = tab === "all" ? commitGroups : cleanGroups;
 
   function toggleYear(y: number) {
     setActiveYear((prev) => (prev === y ? "all" : y));
   }
 
+  function showAllYears() {
+    setActiveYear("all");
+  }
+
   return {
-    tab,
-    setTab,
     activeYear,
     toggleYear,
+    showAllYears,
     search,
     setSearch,
     showSearch,
     setShowSearch,
     allYears,
     heatmapYears,
-    groups,
+    groupsByYear,
   };
 }
