@@ -26,8 +26,8 @@ const navlinks = [
     icon: CheckSquareLinear,
   },
   {
-    label: "Visuals",
-    link: "/visuals",
+    label: "Logbook",
+    link: "/logbook",
     icon: LibraryLinear,
   },
 ];
