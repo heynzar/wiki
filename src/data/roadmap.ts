@@ -74,12 +74,12 @@ export const roadmap: Roadmap[] = [
             url: "how-servers-work-request-response-cycle",
           },
           {
-            name: "Binary, Hexadecimal and How Computers Store Data",
-            url: "binary-hexadecimal-and-how-computers-store-data",
+            name: "How Computers Store Data: Binary, Hexadecimal",
+            url: "how-computers-store-data-binary-hexadecimal",
           },
           {
-            name: "The Abstraction Ladder: Hardware -> OS -> Runtime  App",
-            url: "the-abstraction-ladder-hardware-os-runtime-app",
+            name: "How Everything Works: From Hardware to App",
+            url: "how-everything-works-from-hardware-to-app",
           },
         ],
       },
