@@ -1,4 +1,7 @@
 import Image from "next/image";
+import { buttonVariants } from "../ui/button";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function PurposeSection() {
   return (
@@ -51,29 +54,85 @@ export default function PurposeSection() {
             May Allah accept it.
           </p>
           <p>
-            The idea started during my university studies while preparing for
-            exams. As I worked to truly understand my courses, I naturally
-            started creating summaries, cheat sheets, and personal notes. I also
-            used AI to simplify difficult concepts. Over time, this grew into a
-            large and organized collection of knowledge.
+            This project started during my university studies. As I tried to
+            understand my courses better, I began writing summaries and personal
+            notes. When a topic was difficult, I used AI to help explain it in a
+            simpler way. Little by little, those notes grew into a
+            well-organized collection of knowledge.
           </p>
           <p>
-            At some point, I paused and reflected. I am a Muslim, and my
-            religion encourages benefiting others. That moment changed my
-            intention. Instead of keeping this work private, I decided to put in
-            extra effort to refine it; editing, organizing, and simplifying
-            everything so it could be useful and understandable for others.
+            Then I stopped and thought about it. As Muslims, we are encouraged
+            to benefit others. Instead of keeping these notes to myself, I
+            started improving them, fixing mistakes, and making them easier to
+            understand so others could benefit too.
           </p>
 
           <p>
-            With a renewed niyyah for the sake of Allah, and with the
-            responsibility that comes with it; itqan (excellence) and ihsan
-            (doing things well), this project became a way to document and share
-            everything I learn throughout my journey in software engineering.
+            Today, this notebook is where I document everything I learn about
+            software and web development. The learning path is inspired by{" "}
+            <Link
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "text-sm translate-y-0.5",
+              )}
+              href="https://roadmap.sh"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                className="h-4 w-auto dark:invert-0 invert-100"
+                src="/roadmap.svg"
+                alt="Roadmap.sh"
+                width={16}
+                height={16}
+              />
+              Roadmap.sh
+            </Link>
+            , I use{" "}
+            <Link
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "text-sm translate-y-0.5",
+              )}
+              href="https://claude.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                className="h-4 w-auto"
+                src="/claude.svg"
+                alt="Claude"
+                width={16}
+                height={16}
+              />
+              Claude
+            </Link>{" "}
+            to help me research and improve the articles, and I create all the
+            covers and diagrams in{" "}
+            <Link
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "text-sm translate-y-0.5",
+              )}
+              href="https://figma.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                className="h-4 w-auto"
+                src="/figma.svg"
+                alt="Figma"
+                width={16}
+                height={16}
+              />
+              Figma
+            </Link>
+            . Everything is reviewed and edited by hand before it is published.
           </p>
           <p>
-            May Allah accept this work, place barakah in it, and grant us all
-            tawfiq.
+            I hope this notebook/wiki continues to grow as I learn more, and
+            that it becomes a source of ongoing benefit. May Allah accept this
+            work, put barakah in it, and grant us all tawfiq.
           </p>
         </div>
       </div>

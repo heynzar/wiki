@@ -32,8 +32,8 @@ export default function NewsletterSection() {
           </h2>
           <p className="text-fd-muted-foreground leading-relaxed">
             {status === "success"
-              ? "You're all set. Whenever something new gets added; notes, diagrams, study breakdowns, you'll be the first to know Inshallah. No noise, just knowledge."
-              : "Every time new notes, diagrams, or studies are added, you'll be notified Inshallah. No noise, just knowledge."}
+              ? "You're all set. Whenever something new gets added; articles, diagrams, study breakdowns, you'll be the first to know Inshallah. No noise, just knowledge."
+              : "Every time new articles, diagrams, or studies are added, you'll be notified Inshallah. No noise, just knowledge."}
           </p>
         </header>
 

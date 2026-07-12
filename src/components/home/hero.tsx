@@ -25,8 +25,9 @@ export default function Hero() {
 
       <div className="flex justify-between">
         <p className="text-base max-w-md text-fd-muted-foreground">
-          This is a public notebook/wiki where I share what I learn as I study
-          software engineering, hoping it helps others on the same path.
+          This is a public notebook/wiki where I share everything I learn while
+          studying software and web development, hoping it helps others on the
+          same path.
         </p>
 
         <div className="hidden md:flex flex-col justify-end text-right mr-4">

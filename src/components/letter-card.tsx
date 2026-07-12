@@ -9,25 +9,25 @@ export function LetterCard({ name }: { name: string }) {
         <div className="space-y-3">
           <p className="capitalize">Hey {displayName},</p>
 
-          <p className="leading-relaxed">A new note has been added!</p>
+          <p className="leading-relaxed">A new article has been added!</p>
 
           <p>
             Title:{" "}
             <span className="text-black/90 font-medium">
-              Mastering Big-O: A Visual Guide
+              How Computers Work
             </span>
           </p>
 
           <p className="leading-relaxed">
-            In this note, I explain Big-O notation and how it helps us
-            understand the efficiency of algorithms. The goal is to make the
-            idea simple through clear explanations and visual diagrams.
+            In this article, I explain The four pieces every computer is built
+            from, and how they work together every time you run a single line of
+            code.
           </p>
 
           <div>
-            <p>Read the note here:</p>
-            <p className="text-primary underline underline-offset-2">
-              wiki.nzar.dev/docs/algorithms/big-o-guide
+            <p>Read the article here:</p>
+            <p className="text-primary underline underline-offset-2 truncate">
+              wiki.nzar.dev/docs/foundation/how-systems-work/how-a-computer-works-cpu-ram-storage-io
             </p>
           </div>
         </div>
