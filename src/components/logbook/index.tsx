@@ -24,7 +24,7 @@ export function LogbookClient({ pages }: { pages: PageWithHistory[] }) {
   const totalCommits = pages.reduce((sum, p) => sum + p.allDates.length, 0);
 
   return (
-    <section className="space-y-10 my-12 px-6 max-w-4xl mx-auto">
+    <section className="space-y-10 my-12 w-full px-6 max-w-4xl mx-auto">
       <header className="flex max-w-4xl mx-auto flex-col gap-4 w-full">
         <h2 className="font-instrument flex items-center gap-2.5 text-4xl sm:text-5xl lg:text-6xl leading-tight">
           The Story Log

@@ -42,8 +42,6 @@ export function buildCommitRows(pages: PageWithHistory[]): CommitRow[] {
   return rows.sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
-export type DayCount = { day: number; date: Date; count: number };
-
 export function groupRowsByMonthYear<T>(rows: T[], getDate: (r: T) => Date) {
   const map = new Map<string, { month: string; year: number; rows: T[] }>();
   for (const row of rows) {
@@ -61,28 +59,60 @@ export function groupRowsByMonthYear<T>(rows: T[], getDate: (r: T) => Date) {
   return Array.from(map.values());
 }
 
-export function buildHeatmapDays(
+export type HeatmapCell = {
+  date: Date;
+  count: number;
+  inYear: boolean;
+};
+
+export function buildHeatmapWeeks(
   pages: PageWithHistory[],
   year: number,
-): DayCount[][] {
-  const daysInMonth = (m: number) => new Date(year, m + 1, 0).getDate();
+  weekStartsOn: 0 | 1 = 0, // 0 => Sunday, same as github
+): HeatmapCell[][] {
+  const yearStart = new Date(year, 0, 1);
+  const yearEnd = new Date(year, 11, 31);
 
-  const months: DayCount[][] = Array.from({ length: 12 }, (_, m) =>
-    Array.from({ length: daysInMonth(m) }, (_, d) => ({
-      day: d + 1,
-      date: new Date(year, m, d + 1),
-      count: 0,
-    })),
-  );
+  const leadDiff = (yearStart.getDay() - weekStartsOn + 7) % 7;
+  const gridStart = new Date(yearStart);
+  gridStart.setDate(gridStart.getDate() - leadDiff);
 
+  const trailDiff = (weekStartsOn + 6 - yearEnd.getDay() + 7) % 7;
+  const gridEnd = new Date(yearEnd);
+  gridEnd.setDate(gridEnd.getDate() + trailDiff);
+
+  const totalDays =
+    Math.round((gridEnd.getTime() - gridStart.getTime()) / 86400000) + 1;
+  const totalWeeks = totalDays / 7;
+
+  const counts = new Map<string, number>();
   for (const page of pages) {
     for (const d of page.allDates) {
       if (d.getFullYear() !== year) continue;
-      months[d.getMonth()][d.getDate() - 1].count++;
+      const key = d.toDateString();
+      counts.set(key, (counts.get(key) ?? 0) + 1);
     }
   }
 
-  return months;
+  const weeks: HeatmapCell[][] = [];
+  const cursor = new Date(gridStart);
+
+  for (let w = 0; w < totalWeeks; w++) {
+    const week: HeatmapCell[] = [];
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(cursor);
+      const inYear = date.getFullYear() === year;
+      week.push({
+        date,
+        inYear,
+        count: inYear ? (counts.get(date.toDateString()) ?? 0) : 0,
+      });
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    weeks.push(week);
+  }
+
+  return weeks;
 }
 
 export function intensityClass(count: number, max: number): string {
