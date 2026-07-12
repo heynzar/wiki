@@ -44,19 +44,27 @@ function slugsToTag(slugs: string[]): string | undefined {
   if (!cat) return undefined;
   return sub ? `${slugLabel(cat)} // ${slugLabel(sub)}` : slugLabel(cat);
 }
-
 function hydrate(record: PageRecord): PageWithHistory {
   const slugs = urlToSlugs(record.url);
+  const isIndexPage = record.title.trim().toLowerCase() === "index";
+
+  const title = isIndexPage ? "Explore Page" : record.title;
+  const tag = isIndexPage ? "docs // Index" : slugsToTag(slugs);
+
   return {
-    title: record.title,
+    title,
     url: record.url,
     slugs,
-    tag: slugsToTag(slugs),
+    tag,
     createdAt: new Date(record.createdAt),
     allDates: record.allDates.map((d) => new Date(d)),
     deletedAt: record.deletedAt ? new Date(record.deletedAt) : null,
     isDeleted: !!record.deletedAt,
   };
+}
+
+function isMetaFile(url: string): boolean {
+  return url.endsWith("/meta.json") || url.endsWith("meta.json");
 }
 
 export async function getPageHistory(
@@ -78,9 +86,9 @@ export async function getPageHistory(
   const results = await pipeline.exec();
 
   return results
-    .filter((r): r is PageRecord => !!r)
+    .filter((r): r is PageRecord => !!r && !isMetaFile((r as PageRecord).url))
     .map(hydrate)
-    .filter((p) => !p.isDeleted); // hide deleted by default
+    .filter((p) => !p.isDeleted);
 }
 
 export async function getFullPageHistory(
@@ -101,7 +109,9 @@ export async function getFullPageHistory(
   for (const slug of slugs) pipeline.get(PAGE_KEY(slug));
   const results = await pipeline.exec();
 
-  return results.filter((r): r is PageRecord => !!r).map(hydrate);
+  return results
+    .filter((r): r is PageRecord => !!r && !isMetaFile((r as PageRecord).url))
+    .map(hydrate);
 }
 
 export async function upsertPage(slug: string, record: PageRecord) {

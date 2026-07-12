@@ -22,6 +22,7 @@ export type CommitRow = {
   date: Date;
   version: number;
   isUpdate: boolean;
+  isDeleted: boolean;
 };
 
 export function buildCommitRows(pages: PageWithHistory[]): CommitRow[] {
@@ -36,6 +37,7 @@ export function buildCommitRows(pages: PageWithHistory[]): CommitRow[] {
         date,
         version: idx + 1,
         isUpdate: idx > 0,
+        isDeleted: page.isDeleted,
       });
     });
   }
