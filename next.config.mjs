@@ -15,6 +15,14 @@ const config = {
         protocol: "https",
         hostname: "m.media-amazon.com",
       },
+      {
+        protocol: "https",
+        hostname: "cdn-media-0.freecodecamp.org",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.hashnode.com",
+      },
     ],
   },
 };
