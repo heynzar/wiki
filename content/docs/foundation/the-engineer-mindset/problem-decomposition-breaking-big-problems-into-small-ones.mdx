@@ -1,0 +1,107 @@
+---
+title: Problem Decomposition
+description: Why big problems feel impossible until you break them apart, and a practical way to actually do that every time.
+icon: FileText
+---
+
+---
+
+# Problem Decomposition: Breaking Big Problems Into Small Ones
+
+<div className="img-dev">
+  ![Problem Decomposition: Breaking Big Problems Into Small Ones; Cover
+  ](/visuals/wiki/foundation/the-engineer-mindset/problem-decomposition-breaking-big-problems-into-small-ones.png)
+</div>
+
+A ticket lands in your queue: "Add user profiles to the app." You read it, and your brain just kind of stalls. Where do you even start? What counts as done? It feels like standing at the bottom of a wall with no visible way up.
+
+That stuck feeling isn't a sign you're not cut out for this. It's a sign the problem is still too big to hold in your head all at once. The core loop from the last article started with "understand the problem, then break it into pieces small enough to solve." This article is entirely about that second step, because it's the one skill that makes every single problem after this feel manageable.
+
+## Why Big Problems Feel Impossible
+
+Your working memory, similar in spirit to the RAM we covered back in the Foundation chapter, can only hold so much at once. A problem like "add user profiles" isn't really one problem. It's dozens of smaller problems tangled together: a form, some validation, a database change, an image upload, permissions, error states, and more, all bundled into one intimidating sentence.
+
+When you try to solve all of that at once, you're not really solving anything. You're just staring at the whole tangled mess and hoping a plan appears. It won't, not like that. The fix isn't to think harder. It's to stop trying to hold the whole thing in your head at once.
+
+## What Decomposition Actually Means
+
+**Decomposition** is the habit of taking one big, vague problem and splitting it into a set of smaller, specific ones, each one small enough to actually picture yourself solving. Not solving yet, just picturing.
+
+Think about moving apartments. "Move apartments" is overwhelming as a single task. Nobody just starts randomly picking things up. Instead, you break it into pieces: pack the kitchen, pack the bedroom, book a van, change your address, disconnect the internet. None of those individually feels overwhelming. The whole move was never actually one task, it was always a pile of small ones wearing a single label.
+
+Coding problems work exactly the same way. The ticket was never really one task called "add user profiles." It was always several smaller ones, just hiding behind one sentence.
+
+## Watching It Actually Happen
+
+Let's take that same ticket and actually break it down.
+
+Before decomposition, here's the entire plan:
+
+```
+Add user profiles to the app.
+```
+
+That's it. That's the whole plan. No wonder it feels impossible, there's nothing to actually act on yet.
+
+After decomposition, the same ticket becomes something like:
+
+```
+1. Design the profile page layout
+2. Add a database field for bio and avatar
+3. Build a form to edit profile info
+4. Validate the form input
+5. Save the changes to the database
+6. Show a success message when it saves
+7. Handle what happens if the save fails
+```
+
+Nothing on that second list is scary. Each one is a task you could realistically sit down and finish in one sitting. The problem didn't get any smaller by writing it out. Your view of it did.
+
+## Two Ways to Break Things Down
+
+There are two common directions people approach decomposition from, and it's worth knowing both, because different problems suit different approaches.
+
+**Top-down** starts broad and narrows in, exactly like the profile example above. You start with the big vague goal, split it into major pieces, then keep splitting each piece further until every item feels doable. This works well when you already roughly understand the shape of the problem.
+
+**Bottom-up** starts from the small, concrete things you already know how to do, and builds upward from there. If you're not sure yet how the whole feature should work, you might start by just writing the one function you're confident about, saving a user's bio to the database, and let the rest of the plan take shape around that early piece. This works well when the problem is fuzzy and you need to build understanding by doing something concrete first.
+
+Neither approach is "more correct." Experienced engineers slide between both, depending on how well they already understand the problem in front of them.
+
+## How to Know a Piece Is Small Enough
+
+So how small is small enough? A useful test: could you describe this one piece, out loud, in a single sentence, without using the word "and"?
+
+"Validate the form input" passes that test. "Build the profile page and connect it to the database and handle errors" does not, that's really three separate pieces wearing a trench coat. If a piece still feels vague, or you can't picture the first concrete step for it, it's not broken down enough yet. Keep splitting it until it is.
+
+There's a flip side too: you can break things down too far, splitting something already simple into pointless micro-steps. If a piece is already something you could finish in a few focused minutes without thinking hard, that's usually small enough. You're looking for "manageable," not "as tiny as physically possible."
+
+## Where This Shows Up in Your Actual Code
+
+This same habit doesn't stop at planning, it shows up directly in how good code gets structured too. A function that tries to validate input, save to a database, send an email, and log an event all at once is really just an undecomposed problem, written in code form instead of a task list. Later in this wiki, when we get to writing clean, readable code, you'll see this exact same idea again: small, focused functions are decomposition, applied to code itself, not just planning.
+
+## Why This Matters
+
+The next time a task feels impossible, that feeling is information, not a final judgment on your ability. It's telling you the problem is still too big and complicated to act on, not that you're missing some skill everyone else already has. Stop, and spend five minutes just listing out the smaller pieces hiding inside it, even roughly, even if you're not sure yet.
+
+This is also exactly why experienced engineers rarely look panicked when handed a huge, vague task. It's not that the task is smaller for them. It's that breaking it down is now a reflex, something they do automatically instead of something they have to remember to try. That reflex is available to you too, and it's built through nothing more than practicing it, on purpose, every time something feels too big to start.
+
+## Go Deeper
+
+If this topic clicked for you and you want to build this reflex properly, this resource is worth your time:
+
+<Container cols={1}>
+  <BookCard
+    href="https://a.co/d/0fQouwjI"
+    image="https://m.media-amazon.com/images/I/71K9kh-Xh+L._SL1500_.jpg"
+    title="Think Like a Programmer. by V. Anton Spraul"
+  >
+    A book built entirely around problem-solving for programmers, not syntax. It
+    walks through real techniques for breaking problems apart, using actual code
+    examples, and is one of the best resources for turning decomposition from an
+    idea into an actual habit.
+  </BookCard>
+</Container>
+
+Pick up "Think Like a Programmer" once you're ready to practice the skill itself, with real problems to work through.
+
+---
