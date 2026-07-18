@@ -1,0 +1,85 @@
+---
+title: How to Read Docs
+description: Why docs feel harder to read than a tutorial, and a better way to actually use them instead of avoiding them.
+icon: FileText
+---
+
+---
+
+# How to Read Documentation Like a Pro
+
+<div className="img-dev">
+  ![How to Read Documentation Like a Pro Cover
+  ](/visuals/wiki/foundation/the-engineer-mindset/how-to-read-documentation-like-a-pro.png)
+</div>
+
+You install a new library, open its documentation page, and immediately feel a small wave of dread. Long pages, unfamiliar terms, no clear "start here" arrow. So you close the tab and go search for a blog post instead, one that just shows you the exact code to copy.
+
+That instinct is completely normal, and also worth unlearning early. Documentation, once you know how to actually read it, is usually faster and more reliable than any blog post you'll find. This article is about closing that gap.
+
+## Why Docs Feel Harder Than They Should
+
+Tutorials are written to hold your hand through one specific path, start to finish, in order. Documentation is written differently, as a reference, meant to answer any question you might have, in any order, whenever you need it. That's exactly why it feels harder to read top to bottom, it was never meant to be read that way in the first place.
+
+Once you stop trying to read documentation like a story and start treating it like a map, it becomes a lot less intimidating. You don't read a map cover to cover. You find the part that gets you where you're going, right now, and you come back to the rest of it later, if you ever need to.
+
+## Docs, Tutorials and Blog Posts Aren't the Same Thing
+
+It helps to know these three things are genuinely different tools, each with a different job.
+
+A **tutorial** walks you through one specific scenario, step by step, usually written to get a beginner to a working result quickly. A **blog post** is usually one person's specific experience solving one specific problem, useful, but shaped by their exact situation, which might not match yours. **Documentation** is the source of truth, written, or at least reviewed, by the people who actually built the thing, describing everything it can do, not just one path through it.
+
+Here's why this matters: a blog post from three years ago might describe a version of a tool that's since changed completely. The official documentation is usually the first thing updated when something changes. When a tutorial and the official docs disagree, believe the docs.
+
+## Knowing Where to Look First
+
+Most good documentation follows a similar shape, and knowing that shape in advance saves you from wandering aimlessly. There's usually a **Getting Started** or **Quickstart** section, meant to get something small actually working, fast. There are usually **Guides**, longer walkthroughs of specific common tasks. And there's usually an **API Reference**, the exhaustive, precise list of every function, option, and setting available, usually the least fun to read and the most useful once you know exactly what you're looking for.
+
+If you're brand new to a tool, start at Quickstart, not the API Reference. If you already know roughly what you're doing and just need one specific detail, like what a function returns or what options it accepts, skip straight to the reference section and search for that one specific term. Reading the wrong section for what you actually need is the single biggest reason documentation feels like a slog.
+
+## Skimming on Purpose
+
+Watch two people open the same documentation page. One starts at the top and reads every sentence in order, loses patience halfway down, and gives up. The other opens the page, immediately scans the headings and bold terms, jumps straight to the one paragraph that answers their actual question, and is done in thirty seconds.
+
+That second approach isn't cutting corners, it's the correct way to use a reference document. Use your browser's find function liberally. Scan headings before reading paragraphs. Look at code examples first, since they often answer your question faster than the prose around them ever will. You're not being graded on reading every word, you're trying to solve one specific problem.
+
+## Reading an API Reference Specifically
+
+API reference pages have their own particular shape, and it's worth knowing how to read one properly, since you'll do this constantly throughout your career. Each function or method is usually documented with its name, the **parameters** it accepts (what you're allowed to pass in, and what type each one should be), and what it **returns** (what you get back once it's done).
+
+Here's a small example of what that looks like, and how to actually read it:
+
+```
+formatDate(date: Date, format?: string): string
+```
+
+Read this piece by piece. The function is called `formatDate`. It takes a required `date` parameter, of type `Date`. It takes an optional `format` parameter, of type `string`, the question mark tells you it's optional. And it returns a `string`. That's the whole function's contract, in one line, once you know how to read it. This exact style of describing types will feel very familiar once you get to the TypeScript chapter later in this wiki, it's really the same idea, formalized into the language itself.
+
+## When the Docs Are Bad or Missing
+
+Sometimes, especially with smaller or newer open-source tools, the documentation is thin, outdated, or just missing the one detail you actually need. This happens constantly, and it's not a sign you're doing something wrong.
+
+When that happens, you have a few solid fallbacks. Check the project's examples folder, if it has one, real working code is often clearer than any prose. Search the project's GitHub issues, since someone else has very likely hit your exact question already. And sometimes, the most reliable answer is just reading the actual source code of the function you're trying to use, which sounds intimidating now, but becomes a completely normal habit once we get to reading and navigating a large codebase later in the Career chapter. The next article in this part covers exactly this kind of searching in more depth.
+
+## Understand Before You Copy
+
+One last habit worth building early: when you find a code snippet in the docs that solves your problem, read it before you paste it. What does each part actually do? Would it still work if your data looked slightly different?
+
+This matters for the same reason we talked about in the AI section of the last article. Pasting something you don't understand, whether it came from documentation, a blog post, or an AI tool, means you haven't actually solved your problem. You've just moved it further down the road, to some future version of you who now has to debug code they never really understood in the first place.
+
+## Why This Matters
+
+Once reading documentation stops feeling scary, it quietly becomes your fastest way to solve almost any problem, faster than searching, faster than asking someone else, and far more reliable than an old blog post. You'll stop avoiding the "boring" official docs and start reaching for them first, because you'll know exactly where to look and what you're looking for.
+
+This is also one of those skills that compounds. The more documentation you read, the more you notice it's almost always structured the same way, quickstart, guides, reference, and the faster you get at finding exactly what you need in a tool you've never even touched before.
+
+## Go Deeper
+
+If this topic clicked for you and you want to understand documentation well enough to navigate any of it confidently, these two are worth your time:
+
+- **"Docs for Developers: An Engineer's Field Guide to Technical Writing" by Jared Bhatti, Sarah Corleissen, and others.** Written from the other side, how good documentation actually gets built, which turns out to be one of the fastest ways to learn how to navigate it well yourself.
+- **The Divio documentation system, free online at docs.divio.com.** A widely used framework explaining the four distinct kinds of documentation, tutorials, how-to guides, explanations, and reference material, and why mixing them up is exactly what makes so many docs feel confusing to read.
+
+Start with the Divio framework if you want a quick, free way to recognize what kind of documentation you're looking at. Pick up "Docs for Developers" once you're ready for the fuller picture of how good documentation gets built in the first place.
+
+---

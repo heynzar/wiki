@@ -80,7 +80,7 @@ export function RoadmapCard({
   completed,
 }: RoadmapCardProps) {
   const [, , progress] = calculate_step_progress(id ?? 0, completed);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => (id ?? 0) <= 2);
 
   const IconComponent = icon && typeof icon !== "string" ? icon : null;
 
