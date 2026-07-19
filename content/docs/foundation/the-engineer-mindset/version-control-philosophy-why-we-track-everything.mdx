@@ -1,0 +1,66 @@
+---
+title: Why Version Control
+description: The actual problem version control solves, and why treating it as optional is one of the most expensive mistakes a new developer can make.
+icon: FileText
+---
+
+---
+
+# Version Control Philosophy: Why We Track Everything
+
+<div className="img-dev">
+  ![Version Control Philosophy: Why We Track Everything
+  Cover](/visuals/wiki/foundation/the-engineer-mindset/version-control-philosophy-why-we-track-everything.png)
+</div>
+
+You've probably done this before, even outside of code. `essay_final.docx`, then `essay_final_v2.docx`, then `essay_final_v2_ACTUALLY_FINAL.docx`. Somewhere in that pile is the version you actually want, and you're not entirely sure which one.
+
+That folder full of confusingly named copies is exactly the problem version control was built to solve. This article isn't about git commands, that gets its own full chapter later. This is about the actual idea underneath all of it, why it exists, and why every serious engineer treats it as non-negotiable.
+
+## Life Before Version Control
+
+Imagine working on a project with no system for tracking changes at all. You make a change, it breaks something, and you can't quite remember what the working version looked like an hour ago. So you start manually copying entire folders, just in case, `project`, `project_backup`, `project_backup_2`, `project_working_dont_touch`.
+
+This actually used to be normal. And it falls apart almost immediately. Which folder is actually current? What exactly changed between `project_backup` and `project_backup_2`? If two people are working on the same project, whose copy is right when they don't match? None of these questions have a clean answer, because nothing was actually being tracked, you were just guessing with folder names.
+
+## What Version Control Actually Is
+
+**Version control** is a system that remembers every change made to a project, over its entire history, on purpose. Not just the current state of your files, like the storage and file systems we covered back in the Foundation chapter, but every state your project has ever been in, going all the way back to the very first line you wrote.
+
+Think of it like a time machine sitting quietly behind your project. At any point, you can look back and see exactly what your code looked like last Tuesday, or right before that bug was introduced, or the moment before you deleted something you probably shouldn't have. Nothing is ever really gone, and nothing has to be guessed at from a folder name ever again.
+
+## Why "Just Saving the File" Isn't Enough
+
+Here's the distinction worth sitting with: your file system, the one from the earlier Foundation articles, only ever knows the current state of a file. Save over it, and whatever was there before is simply gone. That's fine for most everyday use, but it's a real problem for a project that changes constantly, where "what did this look like before I touched it" is a question you'll ask constantly.
+
+Version control solves this by keeping a full history layered underneath your normal files, a project's entire past, not just its present, ready to be looked at, compared, or restored, whenever you actually need it.
+
+## Snapshots, Not Copies
+
+The core idea behind most version control systems is the **snapshot**, usually called a **commit**. Instead of keeping messy duplicate folders, you periodically tell the system "remember exactly what the project looks like right now," along with a short message explaining what changed and why.
+
+This is a meaningfully different idea than just copying a folder. Each snapshot is small, connected to the ones before and after it, and labeled with intent, "fixed the login bug," "added the profile page," instead of a meaningless filename like `v2_final`. Over time, you end up with a clear, readable timeline of exactly how your project came to look the way it does, not a pile of guesswork.
+
+## Why Track Even the Small Stuff
+
+It might feel like overkill to save a snapshot for a tiny change. It isn't, and here's why: the value of tracking everything isn't really about any one single change, it's about the freedom it gives you to experiment fearlessly.
+
+If you know every state of your project is safely recorded, you can try a risky refactor, a bold experiment, a "let's see what happens if" change, without any real fear. If it doesn't work out, you're never more than a moment away from exactly where you started. Without that safety net, most people play it too safe, avoiding real improvements simply because undoing a mistake feels too risky. This is also exactly what makes finding when a bug was introduced so much easier, since you can look back through this whole timeline and pinpoint the exact snapshot where something broke, a technique you'll see properly in the dedicated Git chapter later.
+
+## Working With Others, Without Chaos
+
+Here's where this idea becomes essential rather than just convenient. The moment more than one person works on the same project, at the same time, you need a way to combine everyone's changes without anyone quietly overwriting someone else's work.
+
+Version control handles this by letting people work on their own parallel timeline, often called a **branch**, and then carefully combine it back into the main project once it's ready. Two people can work on completely different features, on the same codebase, at the same time, without stepping on each other, and the system handles reconciling their work when the moment comes. The actual mechanics of branches, merges, and resolving conflicts get a full, proper treatment in the Git chapter ahead. For now, just know the underlying idea: many people, many timelines, one system quietly keeping track of how they all fit back together.
+
+## Why This Isn't Optional Anymore
+
+It's worth saying plainly: there is no serious professional environment where version control is optional. Every team you'll ever join will use it, almost always in the form of git, which is what the rest of this wiki's Git chapter focuses on directly. Even working entirely solo, on a tiny personal project, the habit is worth building from day one, because the day you actually need your project's history, and you eventually will, is not a good day to discover you never had one.
+
+## Why This Matters
+
+Once this idea clicks, you stop being afraid of your own code. You'll make bolder changes, knowing you can always step back to exactly where you were. You'll stop naming files `final_v2_actually_final`, because you'll have an actual system doing that job properly, with real history behind it instead of a guess.
+
+This is also one of those habits that quietly separates people who ship real software from people who just write code on their own machine. The moment you work with anyone else, or need to trace back exactly when and why something changed, you'll be glad this history was being kept the entire time, instead of wishing you'd started tracking it sooner.
+
+---
