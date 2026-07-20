@@ -1,0 +1,114 @@
+---
+title: Clean Code Guide
+description: Why code that works isn't automatically good code, and why clarity matters more than you'd expect this early on.
+icon: FileText
+---
+
+---
+
+# The Importance of Writing Clean, Readable Code
+
+<div className="img-dev">
+  ![Clean Code 101: Why Readable Code Matters for Developers
+  ](/visuals/wiki/foundation/the-engineer-mindset/the-importance-of-writing-clean-readable-code.png)
+</div>
+
+You open a file you wrote three months ago, and it might as well have been written by a stranger. Confusing variable names, no clear structure, no idea why you made half these decisions. You wrote every single line, and you still can't follow it.
+
+That moment is exactly why this article exists this early in the wiki, before you've even learned most of the languages and tools ahead. Clean code isn't a style preference you pick up later. It's a mindset worth building from your very first lines.
+
+## Code Is Read Far More Than It's Written
+
+Here's a fact that surprises a lot of new developers: any piece of code gets written once, and then read many, many times after that. By you, debugging it later. By a teammate, trying to add a feature next to it. By whoever reviews your changes before they ship. Writing code is a single event. Reading it happens over and over, for as long as that code stays in use.
+
+Given that ratio, optimizing purely for how fast something was to write, at the expense of how easy it is to read afterward, is exactly backwards. A few extra minutes spent making something clear now saves everyone, including future you, far more time later.
+
+## "Working" and "Good" Are Different Bars
+
+It's easy to assume that if code runs and produces the right output, the job is done. That's one bar, and it's an important one, but it's not the same bar as "good."
+
+Here's the same small task, done two different ways.
+
+Before, code that works, but only just barely explains itself:
+
+```javascript
+function p(a, b) {
+  return a.filter((x) => x.s === "a").reduce((t, x) => t + x.v, 0) > b;
+}
+```
+
+This runs fine. It also asks anyone reading it, including you next month, to reverse-engineer what `s`, `a`, and `v` even mean before they can trust it, let alone safely change it.
+
+After, functionally identical, written to actually be read:
+
+```javascript
+function isOverBudget(transactions, budgetLimit) {
+  const activeSpending = transactions
+    .filter((transaction) => transaction.status === "active")
+    .reduce((total, transaction) => total + transaction.value, 0);
+
+  return activeSpending > budgetLimit;
+}
+```
+
+Same logic, same result, completely different experience for the next person who opens it. This connects directly back to problem decomposition from earlier in this part, a clear name and a clear shape is really just decomposition applied to the code itself, breaking one dense line into small, obvious, individually understandable pieces.
+
+## Messy Code's Cost Compounds
+
+Having one messy piece of code is okay, but having a whole project of it causes big problems. It makes adding new features really slow because no one understands the old code. It also makes fixing bugs risky, because you might accidentally break something without realizing it.
+
+This slow buildup of messy, hard-to-change code has a name in the industry, **technical debt**, and it gets a much deeper treatment later, once we cover software architecture properly. For now, just know the pattern: messy code is never just "a bit slower to read." Its cost quietly grows every single day it isn't cleaned up, the same way real debt grows the longer it's left unpaid.
+
+## Choose Clear Code Over Clever Code
+
+It feels great to write a super short, clever line of code that does a lot. But you should usually avoid it. Clever code is a small trophy for you, right now, and a small tax on everyone who reads it afterward, including future you, who won't remember the clever trick either.
+
+Here is a simple rule: if you have to stop and think to understand your own code a week later, it was too clever. Writing slightly longer, clear code is almost always better than writing short and confusing code. The goal is not to write the shortest code possible. The goal is to make code that is easy to read, trust, and update.
+
+## Naming Is Half the Battle
+
+A huge amount of what makes code readable comes down to something super simple: naming things well. A variable called `x` tells you nothing. A variable called `activeSpending` tells you almost everything, before you've even read the line it's used in.
+
+This topic deserves its own full article later, in the Career chapter's piece on clean code in practice. For now, just start building the habit early: when you're about to name something quickly and move on, pause for three extra seconds and ask whether the name alone would make sense to someone who's never seen this code before.
+
+## Comments: When They Help, and When They Lie
+
+Comments feel like an obvious way to make code clearer, and sometimes they are. But a comment that just repeats what the code already clearly says adds noise, not clarity. A comment explaining why a decision was made, something the code itself can't say on its own, like why you're working around a strange bug in a third-party library, is genuinely valuable.
+
+Here's the risk worth knowing early: comments don't automatically update when the code around them changes. A comment that was accurate a year ago, sitting next to code that's since changed twice, can actively mislead you, confidently telling you something that's no longer true. A good comment explains intent. A stale comment is worse than no comment at all, because it's actively not telling the truth to whoever trusts it next.
+
+## Why This Matters
+
+Every time you're tempted to rush past a bad variable name, or squeeze a dense clever line in just to feel efficient, remember who actually pays for that shortcut later. Usually, it's you, a few weeks from now, staring at your own code like a stranger wrote it.
+
+Clean code isn't about being precious or perfectionist. It's about respecting the fact that code is read far more than it's written, and that the easiest gift you can give your future self, and everyone who works alongside you, is code that explains itself the moment they open it.
+
+## Go Deeper
+
+If this topic clicked for you and you want to see both sides of this taken seriously, these two are worth your time:
+
+<Container cols={2}>
+  <BookCard
+    href="https://a.co/d/058GzG6U"
+    image="https://m.media-amazon.com/images/I/71nj3JM-igL._SL1500_.jpg"
+    title="Clean Code. by Robert C. Martin"
+  >
+One of the most widely read books in the industry on exactly this topic.   
+</BookCard>
+
+<BookCard
+  href="https://github.com/droogans/unmaintainable-code"
+  title="How to Write Unmaintainable Code. by Roedy Green"
+>
+  A well-known, genuinely funny essay written from the opposite direction, a
+  satirical guide to writing code that's deliberately confusing
+</BookCard>
+
+</Container>
+
+- **"Clean Code" by Robert C. Martin.** One of the most widely read books in the industry on exactly this topic, full of concrete before-and-after examples that go much deeper than this article had room for.
+- **"How to Write Unmaintainable Code" by Roedy Green, free online.** A well-known, genuinely funny essay written from the opposite direction, a satirical guide to writing code that's deliberately confusing. Reading it is a surprisingly effective way to spot exactly the habits this article is asking you to avoid.
+
+Start with "How to Write Unmaintainable Code" for a quick, entertaining way to recognize bad habits by seeing them exaggerated on purpose. Pick up "Clean Code" once you're ready for the fuller, serious version of everything this article introduced.
+
+---
