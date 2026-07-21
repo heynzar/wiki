@@ -102,17 +102,17 @@ export const roadmap: Roadmap[] = [
             name: "Understanding Errors: Reading Stack Traces & Logs",
             url: "understanding-errors-reading-stack-traces-and-logs",
           },
-           {
+          {
             name: "How to Debug Systematically (Not by Guessing)",
             url: "how-to-debug-systematically-not-by-guessing",
           },
           {
             name: "How to Read Documentation Like a Pro",
             url: "how-to-read-documentation-like-a-pro",
-          }, 
-           {
-            name: "How to Search for Answers (Stack Overflow, GitHub, Docs)",
-            url: "how-to-search-for-answers-stack-overflow-github-docs",
+          },
+          {
+            name: "Mastering Search: Google Tricks, AI and Where to Actually Look",
+            url: "mastering-search-google-tricks-and-ai",
           },
           {
             name: "Using AI Tools Effectively (Without Becoming Dependent)",
@@ -125,7 +125,7 @@ export const roadmap: Roadmap[] = [
           {
             name: "The Importance of Writing Clean, Readable Code",
             url: "the-importance-of-writing-clean-readable-code",
-          },         
+          },
           {
             name: "Building a Learning System That Compounds Over Time",
             url: "building-a-learning-system-that-compounds-over-time",

@@ -1,0 +1,138 @@
+---
+title: Mastering Search
+description: Why searching is still a real skill in the age of AI, and the simple tricks that help you find answers faster.
+icon: FileText
+---
+
+---
+
+# Mastering Search: Google Tricks, AI and Where to Actually Look
+
+<div className="img-dev">
+  ![Mastering Search: Google Tricks, AI and Where to Actually Look Cover
+  ](/visuals/wiki/foundation/the-engineer-mindset/mastering-search-google-tricks-and-ai.png)
+</div>
+
+A few years ago, when something broke, the first step was to paste the error into Google and scroll through Stack Overflow posts. Today, many people open an AI chat first instead. Stack Overflow's traffic has dropped a lot as more developers use AI, and it's easy to see why. A good AI answer is often faster than searching through five different tabs.
+
+That change is real, but it doesn't mean searching is no longer useful. It just means the skill has changed. This article covers both sides of modern research: the search tricks most people never learn, and how to use AI without slowly losing the ability to find things yourself.
+
+## Why Good Searching Still Matters
+
+AI is great at explaining ideas or helping you write a first version of a fix. But it's weaker in a few situations: things that changed recently, because its knowledge may be out of date, problems that are very rare or poorly documented, and anything inside your own private codebase unless you share it.
+
+This is where search is still better. A GitHub issue from last week about a new bug. A discussion where someone already had your exact problem. The official documentation that was updated the day a feature was released. AI is a great starting point for common problems. Search is still the best tool for recent, specific, and unusual ones.
+
+## The Search Trick Most People Never Learn
+
+Most people type a question into Google and hope for the best. They get pages of results that are only loosely related. Learning a few search operators can make your search much more accurate, and they only take a few minutes to understand.
+
+Here's the same problem searched in two different ways.
+
+A normal search:
+
+```text
+node fetch error when calling api sometimes
+```
+
+This is broad and unclear. You'll probably get tutorials, unrelated errors, and old forum posts that don't really match.
+
+Now with a few search operators:
+
+```text
+"fetch failed" node site:github.com -tutorial
+```
+
+Every part of this search has a purpose.
+
+The quotes around `"fetch failed"` tell Google to search for that exact phrase. `site:github.com` limits the results to GitHub, which is useful when you want issue discussions instead of blog posts. `-tutorial` removes pages with that word, helping you avoid beginner guides when you just need the answer.
+
+## The Search Operators Worth Remembering
+
+You don't need to memorize dozens of operators. These few are enough for most searches.
+
+- `"exact phrase"` searches for those exact words, which is perfect for error messages.
+- `site:domain.com` searches only one website, like GitHub, Stack Overflow, or the official documentation.
+- `-word` removes results containing a certain word, helping you filter out things you don't want.
+- `filetype:pdf` only shows files of a certain type, which is useful for papers, manuals, or specifications.
+
+Another useful habit is using Google's date filter. You can limit results to the past year or even the past month. This is especially helpful when you're working with software that changes often, because it keeps you from reading solutions that are years out of date.
+
+## Searching Inside One Website
+
+Sometimes the fastest search isn't Google at all. It's searching directly on the website you care about.
+
+GitHub lets you search with filters like `is:issue is:closed`, which only shows issues that have already been solved. You can also use `label:bug` to find confirmed bugs instead of feature requests.
+
+Stack Overflow also has good search filters. For example, searching only inside the `[node.js]` tag removes answers from other programming languages.
+
+This works because a project's own issue tracker is usually much smaller and more relevant than the whole internet. Searching inside the right website is often the fastest way to find the answer.
+
+## Using AI to Help You Search
+
+The last article talked about using AI while you're already debugging. This is different. Here, AI is helping you research before you've found the answer.
+
+AI is especially useful for two things.
+
+First, it can turn a vague idea into a better search query. Instead of asking AI to solve your problem, ask it to suggest search terms or search operators you should try.
+
+Second, AI is good at summarizing long discussions. If you find a huge GitHub issue or forum thread, AI can give you the main points. Just make sure you still read the original discussion afterward in case the summary missed something important.
+
+The risky part is trusting AI too much. AI can sound very confident even when it's wrong, especially for recent changes, uncommon problems, or version-specific questions. Treat an AI answer the same way you would treat an old forum post. It might be right, but you should still check it against the official documentation or another reliable source.
+
+## Be Careful What You Trust
+
+Not every answer deserves the same level of trust, whether it comes from Google or AI.
+
+In general, official documentation and official GitHub issues are the most reliable because they come from the people who built the software.
+
+Next come recent Stack Overflow answers or GitHub discussions that have been confirmed by other developers.
+
+Old forum posts and AI answers should be treated more carefully. Both can give outdated or incorrect advice while sounding completely certain.
+
+A good habit is simple: before you trust an answer, check when it was written. If it came from AI, compare it with a real, up-to-date source. Confidence is not the same as being correct.
+
+## Know When to Stop Searching
+
+Searching, just like asking AI, can become a form of procrastination. It's easy to read one more discussion or try one more prompt without actually testing anything.
+
+A good rule is to spend a reasonable amount of time searching, then go test your own idea using the debugging process from the earlier articles, even if you didn't find the perfect answer.
+
+Search and AI are both tools that support debugging. Neither one replaces testing your ideas in your own code.
+
+## Why This Matters
+
+Good search operators can turn forty unrelated search results into a few pages that actually answer your question.
+
+Knowing when to use a `site:` search, when to search for an exact phrase, or when to ask AI for better search terms instead of a complete answer will save you time every day.
+
+It also helps you stay in control of your own research. AI is an excellent tool for finding information faster, but the developers who keep improving are the ones who still know how to search well, check their sources, and use AI as another tool instead of depending on it completely.
+
+## Go Deeper
+
+If you want to get even better at searching, these two free resources are worth reading.
+
+<Container cols={2}>
+  <BookCard
+    href="https://support.google.com/websearch/answer/134479"
+    title="Google's official 'Refine web searches' guide"
+  >
+It explains every search operator Google supports. It's short, practical, and worth bookmarking.
+</BookCard>
+
+<BookCard
+  href="http://www.catb.org/~esr/faqs/smart-questions.html"
+  title="How To Ask Questions The Smart Way. by Eric Steven Raymond"
+>
+  A well-known guide about researching a problem properly before asking for
+  help.
+</BookCard>
+
+</Container>
+
+- **Google's official "Refine web searches" guide.** It explains every search operator Google supports. It's short, practical, and worth bookmarking.
+- **"How To Ask Questions The Smart Way" by Eric Steven Raymond.** A well-known guide about researching a problem properly before asking for help. The tone is direct, but the advice is still very useful, even in the age of AI.
+
+Start with Google's search guide. You'll probably use several of the operators within a few days. Then read the Raymond essay to build stronger research habits that will help throughout your career.
+
+---
