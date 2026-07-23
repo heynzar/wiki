@@ -19,6 +19,12 @@ export default function Layout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${instrument_serif.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <meta
+          name="google-site-verification"
+          content="GVMliRgOaC5BVnMhXqDy1r-RIP0utMUGGkf38orLpNo"
+        />
+      </head>
       <body className="flex flex-col min-h-screen">
         <RootProvider>{children}</RootProvider>
       </body>

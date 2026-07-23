@@ -163,6 +163,10 @@ export const roadmap: Roadmap[] = [
             url: "semantic-html-why-structure-matters",
           },
           {
+            name: "Metadata & SEO: head, title, og tags, robots",
+            url: "metadata-seo-head-title-og-tags-robots",
+          },
+          {
             name: "Forms: Inputs, Validation, Labels & Accessibility",
             url: "forms-inputs-validation-labels-accessibility",
           },
@@ -171,23 +175,27 @@ export const roadmap: Roadmap[] = [
             url: "tables-when-and-how-to-use-them",
           },
           {
-            name: "Metadata & SEO: head, title, og tags, robots",
-            url: "metadata-seo-head-title-og-tags-robots",
-          },
-          {
-            name: "HTML Accessibility: ARIA Roles, Screen Readers, Alt Text",
+            name: "HTML Accessibility: ARIA Roles, Screen Readers & Alt Text",
             url: "html-accessibility-aria-roles-screen-readers-alt-text",
           },
           {
-            name: "Embedding: iframes, video, audio, SVG",
-            url: "embedding-iframes-video-audio-svg",
+            name: "Embedding Content: iframes, Video, Audio & SVG",
+            url: "embedding-content-iframes-video-audio-svg",
           },
           {
-            name: "Web Components: Custom Elements Overview",
-            url: "web-components-custom-elements-overview",
+            name: "Images on the Web: Responsive Images & Optimization",
+            url: "images-on-the-web-responsive-images-optimization",
           },
           {
-            name: "HTML Email: Why It's Still Hell",
+            name: "Inspecting HTML with Browser DevTools",
+            url: "inspecting-html-with-browser-devtools",
+          },
+          {
+            name: "Introduction to Web Components",
+            url: "introduction-to-web-components",
+          },
+          {
+            name: "HTML Email: Why It's Still Hell (Bonus)",
             url: "html-email-why-its-still-hell",
           },
         ],
