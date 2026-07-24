@@ -14,7 +14,12 @@ export function Timeline({ groups }: { groups: Group<CommitRow>[] }) {
   return (
     <>
       {groups.map(({ month, year, rows }, i) => (
-        <MonthGroup key={`${year}-${month}-${i}`} month={month} year={year}>
+        <MonthGroup
+          key={`${year}-${month}-${i}`}
+          month={month}
+          year={year}
+          total_commits={rows.length}
+        >
           {rows.map((row, j) => (
             <CommitRowItem key={j} row={row} />
           ))}

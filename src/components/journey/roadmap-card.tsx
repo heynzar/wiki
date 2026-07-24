@@ -83,7 +83,8 @@ export function RoadmapCard({
   const [isOpen, setIsOpen] = useState(() => (id ?? 0) <= 2);
 
   const IconComponent = icon && typeof icon !== "string" ? icon : null;
-
+  const formatPercent = (value: number) =>
+    Number.isInteger(value) ? `${value}%` : `${value.toFixed(2)}%`;
   return (
     <div
       style={{ order: id }}
@@ -97,7 +98,7 @@ export function RoadmapCard({
       >
         <div className="flex items-center justify-between">
           <span className="uppercase font-medium text-xs text-primary">
-            {`${formatIndex(id ?? 0)} ✦ (${progress}%) ✦ ${sectionName}`}
+            {`${formatIndex(id ?? 0)} ✦ (${formatPercent(progress)}) ✦ ${sectionName}`}
           </span>
 
           {url && (
