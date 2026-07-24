@@ -146,7 +146,7 @@ export const roadmap: Roadmap[] = [
       {
         id: 3,
         url: "html",
-        name: "HTML",
+        name: "HTML: The Full Guide",
         description: "The structure and skeleton of every webpage",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
         children: [
@@ -203,7 +203,7 @@ export const roadmap: Roadmap[] = [
       {
         id: 4,
         url: "css",
-        name: "CSS",
+        name: "CSS: The Full Guide",
         description: "Styling, layouts, animations and visual design language",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
         children: [
@@ -279,7 +279,7 @@ export const roadmap: Roadmap[] = [
       {
         id: 5,
         url: "javascript",
-        name: "JavaScript",
+        name: "JavaScript: The Full Guide",
         description: "The core programming language of the web and beyond",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
         children: [
@@ -421,7 +421,7 @@ export const roadmap: Roadmap[] = [
       {
         id: 7,
         url: "typescript",
-        name: "TypeScript",
+        name: "TypeScript: The Full Guide",
         description: "Type-safe JavaScript for large, serious applications",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
         children: [
@@ -614,7 +614,7 @@ export const roadmap: Roadmap[] = [
       {
         id: 10,
         url: "react",
-        name: "React",
+        name: "React: The Full Guide",
         description: "Build modern and dynamic user interfaces.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
 
@@ -855,7 +855,7 @@ export const roadmap: Roadmap[] = [
       {
         id: 14,
         url: "nextjs",
-        name: "Next.js",
+        name: "Next.js: The Full Guide",
         description: "Build production-grade fullstack React apps.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
 
@@ -934,7 +934,7 @@ export const roadmap: Roadmap[] = [
       {
         id: 15,
         url: "remix",
-        name: "Remix",
+        name: "Remix: The Full Guide",
         description: "Build fast web apps using remix framework.",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/remix/remix-original.svg",
 
