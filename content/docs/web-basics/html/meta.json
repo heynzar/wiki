@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "html-cheat-sheet-document-structure",
+    "every-html-tag-you-actually-need-to-know",
+    "semantic-html-why-structure-matters",
+    "metadata-seo-head-title-og-tags-robots",
+    "forms-inputs-validation-labels-accessibility",
+    "tables-when-and-how-to-use-them",
+    "html-accessibility-aria-roles-screen-readers-alt-text",
+    "embedding-content-iframes-video-audio-svg",
+    "images-on-the-web-responsive-images-optimization",
+    "inspecting-html-with-browser-devtools",
+    "introduction-to-web-components",
+    "html-email-why-its-still-hell"
+  ]
+}
