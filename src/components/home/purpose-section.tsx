@@ -2,6 +2,7 @@ import Image from "next/image";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { ArrowUpRight } from "lucide-react";
 
 export default function PurposeSection() {
   return (
@@ -87,6 +88,7 @@ export default function PurposeSection() {
                 height={16}
               />
               Roadmap.sh
+              <ArrowUpRight />
             </Link>
             , I use{" "}
             <Link
@@ -106,6 +108,7 @@ export default function PurposeSection() {
                 height={16}
               />
               Claude
+              <ArrowUpRight />
             </Link>{" "}
             to help me research and improve the articles, and I create all the
             covers and diagrams in{" "}
@@ -126,6 +129,7 @@ export default function PurposeSection() {
                 height={16}
               />
               Figma
+              <ArrowUpRight />
             </Link>
             . Everything is reviewed and edited by hand before it is published.
           </p>
