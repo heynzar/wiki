@@ -1,0 +1,138 @@
+---
+title: Accessible Forms
+description: Why forms are one of the easiest things to get visually right and functionally wrong, and how to actually build one properly.
+icon: FileText
+---
+
+---
+
+# Forms: Inputs, Validation, Labels & Accessibility
+
+<div className="img-dev">
+  ![Forms: Inputs, Validation, Labels & Accessibility Cover
+  ](/visuals/wiki/web-basics/html/forms-inputs-validation-labels-accessibility.png)
+</div>
+
+Fill out almost any signup form and something small but impressive happens without you noticing. Your phone shows a number pad for a phone field, and a full keyboard for a name field. Click the word "Email" and the input box focuses automatically, even though you clicked text, not the box itself. None of that is an accident, and none of it happens automatically unless the HTML underneath is written correctly.
+
+Forms are deceptively easy to get visually right and functionally wrong. A form can look perfect and still be genuinely unusable for a screen reader user, or quietly submit to the wrong place, or fail validation in a way nobody notices until real users start complaining. This article is about building one properly, not just one that looks fine.
+
+## The `<form>` Element and How It Actually Submits
+
+Every form starts with a `<form>` tag, and two attributes decide what happens when it's submitted.
+
+```html
+<form action="/submit-signup" method="POST">...</form>
+```
+
+`action` is the URL the form's data gets sent to, and `method` is the HTTP method used to send it, the same GET and POST covered back in the HTTP and networking articles in the Foundation chapter. `GET` appends the form's data directly onto the URL, fine for something like a search box, but a poor choice for anything sensitive, since the data ends up visible in the address bar and browser history. `POST` sends the data in the request body instead, the standard choice for anything meaningful, like a signup or login form.
+
+## Input Types: More Than Just Text
+
+It's tempting to make every field a plain `type="text"` input and call it done. Resist that. HTML has a specific input type for a wide range of common data, and each one comes with real, built-in benefits, not just a nicer label.
+
+Before, everything treated the same:
+
+```html
+<input type="text" name="email" /> <input type="text" name="phone" />
+```
+
+This works, technically, but gives up a lot of free functionality.
+
+After, using the type that actually matches the data:
+
+```html
+<input type="email" name="email" /> <input type="tel" name="phone" />
+```
+
+On a phone, `type="email"` brings up a keyboard with an `@` key readily available, and `type="tel"` brings up a proper number pad. Both types also get basic built-in validation for free, an `email` field will flag an obviously malformed address before the form is even submitted. Other useful types include `type="date"` for a proper date picker, `type="number"` for numeric input, and `type="checkbox"` and `type="radio"` for selecting one or multiple options from a set. Choosing the right type costs nothing extra to write and gives your users a noticeably better experience, especially on mobile.
+
+## Labels: The Most Skipped, Most Important Tag
+
+Here's the single most common mistake in real-world forms: skipping a proper `<label>` and relying on a placeholder, or no label at all.
+
+Before, a field with no real label:
+
+```html
+<input type="text" placeholder="Full Name" />
+```
+
+This looks fine, right up until someone starts typing, at which point the placeholder text disappears entirely, and there's no label left describing what the field even was. A screen reader user gets even less to work with, often nothing more than "edit text," with no indication of what belongs there at all.
+
+After, properly labeled:
+
+```html
+<label for="fullName">Full Name</label>
+<input type="text" id="fullName" name="fullName" />
+```
+
+The `for` attribute on the label matches the `id` on the input, formally connecting the two. This does more than you'd expect from something so small: clicking anywhere on the label text now focuses the input automatically, and a screen reader announces the label clearly every time that field is reached. This single connection is often the difference between a form that's genuinely usable and one that technically works but quietly fails a huge number of real users.
+
+## Placeholder Is Not a Label
+
+It's worth saying this plainly, since it's such a common trap: a placeholder is a hint about the expected format, like `MM/DD/YYYY`, not a substitute for a real label. Placeholders also tend to render in low-contrast gray text, making them harder to read even while they're still visible. Use a real `<label>` every time, and reserve placeholders for genuinely optional formatting hints alongside it, never instead of it.
+
+## Built-In HTML5 Validation
+
+Browsers can catch a surprising number of basic mistakes before a form is even submitted, using nothing but a few HTML attributes.
+
+```html
+<input type="email" required minlength="5" />
+<input type="number" min="1" max="100" />
+```
+
+`required` blocks submission entirely if the field is empty. `minlength` and `maxlength` constrain text length, and `min` and `max` constrain numeric range. This is genuinely useful, immediate feedback with zero JavaScript required, but it's worth knowing plainly: this is a convenience for the user, not a security boundary. Anyone can bypass client-side validation entirely, so the actual, trustworthy validation still has to happen again on the server, a topic covered properly later, in the backend chapter's article on request validation.
+
+## Grouping Related Fields: `fieldset` and `legend`
+
+When a form has a genuinely related cluster of fields, a set of radio buttons, or the separate pieces of a mailing address, wrapping them in a `<fieldset>` with a `<legend>` gives that group its own clear, announced heading.
+
+```html
+<fieldset>
+  <legend>Preferred Contact Method</legend>
+  <label><input type="radio" name="contact" value="email" /> Email</label>
+  <label><input type="radio" name="contact" value="phone" /> Phone</label>
+</fieldset>
+```
+
+A screen reader announces the legend before reading each option inside it, so a user hears "Preferred Contact Method, Email" instead of just "Email," with no context for what that radio button actually belongs to.
+
+## Buttons: A Small, Common Bug
+
+Any `<button>` placed inside a `<form>` defaults to `type="submit"`, whether you meant it to or not. This causes a genuinely common bug: a button meant to do something else entirely, like toggling a password's visibility, accidentally submits the entire form the moment it's clicked.
+
+```html
+<button type="button">Show Password</button>
+<button type="submit">Create Account</button>
+```
+
+Being explicit about `type="button"` for anything that isn't meant to submit the form is a small habit that prevents a genuinely confusing bug to track down later.
+
+## A Complete, Accessible Form Example
+
+Putting all of this together, here's a small but properly built form:
+
+```html
+<form action="/signup" method="POST">
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required />
+
+  <fieldset>
+    <legend>Preferred Contact Method</legend>
+    <label><input type="radio" name="contact" value="email" /> Email</label>
+    <label><input type="radio" name="contact" value="phone" /> Phone</label>
+  </fieldset>
+
+  <button type="submit">Sign Up</button>
+</form>
+```
+
+Every part of this form does its job for a specific reason, real input types, a properly connected label, a grouped fieldset, and an unambiguous submit button. This is also just the HTML side of the story, deeper ARIA patterns for more complex, custom form widgets get their own proper treatment in the accessibility article coming up shortly in this part.
+
+## Why This Matters
+
+A form with no real labels isn't just a minor inconvenience, it can make a page completely unusable for someone relying on a screen reader, and it's one of the most common reasons real sites fail basic accessibility audits. A button that unexpectedly submits a form is exactly the kind of confusing bug that eats up an afternoon before anyone realizes it was `type="submit"` all along. Relying only on client-side validation is exactly how invalid, or malicious, data ends up reaching your server unchecked.
+
+Forms are one of the most common things you'll ever build, and one of the easiest things to get subtly wrong while looking completely fine. Getting the fundamentals right here, real labels, the right input types, sensible validation, pays off every single time a real person, not just you testing it once, actually has to use what you built.
+
+---
