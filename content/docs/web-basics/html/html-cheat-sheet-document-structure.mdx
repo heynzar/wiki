@@ -1,5 +1,5 @@
 ---
-title: HTML Cheat Sheet
+title: HTML Structure
 description: The exact skeleton every HTML page needs, what each piece actually does, and a quick reference you'll come back to constantly.
 icon: FileText
 ---
@@ -17,13 +17,18 @@ A desktop app, say something written in Java, is usually just Java. One language
 
 Quick note before we start: this article assumes you've already read How Browsers Work from the Foundation chapter. Everything here, the DOM, parsing, how a browser actually reads what you're about to write, builds directly on that article, so if you haven't read it yet, that's a great five minutes to spend first.
 
-## Why the Web Split Into Three Languages
+## Why the Web Split Into 3 Languages
 
 The web didn't actually start this way. In its earliest days, HTML did almost everything, structure and appearance were tangled together in the same tags, things like `<font>` and `<center>` littered right alongside the content itself. It worked, in the way anything tangled together "works," until you needed to change how a hundred pages looked, and had to go edit every single one of them individually.
 
 CSS arrived specifically to pull styling out of that mess, and JavaScript arrived to handle behavior, what happens when you click something, separately again. This split has a name: **separation of concerns**, keeping structure, appearance, and behavior in three distinct layers instead of one tangled one. Change how your site looks, and you touch CSS, not your content. Add a new interactive feature, and you touch JavaScript, without needing to rewrite your page's structure at all.
 
 Compare that to a single-language desktop app, where UI logic, appearance, and business logic often do end up tangled together in the same codebase, and changing how something looks can mean carefully picking apart code that also handles what it does. The web's three-language split isn't an accident or a historical inconvenience. It's a deliberate design that keeps each concern independent enough to change without breaking the other two. HTML is the first of those three layers, and it's what this entire part of the wiki is about.
+
+<div className="img-dev">
+  ![Why the Web Split Into Three Languages
+  ](/visuals/wiki/web-basics/html/html-cheat-sheet-document-structure_html-basic-document-and-structure_why-the-web-split-into-3-languages.png)
+</div>
 
 ## Why Every HTML Document Looks the Same
 
@@ -33,15 +38,25 @@ Remember from the browsers article that the browser builds the DOM by parsing yo
 
 ## The Document Type Declaration
 
-Every HTML page should start with this exact line:
+Every HTML page should start with this exact line, at the very top of the file:
 
 ```html
 <!DOCTYPE html>
 ```
 
-This tells the browser, plainly, "interpret this page using modern HTML standards." It looks small, but it matters more than its size suggests.
+Think of it as a note to the browser that says: "Hey, use modern rules to show this page."
 
-Before this declaration, or with it missing entirely, older browsers would fall back into something called **quirks mode**, an old compatibility mode that mimics buggy browser behavior from decades ago, purely to avoid breaking ancient websites that were never updated. After including it, the browser uses **standards mode**, the modern, predictable, consistent set of rules that this entire wiki assumes you're building with. One line, and you've told the browser exactly which rulebook to use.
+**What happens if you leave it out?**
+The browser doesn't know which rulebook to use, so it guesses. To avoid breaking really old websites, it falls back to **quirks mode**, a legacy compatibility mode that copies buggy browser behavior from the 1990s. Your CSS can behave inconsistently, spacing and sizing can shift in unexpected ways, and different browsers may render your page differently from each other.
+
+**What did pages look like before this line existed?**
+Back before `<!DOCTYPE html>` was standardized, developers had to write long, ugly declarations like this just to get modern rendering:
+
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+```
+
+HTML5 simplified all of that down to one short, easy-to-remember line. Add it, and the browser uses **standards mode**, the modern, predictable, consistent rendering that this entire wiki assumes you're building with.
 
 ## The `<html>` Element and Why `lang` Matters
 
@@ -53,17 +68,32 @@ Right after the doctype comes the root of the whole page:
 </html>
 ```
 
-Every other tag on your page lives inside this one element, it's the trunk of the entire DOM tree from the browsers article. The `lang` attribute tells the browser, and anything reading the page on your behalf, what human language the content is written in.
+Every other tag on your page lives inside this one element. It's the trunk of the entire DOM tree, the thing every branch, twig, and leaf grows out of. The `lang` attribute tells the browser, and anything reading the page on your behalf, what human language the content is written in.
 
 This isn't just a formality. Screen readers use it to choose the correct pronunciation rules, and search engines use it to serve your page to the right audience. We'll cover both of these properly in the accessibility and SEO articles later in this part, but the habit starts right here, at the very top of the document.
+
+`lang` is the one you'll use on almost every project, but a few others are worth knowing too.
+
+`dir` tells the browser which way your text should flow. Most languages, like English, go left to right, so you rarely need to set this one by hand. But languages like Arabic go right to left, so you'd write `dir="rtl"` to flip the whole page around, including where the scrollbar sits and how some layouts behave.
+
+```html
+<html lang="ar" dir="rtl"></html>
+```
+
+Lastly, you can also attach your own custom `data-*` attributes to `<html>`, like `data-theme="dark"`, so JavaScript can read them later. We'll cover exactly how these work when we get to the CSS part of this wiki.
 
 ## `<head>` vs `<body>`: What Goes Where
 
 Inside `<html>`, everything splits into exactly two sections, and mixing them up is one of the most common beginner mistakes.
 
-The `<head>` holds information _about_ the page, not the page's actual visible content. Think of it as the page's ID card: its title, its character encoding, links to stylesheets, metadata for search engines and social media. None of it appears directly on screen. The `<body>` holds everything that actually gets displayed, every heading, paragraph, image, and button a visitor will actually see and interact with.
+The `<head>` holds information about the page, not the page's actual visible content. Think of it as the page's ID card: its title, its character encoding, links to stylesheets, metadata for search engines and social media. None of it appears directly on screen. The `<body>` holds everything that actually gets displayed, every heading, paragraph, image, and button a visitor will actually see and interact with.
 
 A useful way to remember the split: if a person looking at the rendered page in their browser would never see it directly, it belongs in `<head>`. If they would, it belongs in `<body>`.
+
+<div className="img-dev">
+  ![HTML Document Structure Explained: DOCTYPE, HTML, Head & Body Beginner Guide
+  ](/visuals/wiki/web-basics/html/html-cheat-sheet-document-structure_html-basic-document-and-structure.png)
+</div>
 
 ## The Meta Tags Worth Knowing by Heart
 
