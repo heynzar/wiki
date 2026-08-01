@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import {
   CompassLinear,
   LibraryLinear,
@@ -13,6 +12,7 @@ import { ThemeToggle } from "fumadocs-ui/components/layout/theme-toggle";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import Logo from "@/components/logo";
 
 const navlinks = [
   {
@@ -48,15 +48,7 @@ export default function CustomNavbar() {
   return (
     <>
       <header className="h-14 sticky -mt-14 top-0 inset-0 z-40 flex items-center justify-between w-full px-4 sm:px-8 md:px-16 lg:px-40 bg-white dark:bg-fd-background border-b">
-        <Link href="/" className="flex items-center shrink-0">
-          <Image
-            alt="Wiki Nzar Dev Logo"
-            src="/logo.svg"
-            width={40}
-            height={20}
-            className="h-5 w-auto dark:grayscale-100 dark:invert-100"
-          />
-        </Link>
+        <Logo />
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex">

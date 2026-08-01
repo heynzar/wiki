@@ -2,6 +2,7 @@ import { buttonVariants } from "fumadocs-ui/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import Logo from "@/components/logo";
 
 export const metadata: Metadata = {
   title: "404 - Page Not Found",
@@ -10,18 +11,9 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div className="flex items-center w-full h-screen">
-      <Link
-        href="/"
-        className="hidden md:flex mx-auto absolute top-5 left-5 items-center shrink-0"
-      >
-        <Image
-          alt="Wiki Nzar Dev Logo, Page Not Found 404"
-          src="/logo.svg"
-          width={40}
-          height={20}
-          className="h-5 w-auto dark:grayscale-100 dark:invert-100"
-        />
-      </Link>
+      <div className="hidden md:flex mx-auto absolute top-5 left-5 items-center shrink-0">
+        <Logo />
+      </div>
       <div className="w-full space-y-6 text-center">
         <div className="space-y-2">
           <h1 className="text-[#0000ff] dark:text-white text-8xl font-medium tracking-tighter transition-transform">
