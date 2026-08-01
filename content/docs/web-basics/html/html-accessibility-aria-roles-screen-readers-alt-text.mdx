@@ -1,0 +1,90 @@
+---
+title: HTML Accessibility
+description: What accessibility actually means beyond screen readers, how assistive technology reads your page, and when ARIA genuinely helps versus makes things worse.
+icon: FileText
+---
+
+---
+
+# HTML Accessibility: ARIA Roles, Screen Readers & Alt Text
+
+<div className="img-dev">
+  ![HTML Accessibility: ARIA Roles, Screen Readers & Alt Text Cover
+  ](/visuals/wiki/web-basics/html/html-accessibility-aria-roles-screen-readers-alt-text.png)
+</div>
+
+Try navigating a website using only your keyboard, no mouse at all, just Tab, Shift+Tab, and Enter. Most people who write code every day have never actually tried this on their own site. It's a genuinely humbling experience, and it's exactly how a large number of real users experience the web, every single day.
+
+Accessibility has come up constantly throughout this part, landmarks in the semantic HTML article, labels in the forms article, `scope` in the tables article. This article pulls all of that together properly, and goes further, into screen readers, alt text, and ARIA, the last tool in the accessibility toolbox, not the first.
+
+## What Accessibility Actually Means
+
+It's easy to assume accessibility is entirely about blind users and screen readers. That's a real and important part of it, but far from the whole picture. Someone with low vision might rely on browser zoom or high contrast settings. Someone with a motor impairment might navigate entirely by keyboard, unable to use a mouse precisely. Someone with a broken arm, temporarily, is in exactly the same situation. Someone in bright sunlight, struggling to read low-contrast text, is experiencing a milder version of the same problem too.
+
+Accessibility isn't a narrow feature for a small group of people. It's the difference between a page that works for anyone, under any circumstances, and one that only works under ideal ones.
+
+## How a Screen Reader Actually Reads Your Page
+
+A screen reader doesn't see your page the way you do. It reads through your HTML, largely in DOM order, the same tree structure from the browsers article, and converts it into speech or braille, one element at a time. This is exactly why everything covered earlier in this part matters so much here.
+
+Proper headings let a screen reader user jump straight to the section they care about, the same way you'd skim a table of contents. Landmark tags, `<nav>`, `<main>`, `<footer>`, let them skip straight past your navigation menu instead of listening to every link read aloud first. A page built from nothing but unlabeled `<div>` tags gives a screen reader almost nothing useful to say at all, no matter how clear it looks visually.
+
+## Alt Text: More Than a Formality
+
+Every meaningful image needs an `alt` attribute, describing what the image actually conveys.
+
+```html
+<img src="cookies.jpg" alt="A tray of fresh-baked chocolate chip cookies" />
+```
+
+The test worth applying: if this image failed to load, or you couldn't see it at all, what would you need to be told to not miss anything important? Not "image of cookies," which is redundant, a screen reader already announces that this is an image, but what the image actually shows or communicates.
+
+Not every image needs a full description, though. A purely decorative image, one that adds nothing informational, a background flourish, a spacer graphic, should use an empty `alt=""`, which tells a screen reader to skip it entirely, rather than waste the user's time announcing something meaningless. Getting this distinction right, describing what matters and silencing what doesn't, is the whole skill.
+
+## The Accessibility Tree
+
+Alongside the DOM and the render tree covered back in the browsers article, browsers build one more structure: the **accessibility tree**. This is what a screen reader actually reads from, not your visual page directly.
+
+Every element gets a computed role, name, and state in this tree, largely inferred automatically from the semantic tags you used, a `<button>` gets a role of "button" for free, a properly labeled input gets its label as its accessible name automatically. This is exactly why the earlier articles in this part, choosing `<button>` over a styled `<div>`, connecting a `<label>` to its input, matter so much: you're not just writing HTML, you're directly shaping this second, parallel tree that a huge number of real users depend on entirely.
+
+## ARIA: A Last Resort, Not a First Choice
+
+**ARIA**, Accessible Rich Internet Applications, is a set of extra attributes that can add roles, states, and labels to elements that don't have them built in. And here's the single most important rule about it, one accessibility experts repeat constantly: the first rule of ARIA is, don't use ARIA, if a real HTML element already does the job.
+
+Before, a custom "button" built the hard way:
+
+```html
+<div onclick="submitForm()">Submit</div>
+```
+
+This looks like a button, might even be styled like one, but it's invisible to the accessibility tree as anything meaningful, unreachable by keyboard Tab navigation, and silent to a screen reader.
+
+After, using the actual element built for this exact job:
+
+```html
+<button onclick="submitForm()">Submit</button>
+```
+
+A real `<button>` gets keyboard focus automatically, responds to both Enter and Space by default, and announces itself as "button" with no extra work at all. ARIA exists for the gaps semantic HTML genuinely can't fill, a custom dropdown menu, a tab interface, a modal dialog, situations where no single native tag captures what you're building. Reach for it there. Reach for real HTML everywhere else.
+
+## Common ARIA Attributes Worth Knowing
+
+A few ARIA attributes come up often enough to know by name. `aria-label` provides an accessible name for an element with no visible text, like an icon-only close button. `aria-labelledby` points to another element's ID to use as the label instead, useful when a visible heading already serves that purpose. `aria-hidden="true"` hides a purely decorative element from the accessibility tree entirely, without hiding it visually. `aria-expanded` tells a screen reader whether a collapsible section, like a dropdown or accordion, is currently open or closed. `role` explicitly assigns a role to an element, only needed when you're building something genuinely custom with no matching native tag.
+
+## Keyboard Navigation and Focus
+
+Every interactive element, links, buttons, form fields, should be reachable and usable using nothing but a keyboard, and native HTML elements get this for free. `tabindex="0"` can add a custom element into the normal tab order if you genuinely need to, though it's almost always better to reach for a real button or link instead. A visible focus indicator, showing clearly which element is currently selected via keyboard, matters enormously, and it's a styling concern that gets its own attention in the CSS part of this wiki, worth knowing now: never remove it without providing an equally visible replacement.
+
+One small, high-impact pattern worth knowing: a "skip to main content" link, placed as the very first focusable element on the page, lets keyboard users jump straight past a long navigation menu instead of tabbing through every single link first, every single time they load the page.
+
+## Testing Your Own Work
+
+You don't need special tools to catch a surprising number of accessibility problems. Try tabbing through your own page with nothing but the keyboard, and see whether everything you can click with a mouse is also reachable this way. Try turning on your operating system's built-in screen reader for a few minutes and listen to how your page actually gets announced. Most browsers also include an accessibility panel directly in their DevTools, letting you inspect the exact accessibility tree a screen reader would use, something we'll actually put into practice properly in the DevTools article coming up next.
+
+## Why This Matters
+
+An unlabeled icon button, an image with missing alt text, a custom dropdown built entirely from divs with no ARIA at all, none of these show up as a visible bug on your screen. They show up as a real, locked-out user on someone else's screen, someone who simply can't complete a purchase, fill out a form, or read your content at all. In many places, this isn't just a courtesy either, accessibility requirements are backed by real legal obligations for many kinds of websites.
+
+The good news is that most of what actually matters here isn't exotic. It's the habits already built up across this entire part: real semantic tags, real labels, real alt text, and ARIA reserved for the genuine gaps native HTML can't fill on its own. Get those right, consistently, and you've already covered the vast majority of what real accessibility requires.
+
+---
