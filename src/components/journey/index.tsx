@@ -103,9 +103,12 @@ export function JourneyClient({ progress, completed }: JourneyClientProps) {
 
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
         {filtered.map(
-          ({ id, url, sectionName, name, description, icon, children }) => (
+          (
+            { id, url, sectionName, name, description, icon, children },
+            idx,
+          ) => (
             <RoadmapCard
-              key={id}
+              key={`${statusFilter}-${id}`}
               id={id}
               url={url}
               name={name}
@@ -114,6 +117,7 @@ export function JourneyClient({ progress, completed }: JourneyClientProps) {
               items={children}
               sectionName={sectionName}
               completed={completed}
+              defaultOpen={idx < 2}
             />
           ),
         )}

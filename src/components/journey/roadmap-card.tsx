@@ -40,7 +40,7 @@ function TopicItem({ name, url, completed }: TopicItemProps) {
           : "border-black/20 dark:border-white/20",
       )}
     >
-      <Check className="size-3 text-fd-background opacity-0" strokeWidth={3} />
+      <Check className="size-3 text-white opacity-0" strokeWidth={3} />
     </div>
   );
 
@@ -67,6 +67,7 @@ interface RoadmapCardProps extends Omit<Roadmap, "children"> {
   sectionName: string;
   items?: Roadmap[];
   completed: CompletedArticle[];
+  defaultOpen?: boolean;
 }
 
 export function RoadmapCard({
@@ -78,9 +79,24 @@ export function RoadmapCard({
   items,
   sectionName,
   completed,
+  defaultOpen = false,
 }: RoadmapCardProps) {
   const [, , progress] = calculate_step_progress(id ?? 0, completed);
-  const [isOpen, setIsOpen] = useState(() => (id ?? 0) <= 2);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  const DARK_MODE_INVERT_ICONS = new Set([
+    "github-original.svg",
+    "nextjs-original.svg",
+    "remix-original.svg",
+    "prisma-original.svg",
+    "ros-original.svg",
+    "codepen-original.svg",
+    "markdown-original.svg",
+  ]);
+
+  const iconFile =
+    typeof icon === "string" ? (icon.split("/").pop() ?? "") : "";
+  const shouldInvert = DARK_MODE_INVERT_ICONS.has(iconFile);
 
   const IconComponent = icon && typeof icon !== "string" ? icon : null;
   const formatPercent = (value: number) =>
@@ -118,7 +134,10 @@ export function RoadmapCard({
               alt={name}
               width={20}
               height={20}
-              className="h-7 w-auto shrink-0"
+              className={cn(
+                "h-7 w-auto shrink-0",
+                shouldInvert && "dark:invert-100",
+              )}
               src={icon}
             />
           ) : IconComponent ? (
