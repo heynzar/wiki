@@ -1,0 +1,118 @@
+---
+title: HTML Embedding
+description: How another site's content, or a video, or a crisp vector icon, actually ends up living inside your page.
+icon: FileText
+---
+
+---
+
+# Embedding: iframes, Video, Audio & SVG
+
+<div className="img-dev">
+  ![HTML Embedding Cover
+  ](/visuals/wiki/web-basics/html/embedding-content-iframes-video-audio-svg.png)
+</div>
+
+Paste a YouTube video into a blog post, or drop a Google Map onto a contact page, and suddenly a whole other website's content is sitting right inside yours, fully interactive, completely separate from your own code. That's embedding, and HTML has a specific tag for exactly this job.
+
+This article covers the four main ways content gets embedded into a page: another page entirely, video, audio, and vector graphics. Each works differently, and each comes with its own small gotchas worth knowing upfront.
+
+## What Embedding Actually Means
+
+Embedding is bringing a separate piece of content, sometimes from your own site, often from somewhere else entirely, directly into the page a visitor is looking at. The content doesn't get copied into your HTML, it stays where it actually lives, and your page just displays it inline, as if it were part of the page all along.
+
+## Iframe Tag: A Page Inside a Page
+
+An `<iframe>` embeds an entire separate document inside your page, quite literally a browsing context nested inside another one, its own tiny browser window living inside yours.
+
+```html
+<iframe
+  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+  title="Video title describing the content"
+  width="560"
+  height="315"
+></iframe>
+```
+
+The `title` attribute isn't optional in practice, even though the browser won't stop you from omitting it. A screen reader announces an iframe using this exact text, and without it, a user just hears "iframe," with no idea what's actually inside it. Since an iframe embeds content from a source you don't fully control, it's also worth knowing that browsers apply real security restrictions around what an embedded page can and can't do, a topic covered properly in the clickjacking article later, in the Security chapter.
+
+## Video Tag: Native, No Plugins Required
+
+The `<video>` tag plays video directly in the browser, no external plugin required, something that wasn't true in the web's earlier days.
+
+Before, a bare minimum video:
+
+```html
+<video src="demo.mp4"></video>
+```
+
+This technically plays a video, with no controls at all, no way for a visitor to pause, adjust volume, or seek, and it'll silently fail entirely if the browser doesn't support that particular file format.
+
+After, a properly built version:
+
+```html
+<video controls poster="thumbnail.jpg" preload="metadata">
+  <source src="demo.mp4" type="video/mp4" />
+  <source src="demo.webm" type="video/webm" />
+  Your browser doesn't support embedded video.
+</video>
+```
+
+`controls` adds the play, pause, and volume controls visitors actually expect. `poster` sets a thumbnail image shown before playback starts, instead of an awkward blank black box. Multiple `<source>` tags let the browser pick whichever format it actually supports, falling back gracefully if the first one fails, and the plain text at the end only shows up if no format works at all, a small courtesy instead of a silent failure.
+
+## Audio Tag: The Same Idea, Simpler
+
+`<audio>` works almost identically to `<video>`, just without any visual dimensions to worry about.
+
+```html
+<audio controls>
+  <source src="podcast-episode.mp3" type="audio/mpeg" />
+</audio>
+```
+
+Same `controls` attribute, same multiple `<source>` fallback pattern, just for sound instead of picture.
+
+## SVG Tag: Vector Graphics That Never Get Blurry
+
+An **SVG**, Scalable Vector Graphic, describes an image using math, points, curves, and shapes, rather than a fixed grid of pixels like a JPEG or PNG. The practical benefit is enormous: an SVG icon looks exactly as crisp at a tiny size as it does blown up to fill an entire screen, since it's never actually stored as pixels at all.
+
+You can embed an SVG the same way as any other image:
+
+```html
+<img src="icon.svg" alt="A settings gear icon" />
+```
+
+But SVG has a second option worth knowing, embedding it directly, inline, right in your HTML:
+
+```html
+<svg viewBox="0 0 24 24" width="24" height="24">
+  <circle cx="12" cy="12" r="10" fill="currentColor" />
+</svg>
+```
+
+Written this way, the SVG becomes real, live markup, part of your actual DOM, not a separate file the browser has to fetch. That means CSS can style it directly, changing its color to match a theme, for instance, and JavaScript can manipulate it, animating it or responding to clicks on individual shapes inside it, something a plain `<img>` tag simply can't offer, since the browser treats an image as one opaque unit.
+
+## Accessibility for Embedded Content
+
+Every category here needs its own accessibility consideration. An iframe needs a clear, descriptive `title`. Video benefits enormously from the `<track>` tag, which adds captions directly, readable by anyone who's deaf, hard of hearing, or simply watching without sound.
+
+```html
+<video controls>
+  <source src="demo.mp4" type="video/mp4" />
+  <track src="captions-en.vtt" kind="captions" srclang="en" label="English" />
+</video>
+```
+
+Audio content benefits from a linked transcript nearby, since there's no visual equivalent of captions for sound alone. And any meaningful inline SVG icon needs a `title` element inside it, or an `aria-label`, exactly the same accessible-naming idea covered in the accessibility article, just applied here to vector graphics instead of images or buttons.
+
+## A Quick Note on Performance
+
+Embedded content, especially iframes and video, can be genuinely heavy for a page to load. Adding `loading="lazy"` to an iframe, or choosing `preload="metadata"` instead of `preload="auto"` on a video, tells the browser not to fully load that content until it's actually needed, usually once it scrolls into view. This gets a much deeper treatment later, in the Performance & Optimization chapter, but it's worth building the habit early: don't make a visitor's browser download a video they may never even scroll down to see.
+
+## Why This Matters
+
+A missing `title` on an iframe is exactly why a screen reader user has no idea what that mysterious embedded box actually contains. A video with only one `<source>` format is exactly why it plays perfectly on your machine and shows a blank box for someone on a different browser. Choosing a plain `<img>` for an icon you actually wanted to recolor with CSS is exactly the kind of small decision that causes an unnecessary headache days later.
+
+Embedding content is one of those things that looks simple on the surface, drop in a tag, done, but each of these four categories carries its own small set of details that decide whether the result is genuinely solid, or just something that happened to work the one time you tested it yourself.
+
+---
