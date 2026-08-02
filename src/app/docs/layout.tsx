@@ -7,7 +7,7 @@ export default function Layout({ children }: LayoutProps<"/docs">) {
     <DocsLayout
       tree={source.pageTree}
       nav={{
-        title: <Logo />,
+        title: <Logo link={false} />,
       }}
     >
       {children}
