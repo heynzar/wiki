@@ -183,8 +183,8 @@ export const roadmap: Roadmap[] = [
             url: "embedding-content-iframes-video-audio-svg",
           },
           {
-            name: "Images on the Web: Responsive Images & Optimization",
-            url: "images-on-the-web-responsive-images-optimization",
+            name: "HTML Images: Web Performance & Optimization",
+            url: "html-images-web-performance-and-optimization",
           },
           {
             name: "Inspecting HTML with Browser DevTools",

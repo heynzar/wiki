@@ -1,0 +1,152 @@
+---
+title: Image Optimization
+description: Why images are usually the heaviest thing on a page, and how a handful of HTML attributes fix most of what goes wrong with them.
+icon: FileText
+---
+
+---
+
+# HTML Images: Web Performance & Optimization
+
+<div className="img-dev">
+  ![HTML Image Optimization Cover
+  ](/visuals/wiki/web-basics/html/html-images-web-performance-and-optimization.png)
+</div>
+
+Load a random website on your phone and there's a decent chance you're downloading a photo sized for a desktop monitor twice as wide as your screen, just to have it squeezed down to fit. That's wasted bandwidth, wasted load time, and it happens on an enormous number of real sites, simply because nobody told the browser it had other options.
+
+Images are usually the single heaviest part of a page's total weight, heavier than the HTML, CSS, and JavaScript combined, more often than you'd expect. This article covers the HTML side of fixing that, a handful of attributes and tags that quietly make a huge difference.
+
+## Why Images Deserve This Much Attention
+
+A page's total performance gets a full, proper treatment later, in the Performance & Optimization chapter, including the exact metrics used to measure it. But the groundwork starts here, in HTML, because a huge share of real-world slowness comes down to something simple: serving an image far larger than it ever needed to be for the screen actually displaying it.
+
+## A Quick Recap: `<img>` and `alt`
+
+The basics of the `<img>` tag and writing good `alt` text were already covered properly in the accessibility article. The rest of this article assumes that foundation and builds forward from it, into everything that makes an image not just accessible, but fast and appropriately sized too.
+
+## Width and Height: Preventing Layout Shift
+
+Here's a subtle but common problem: an image with no declared size.
+
+Before, no dimensions specified:
+
+```html
+<img src="hero-photo.jpg" alt="A mountain landscape at sunrise" />
+```
+
+The browser doesn't know how much space this image will need until it's actually finished downloading. Everything below it on the page loads first, settles into place, and then suddenly jumps downward the moment the image finally arrives. Remember layout from the browsers article, this is exactly that step happening a second, unwanted time, and it's a genuinely jarring experience, especially if a visitor was about to tap something that just moved.
+
+After, dimensions declared upfront:
+
+```html
+<img
+  src="hero-photo.jpg"
+  alt="A mountain landscape at sunrise"
+  width="1200"
+  height="600"
+/>
+```
+
+Now the browser reserves exactly the right amount of space before the image ever loads, using the width and height to calculate the correct aspect ratio immediately. Nothing shifts around once the image arrives, it simply fades into a space that was already waiting for it.
+
+## Responsive Images: `srcset` and `sizes`
+
+A single image file is rarely the right size for every device it might be viewed on. `srcset` lets you offer several versions of the same image, at different resolutions, and lets the browser choose the best one for the actual device it's rendering on.
+
+Before, one huge image sent to everyone, phone or desktop alike:
+
+```html
+<img src="photo-2000w.jpg" alt="A mountain landscape at sunrise" />
+```
+
+A phone with a small screen downloads the exact same enormous file a widescreen desktop monitor does, wasting a meaningful amount of data and load time for no visual benefit at all.
+
+After, letting the browser pick appropriately:
+
+```html
+<img
+  src="photo-800w.jpg"
+  srcset="photo-400w.jpg 400w, photo-800w.jpg 800w, photo-1600w.jpg 1600w"
+  sizes="(max-width: 600px) 100vw, 50vw"
+  alt="A mountain landscape at sunrise"
+/>
+```
+
+`srcset` lists the available versions, each labeled with its actual width. `sizes` tells the browser how much space this image will actually occupy at different screen widths, full width on a small screen, half width otherwise, in this example. Combining both, the browser can calculate exactly which file makes sense to download, before it ever requests a single byte, something no amount of CSS resizing after the fact can achieve, since CSS can only shrink an already-downloaded file, not avoid downloading the oversized one in the first place.
+
+## The `<picture>` Element: Real Art Direction
+
+`srcset` handles serving different resolutions of the same image. Sometimes you genuinely want a different image entirely at different screen sizes, a tightly cropped portrait on mobile, a wide landscape shot on desktop. That's what `<picture>` is for.
+
+```html
+<picture>
+  <source media="(max-width: 600px)" srcset="portrait-crop.jpg" />
+  <source media="(min-width: 601px)" srcset="wide-crop.jpg" />
+  <img src="wide-crop.jpg" alt="A mountain landscape at sunrise" />
+</picture>
+```
+
+The browser checks each `<source>` in order and uses the first one whose condition matches, falling back to the plain `<img>` if nothing else applies. This same `<picture>` structure is also commonly used to offer a modern image format with an older fallback, covered next.
+
+## Modern Image Formats: Smaller Files, Same Quality
+
+JPEG and PNG have been the default for decades, but newer formats, **WebP** and **AVIF**, typically produce noticeably smaller files at the same visual quality. Since not every older browser supports these newer formats, `<picture>` provides a clean way to offer the modern format first, with an automatic, safe fallback.
+
+```html
+<picture>
+  <source srcset="photo.avif" type="image/avif" />
+  <source srcset="photo.webp" type="image/webp" />
+  <img src="photo.jpg" alt="A mountain landscape at sunrise" />
+</picture>
+```
+
+The browser picks the first format it actually supports, trying AVIF first, falling back to WebP, and finally to a plain JPEG if neither modern format is available at all. Visitors on modern browsers get a smaller, faster-loading file, and visitors on older ones still get a working image, with zero extra effort on their end.
+
+## Lazy Loading: Don't Load What Isn't Visible Yet
+
+A long page with dozens of images doesn't need all of them the instant the page opens, only the ones actually visible right away.
+
+```html
+<img
+  src="photo-below-fold.jpg"
+  alt="A team photo from the conference"
+  loading="lazy"
+/>
+```
+
+`loading="lazy"` tells the browser to hold off downloading this image until it's about to scroll into view, saving real bandwidth and speeding up the initial page load, especially valuable on a long page or a slow connection. It's worth leaving off images near the very top of the page, though, ones a visitor sees immediately, since lazily delaying those can occasionally make the page feel slower to display its most important content first.
+
+## A Complete Example
+
+Bringing all of this together, here's a properly built image, responsive, modern-format-aware, and dimension-safe:
+
+```html
+<picture>
+  <source
+    srcset="photo-400w.avif 400w, photo-800w.avif 800w"
+    type="image/avif"
+  />
+  <source
+    srcset="photo-400w.webp 400w, photo-800w.webp 800w"
+    type="image/webp"
+  />
+  <img
+    src="photo-800w.jpg"
+    alt="A mountain landscape at sunrise"
+    width="800"
+    height="450"
+    loading="lazy"
+  />
+</picture>
+```
+
+Every piece here is solving a specific, real problem: modern formats for the browsers that support them, appropriately sized files for the device viewing them, reserved space to prevent layout shift, and lazy loading so this image doesn't compete with what's actually visible right away.
+
+## Why This Matters
+
+A missing `width` and `height` is exactly why a page feels like it's jumping around while it loads. A single oversized image, sent to every device regardless of screen size, is exactly why a page feels sluggish on mobile data even though it loaded instantly on your office wifi. None of these problems show up as an error message, they just show up as a page that feels slow or janky, for reasons that are easy to miss unless you know exactly where to look.
+
+Images are one of the easiest places to make a real, measurable difference in how a page actually feels to use, and almost all of it comes down to a handful of HTML attributes most pages never bother to include.
+
+---
