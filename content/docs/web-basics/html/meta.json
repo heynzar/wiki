@@ -9,8 +9,6 @@
     "html-accessibility-aria-roles-screen-readers-alt-text",
     "embedding-content-iframes-video-audio-svg",
     "html-images-web-performance-and-optimization",
-    "inspecting-html-with-browser-devtools",
-    "introduction-to-web-components",
-    "html-email-why-its-still-hell"
+    "inspecting-html-with-browser-devtools"
   ]
 }

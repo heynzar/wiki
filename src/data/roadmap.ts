@@ -190,14 +190,6 @@ export const roadmap: Roadmap[] = [
             name: "Inspecting HTML with Browser DevTools",
             url: "inspecting-html-with-browser-devtools",
           },
-          {
-            name: "Introduction to Web Components",
-            url: "introduction-to-web-components",
-          },
-          {
-            name: "HTML Email: Why It's Still Hell (Bonus)",
-            url: "html-email-why-its-still-hell",
-          },
         ],
       },
       {
