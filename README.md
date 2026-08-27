@@ -1,45 +1,24 @@
-# web-developer-roadmap
+# 📖 The Dev Wiki
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+A personal notebook, turned into a wiki, for everything I'm learning about software and web development.
 
-Run development server:
+It started as notes for myself. Then I figured, why keep it to myself?
 
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
-```
+## How it's made
 
-Open http://localhost:3000 with your browser to see the result.
+- **Path** inspired by [roadmap.sh](https://roadmap.sh)
+- **Research & writing**, with [Claude](https://claude.com)
+- **Covers & diagrams**, hand-made in [Figma](https://figma.com)
+- Everything reviewed and edited before it's published, nothing goes up untouched
 
-## Explore
+## Structure
 
-In the project, you can see:
+`Chapters → Parts → Articles`, each one a single `.mdx` file, building on the one before it.
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+## Status
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+🚧 Still being written, one article at a time.
 
-### Fumadocs MDX
+---
 
-A `source.config.ts` config file has been included, you can customise different options like frontmatter schema.
-
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+_Beneficial knowledge doesn't stop when you do. Hoping this is a small part of that._
