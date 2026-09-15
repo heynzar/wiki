@@ -1,0 +1,106 @@
+---
+title: CSS
+description: The visual language that turns structure into design
+icon: Folder
+---
+
+---
+
+# CSS: The Full Guide
+
+Open any website and strip away the styling. What's left is HTML: plain headings, plain text, plain buttons, stacked top to bottom in a boring grey and black column. Every layout, every color, every smooth hover effect, every grid of product cards you've ever scrolled through, none of that is HTML. That's CSS.
+
+CSS stands for Cascading Style Sheets, and it's the layer that decides how HTML actually looks and behaves visually. It's often treated as the "fun part" that comes after the "boring part," but that's a little misleading. CSS has its own logic, its own gotchas, and its own depth. People spend years getting genuinely good at it, and there's always another layer to learn.
+
+---
+
+## A Quick Word on How Websites Work
+
+Before diving into CSS itself, it helps to zoom out for a second. When you visit a website, your browser requests a file from a server, gets back HTML, and starts building something called the DOM, a structured tree representing every element on the page. That's the skeleton.
+
+CSS is the next thing the browser loads and applies. It reads through your stylesheets and decides, for every single element in that tree, how it should be sized, spaced, colored, and positioned. JavaScript usually comes after that, adding interactivity and behavior on top. Three layers, three jobs: HTML for structure, CSS for presentation, JavaScript for behavior. This chapter is entirely about that middle layer.
+
+---
+
+## Now, Let's Talk About CSS
+
+CSS looks simple at first. You pick an element, you give it a property, you give that property a value, done. `color: blue;`. Easy.
+
+Then you add a second stylesheet, or a class that conflicts with another class, or a component that looks perfect until it's placed inside another component, and suddenly your blue text is black and you don't know why. That's the cascade, and understanding it properly is what separates people who fight their CSS from people who control it.
+
+This chapter is built to take you from that first `color: blue;` all the way to writing responsive, well-organized, modern CSS that holds up in real projects.
+
+---
+
+## What You'll Learn Here
+
+<Container cols={2}>
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/css-basics-syntax-cascade-specificity"
+    title="CSS Basics"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/the-box-model-spacing-sizing-borders"
+    title="The Box Model"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/selectors-explained-basics-to-has-is-where"
+    title="Selectors Explained"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/css-variables-and-modern-color"
+    title="Variables & Modern Color"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/flexbox-the-complete-guide"
+    title="Flexbox"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/css-grid-and-subgrid-the-complete-guide"
+    title="CSS Grid & Subgrid"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/responsive-design-media-queries-and-container-queries"
+    title="Responsive Design"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/organizing-css-nesting-layers-bem-tailwindcss"
+    title="Organizing CSS"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/animations-and-motion-transitions-keyframes-scroll-effects"
+    title="Animations & Motion"
+  />
+  <NavigationButton
+    file
+    href="/docs/web-basics/css/dark-mode-accessibility-and-performance"
+    title="Dark Mode, Accessibility & Performance"
+  />
+</Container>
+
+---
+
+We'll start with the fundamentals, the cascade, specificity, and the box model, since almost every confusing CSS bug traces back to one of those two. From there we move into selectors, including modern ones like `:has()`, and into variables and modern color functions like `oklch`.
+
+Once the basics are solid, we get into layout. Flexbox first, since it's the more intuitive system, then Grid and Subgrid for anything more structured or two dimensional. After that, we cover responsive design properly, not just media queries, but container queries too, which changed how components can adapt to their surroundings instead of just the viewport.
+
+The final stretch is about writing CSS that scales. We'll cover how to organize real projects using nesting, cascade layers, BEM, and TailwindCSS, then move into animations and motion, transitions, keyframes, and scroll driven effects. We'll close the chapter with dark mode, accessibility, and performance, the details that turn a site that merely works into one that feels genuinely finished.
+
+---
+
+## Why This Chapter Matters
+
+It's tempting to learn just enough CSS to make things "look right" and move on. That approach works, until it doesn't. Layouts break on smaller screens, colors fail contrast checks, animations doesn't feel smooth, and stylesheets turn into a pile of overrides nobody wants to touch.
+
+Learning CSS properly, understanding why the cascade behaves the way it does, why your flex items aren't lining up, why that media query isn't firing, saves you from hours of guesswork later. It's the difference between styling by trial and error and styling with actual intention. Let's get into it.
+
+---

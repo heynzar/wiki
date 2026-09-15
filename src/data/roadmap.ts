@@ -200,60 +200,44 @@ export const roadmap: Roadmap[] = [
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
         children: [
           {
-            name: "CSS Cheat Sheet & The Cascade Explained",
-            url: "css-cheat-sheet-the-cascade-explained",
+            name: "CSS Basics: Syntax, the Cascade & Specificity",
+            url: "css-basics-syntax-cascade-specificity",
           },
           {
-            name: "Selectors, Specificity and Inheritance",
-            url: "selectors-specificity-and-inheritance",
+            name: "The Box Model: Spacing, Sizing & Borders",
+            url: "the-box-model-spacing-sizing-borders",
           },
           {
-            name: "The Box Model: Margin, Padding, Border",
-            url: "the-box-model-margin-padding-border",
+            name: "Selectors Explained: From Basics to :has(), :is(), :where()",
+            url: "selectors-explained-basics-to-has-is-where",
           },
           {
-            name: "Flexbox: Complete Visual Guide",
-            url: "flexbox-complete-visual-guide",
+            name: "CSS Variables & Modern Color (oklch, color-mix)",
+            url: "css-variables-and-modern-color",
           },
           {
-            name: "CSS Grid: Complete Visual Guide",
-            url: "css-grid-complete-visual-guide",
+            name: "Flexbox: The Complete Guide",
+            url: "flexbox-the-complete-guide",
           },
           {
-            name: "Responsive Design: Media Queries & Mobile First",
-            url: "responsive-design-media-queries-mobile-first",
+            name: "CSS Grid & Subgrid: The Complete Guide",
+            url: "css-grid-and-subgrid-the-complete-guide",
           },
           {
-            name: "CSS Variables and Custom Properties",
-            url: "css-variables-and-custom-properties",
+            name: "Responsive Design: Media Queries & Container Queries",
+            url: "responsive-design-media-queries-and-container-queries",
           },
           {
-            name: "Animations & Transitions: Keyframes and Timing Functions",
-            url: "animations-transitions-keyframes-and-timing-functions",
+            name: "Organizing CSS: Nesting, Cascade Layers, BEM & TailwindCSS",
+            url: "organizing-css-nesting-layers-bem-tailwindcss",
           },
           {
-            name: "Pseudo-classes and Pseudo-elements",
-            url: "pseudo-classes-and-pseudo-elements",
+            name: "Animations & Motion: Transitions, Keyframes & Scroll Effects",
+            url: "animations-and-motion-transitions-keyframes-scroll-effects",
           },
           {
-            name: "CSS Architecture: BEM, SMACSS, Utility-First",
-            url: "css-architecture-bem-smacss-utility-first",
-          },
-          {
-            name: "TailwindCSS: Setup, Configuration & Real Usage",
-            url: "tailwindcss-setup-configuration-real-usage",
-          },
-          {
-            name: "CSS Modules: Scoped Styles Without a Runtime",
-            url: "css-modules-scoped-styles-without-a-runtime",
-          },
-          {
-            name: "Dark Mode Implementation",
-            url: "dark-mode-implementation",
-          },
-          {
-            name: "Performance: Render Blocking, Paint Layers, will-change",
-            url: "performance-render-blocking-paint-layers-will-change",
+            name: "Dark Mode, Accessibility & Performance",
+            url: "dark-mode-accessibility-and-performance",
           },
         ],
       },
