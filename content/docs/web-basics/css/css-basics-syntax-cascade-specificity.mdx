@@ -10,7 +10,7 @@ icon: FileText
 
 <div className="img-dev">
   ![CSS Basics: Syntax, the Cascade & Specificity Article Cover
-  ](/visuals/wiki/web-basics/css/css-basics-syntax-cascade-specificity.png)
+  ](https://assets.wiki.nzar.dev/web-basics/css/css-basics-syntax-cascade-specificity.png)
 </div>
 
 Every CSS bug you'll ever run into, the button that won't change color, the text that stays black no matter what you try, the style that works in one file but not another, comes down to one of two things: you don't fully understand the syntax, or you don't fully understand the cascade. This article fixes both.
@@ -36,6 +36,10 @@ Three parts here, and it's worth knowing the proper names for them:
 - `color` and `font-size` are **properties**. These are the things you're allowed to change.
 - `blue` and `16px` are **values**. These are what you're changing the property to.
 
+<div className="img-dev">
+  ![CSS rule](https://assets.wiki.nzar.dev/web-basics/css/css-rule.png)
+</div>
+
 A property and its value together, like `color: blue;`, is called a **declaration**. A selector plus one or more declarations wrapped in curly braces is called a **rule** (or a rule set). Stack a bunch of rules together in a `.css` file, and you've got a stylesheet.
 
 ---
@@ -46,7 +50,7 @@ CSS doesn't have to live in its own file. There are three ways to apply it, and 
 
 **Inline CSS** goes directly on an HTML element using the `style` attribute:
 
-```html
+```html title="index.html"
 <p style="color: blue; font-size: 16px;">Hello there</p>
 ```
 
@@ -54,7 +58,7 @@ This works, but it doesn't scale. You'd have to repeat it on every single elemen
 
 **Internal CSS** lives inside a `<style>` tag in the document's `<head>`:
 
-```html
+```html title="index.html"
 <head>
   <style>
     p {
@@ -81,6 +85,11 @@ p {
   font-size: 16px;
 }
 ```
+
+<div className="img-dev">
+  ![3 ways to add CSS to your
+  HTML](https://assets.wiki.nzar.dev/web-basics/css/3-ways-to-write-css.png)
+</div>
 
 One file, linked from every page that needs it. Change something once, and it updates everywhere. This is the standard approach, and it's what the rest of this chapter assumes you're using.
 
@@ -126,7 +135,7 @@ There's a whole world of more advanced selectors, attribute selectors, pseudo-cl
 
 Here's the situation that trips almost everyone up eventually. You write a rule to make some text red. Somewhere else, another rule tries to make it blue. Which one wins?
 
-The browser doesn't guess. It follows a strict, predictable order, and that order is called the **cascade**. Think of it as a waterfall of rules flowing down, where each one can override the ones before it, but only according to fixed priorities. The cascade decides the winner using four factors, checked in this order:
+The browser doesn't guess. It follows a strict, predictable order, and that order is called the **cascade**. Think of it as a waterfall of rules flowing down, where each one can override the ones before it, but only according to fixed priorities. The cascade decides the winner using **4 factors**, checked in this order:
 
 1. **Importance**, whether a declaration is marked `!important`
 2. **Specificity**, how precisely a selector targets an element
@@ -148,6 +157,11 @@ Here's how the score is calculated, from highest weight to lowest:
 - **Classes** (`.card`), **attribute selectors** (`[type="text"]`), and **pseudo-classes** (`:hover`) come after that.
 - **Elements** (`p`, `div`) and **pseudo-elements** (`::before`) score the lowest.
 
+<div className="img-dev">
+  ![CSS Specificity Priority
+  Order](https://assets.wiki.nzar.dev/web-basics/css/css-specificity.png)
+</div>
+
 A useful (if simplified) way to think about it is four columns of points: inline, IDs, classes, elements. Compare left to right, and the first column with a higher number wins.
 
 ```css
@@ -168,6 +182,11 @@ p {
 ```
 
 If `<p id="main-text" class="intro">` matched all three rules, it would end up green, because the ID selector has the highest specificity of the three.
+
+<div className="img-dev">
+  ![CSS Specificity Priority Order
+  Example](https://assets.wiki.nzar.dev/web-basics/css/css-specificity-example.png)
+</div>
 
 A common trap: writing more selectors doesn't automatically mean more specificity, it depends on the type.
 

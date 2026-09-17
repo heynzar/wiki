@@ -23,6 +23,10 @@ const config = {
         protocol: "https",
         hostname: "cdn.hashnode.com",
       },
+      {
+        protocol: "https",
+        hostname: "assets.wiki.nzar.dev",
+      },
     ],
   },
 };
