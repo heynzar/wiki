@@ -27,6 +27,11 @@ const config = {
         protocol: "https",
         hostname: "assets.wiki.nzar.dev",
       },
+      {
+        protocol: "https",
+        hostname: "a.favicon.im",
+        pathname: "/**",
+      },
     ],
   },
 };
