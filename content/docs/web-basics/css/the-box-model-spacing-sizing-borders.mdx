@@ -8,6 +8,11 @@ icon: FileText
 
 # The Box Model: Spacing, Sizing & Borders
 
+<div className="img-dev">
+  ![CSS Box Model: Spacing, Sizing & Borders Article Cover
+  ](https://assets.wiki.nzar.dev/web-basics/css/the-box-model-spacing-sizing-borders.webp)
+</div>
+
 You give an element `width: 300px`, add a little padding, and suddenly it is wider than 300 pixels. Or you set a margin between two elements and the gap is smaller than you expected. Or your whole page has a strange empty strip around it that you never asked for.
 
 None of these are bugs. They are the box model doing exactly what it is designed to do, and it just hasn't been explained to you yet.
@@ -40,6 +45,11 @@ Here is a box with all four layers set:
 }
 ```
 
+<div className="img-dev">
+  ![CSS Box Model
+  ](https://assets.wiki.nzar.dev/web-basics/css/css-box-model.webp)
+</div>
+
 One important detail: the background color of an element paints behind the content, the padding, and under the border. It never paints into the margin. Margin is always transparent, which is why it is used purely for spacing between boxes.
 
 ---
@@ -65,7 +75,7 @@ img {
 }
 ```
 
-Boxes that flex with their container instead of locking to a number are the foundation of <Clink label="responsive design" href="/web-basics/css/responsive-design-media-queries-and-container-queries" />.
+Boxes that flex with their container instead of locking to a number are the foundation of <Clink label="responsive design" href="/docs/web-basics/css/responsive-design-media-queries-and-container-queries" />.
 
 ---
 
@@ -88,7 +98,14 @@ padding: 10px 20px 30px; /* top, left and right, bottom */
 padding: 10px 20px 30px 40px; /* top, right, bottom, left */
 ```
 
-With four values, the order goes clockwise starting from the top. Top, right, bottom, left. Many developers remember it as _TRouBLe_, which is a handy way to never forget it. The same rules apply to `margin`.
+<div className="img-dev">
+  ![CSS Box Model - Padding
+  ](https://assets.wiki.nzar.dev/web-basics/css/css-box-model-padding.webp)
+</div>
+
+With four values, the order goes clockwise starting from the top. Top, right,
+bottom, left. Many developers remember it as _TRouBLe_, which is a handy way to
+never forget it. The same rules apply to `margin`.
 
 You can also set one side at a time with `padding-top`, `padding-right`, `padding-bottom` and `padding-left`.
 
@@ -103,7 +120,7 @@ The border sits between the padding and the margin. By default, its width is zer
 ```css title="styles.css"
 .card {
   border: 1px solid #ccc;
-  /*      width  style color */
+  /*      width style color */
 }
 ```
 
@@ -119,6 +136,10 @@ You can style one side with `border-bottom`, and round the corners with `border-
 ```
 
 `border-radius` changes how the box is painted, not how much space it takes.
+
+<div className="img-dev">
+  ![CSS Border](https://assets.wiki.nzar.dev/web-basics/css/css-border.webp)
+</div>
 
 A related tool is `outline`, which draws a line around an element like a border does. The difference is that an outline does **not** take up space and never changes the layout. That is why browsers use it for the focus ring around a selected link or input. The same is true for `box-shadow`: it is drawn outside the box but does not push anything.
 
@@ -175,6 +196,11 @@ How wide is the box on screen? Not 300 pixels. By default, `width` only sets the
 300 (content) + 40 (padding, both sides) + 10 (border, both sides) = 350px
 ```
 
+<div className="img-dev">
+  ![The Math Behind CSS Box Sizing
+  `content-box`](https://assets.wiki.nzar.dev/web-basics/css/the-content-box-formula.webp)
+</div>
+
 This default behavior is called `box-sizing: content-box`. It is how the original CSS specification worked, and it is still the default today, so old pages keep rendering the same way.
 
 It gets worse with percentages:
@@ -224,6 +250,11 @@ Have you ever set a width on a `<span>` or a `<a>` and watched nothing happen? T
 - **Block boxes** (like `<div>`, `<p>`, `<h1>`): start on a new line and stretch to fill the available width. Width, height, padding, border and margin all work fully.
 - **Inline boxes** (like `<span>`, `<a>`, `<strong>`): flow within a line of text. `width` and `height` are ignored, and vertical margins have no effect. Horizontal padding and margin push neighbors away, but vertical padding and borders are painted without pushing surrounding lines, so they can overlap the text above and below.
 
+<div className="img-dev">
+  ![CSS Inline vs Inline-Block vs
+  Block](https://assets.wiki.nzar.dev/web-basics/css/css-inline-vs-inline-block-vs-block.webp)
+</div>
+
 If you need an inline element to respect width and height, you can change its `display` to `inline-block`. It sits in a line like text, but its inside behaves like a block.
 
 ```css title="styles.css"
@@ -241,7 +272,7 @@ The `display` property has more values, including the modern ones for flexbox an
 
 Here is the last piece, and it catches almost everyone. Take two paragraphs, one with `margin-bottom: 30px` and the next with `margin-top: 20px`. How far apart are they?
 
-Not 50 pixels. They are 30 pixels apart. When the vertical margins of two neighboring blocks touch, they **collapse** into a single margin equal to the larger one. Only vertical margins do this. Horizontal margins never collapse.
+Not 50 pixels. They are 30 pixels apart. When the vertical margins of two neighboring blocks touch, they **collapse** into a single margin equal to _the larger one_. Only vertical margins do this. Horizontal margins never collapse.
 
 It also happens between a parent and its first or last child. Look at this:
 
@@ -276,7 +307,7 @@ This happens because nothing separates them: no border, no padding, no content i
 }
 ```
 
-Two more facts help a lot. Margins do not collapse inside flex and grid containers, and margins of floating or absolutely positioned elements never collapse either. The full list of cases is in MDN's guide to <Clink label="margin collapsing" img href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" />. Because of this and other reasons, modern layouts often use `gap` inside flex or grid containers for spacing between items, which we will meet in the <Clink label="Flexbox guide" href="/web-basics/css/flexbox-the-complete-guide" />.
+Two more facts help a lot. Margins do not collapse inside flex and grid containers, and margins of floating or absolutely positioned elements never collapse either. The full list of cases is in MDN's guide to <Clink label="margin collapsing" img href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" />. Because of this and other reasons, modern layouts often use `gap` inside flex or grid containers for spacing between items, which we will meet in the <Clink label="Flexbox guide" href="/docs/web-basics/css/flexbox-the-complete-guide" />.
 
 ---
 
@@ -284,16 +315,17 @@ Two more facts help a lot. Margins do not collapse inside flex and grid containe
 
 You never have to guess any of this. Open your browser DevTools, select an element, and look at the **Computed** tab. You will find a diagram showing content, padding, border and margin with the exact pixel values of each layer. Hovering over an element in the page also highlights its layers in different colors right on the page.
 
-This is the fastest way to answer questions like "why is this gap 24px and not 16px?" or "which layer is causing this overflow?" If you have not used these tools before, the <Clink label="Inspecting HTML with Browser DevTools" href="/web-basics/html/inspecting-html-with-browser-devtools" /> article shows you where to start.
+This is the fastest way to answer questions like "why is this gap 24px and not 16px?" or "which layer is causing this overflow?" If you have not used these tools before, the <Clink label="Chrome DevToo" img href="https://developer.chrome.com/docs/devtools/overview" /> guide by Google shows you where to start.
 
 ---
 
 ## Why This Matters
 
-The box model sits underneath every layout problem you will ever debug. A horizontal scrollbar that appears for no reason is very often a `width: 100%` with padding on `content-box`. A gap that is smaller than expected is usually collapsing margins. A button that ignores its height is an inline element. Once you know the four layers and the two sizing modes, these stop being mysteries and become a two-minute check in DevTools.
+The box model is the foundation of all CSS layout and debugging:
 
-It also shapes the code you write. Setting `box-sizing: border-box` on day one, keeping spacing consistent with margin and padding, and choosing `max-width` over fixed widths will save you from a large number of layout bugs before they exist. Flexbox and grid, which come later in this chapter, still rely on the box model for the size of every item they arrange.
+- **Fast Debugging:** Issues like unexpected scrollbars (`width: 100%` with padding on `content-box`), collapsing margins, or inline buttons ignoring height become quick two-minute DevTools checks.
+- **Fewer Bugs:** Setting `box-sizing: border-box`, using consistent spacing, and favoring `max-width` prevents most layout bugs before they happen. Flexbox and Grid also rely on it for sizing items.
 
-Now you know how to size and space every box on the page. But how do you pick exactly which boxes to style? You have used classes, IDs and element names so far, and that will only take you a certain distance. Modern CSS can select an element by what it contains, by its position among siblings, by whether it is focused or hovered, and even by its relationship to other elements. That is what you will learn next, and it is where CSS starts to feel like a superpower.
+Now that you can size and space boxes, the next step is targeting specific elements. Modern CSS goes far beyond basic classes and IDs, letting you select items by their state, content, position, or relationships. That is where CSS starts to feel like a superpower.
 
 ---
