@@ -1,6 +1,6 @@
 ---
 title: CSS Basics
-description: The rules that decide which styles actually apply, and why
+description: Learn how CSS rules are written and how the browser decides which style wins when several rules target the same element.
 icon: FileText
 ---
 
@@ -10,18 +10,20 @@ icon: FileText
 
 <div className="img-dev">
   ![CSS Basics: Syntax, the Cascade & Specificity Article Cover
-  ](https://assets.wiki.nzar.dev/web-basics/css/css-basics-syntax-cascade-specificity.png)
+  ](https://assets.wiki.nzar.dev/web-basics/css/css-basics-syntax-cascade-specificity.webp)
 </div>
 
-Every CSS bug you'll ever run into, the button that won't change color, the text that stays black no matter what you try, the style that works in one file but not another, comes down to one of two things: you don't fully understand the syntax, or you don't fully understand the cascade. This article fixes both.
+You write `color: red`, save, refresh, and nothing changes. You check the spelling, check the selector, refresh again. Still nothing.
+
+Most of the CSS bugs you will meet come down to two things: not fully understanding the syntax, or not fully understanding the cascade. This article fixes both.
 
 ---
 
 ## What CSS Actually Is
 
-CSS stands for Cascading Style Sheets. It's a language made up of rules, and each rule tells the browser how to style one or more elements. That's it. No logic, no loops, no functions calling other functions. Just rules, applied to elements, based on a set of priorities we'll get into shortly.
+CSS stands for Cascading Style Sheets. It is a _declarative language_: you describe how things should look, and the browser figures out how to do it. Remember from the HTML part that HTML gives a page its structure. CSS is what turns that structure into something people want to look at.
 
-A single CSS rule looks like this:
+A CSS file is a list of rules. Each rule says "these elements should look like this." Here is one:
 
 ```css
 p {
@@ -30,33 +32,50 @@ p {
 }
 ```
 
-Three parts here, and it's worth knowing the proper names for them:
+It has three parts, and the names are worth learning:
 
-- `p` is the **selector**. It tells the browser which elements this rule applies to, in this case, every `<p>` tag on the page.
-- `color` and `font-size` are **properties**. These are the things you're allowed to change.
-- `blue` and `16px` are **values**. These are what you're changing the property to.
+- `p` is the **selector**. It tells the browser which elements the rule applies to, here every `<p>` on the page.
+- `color` and `font-size` are **properties**. These are the things you can change.
+- `blue` and `16px` are **values**. These are what you set the property to.
 
 <div className="img-dev">
-  ![CSS rule](https://assets.wiki.nzar.dev/web-basics/css/css-rule.png)
+  ![Introduction to CSS
+  syntax](https://assets.wiki.nzar.dev/web-basics/css/css-syntax.webp)
 </div>
 
-A property and its value together, like `color: blue;`, is called a **declaration**. A selector plus one or more declarations wrapped in curly braces is called a **rule** (or a rule set). Stack a bunch of rules together in a `.css` file, and you've got a stylesheet.
+A property and its value together, like `color: blue;`, is a **declaration**. A selector plus its declarations inside curly braces is a **rule** (or rule set). Many rules in a `.css` file make a stylesheet.
+
+Two small details save a lot of pain. Every declaration ends with a semicolon, and you should always write it, even on the last line. Comments use `/* like this */` and can span several lines.
+
+### CSS Forgives Mistakes
+
+What happens if you mistype something? Unlike JavaScript, nothing crashes and nothing is reported. The browser silently ignores the invalid declaration and keeps the rest.
+
+```css
+.card {
+  colour: red; /* unknown property, ignored */
+  padding: 16pixels; /* invalid value, ignored */
+  margin: 8px; /* still applied */
+}
+```
+
+This is deliberate, so old browsers can survive new CSS and the other way around. The downside is that CSS never tells you when you got it wrong. If a style does not apply, you have to investigate. We will get to how in a moment.
 
 ---
 
 ## Three Ways to Write CSS
 
-CSS doesn't have to live in its own file. There are three ways to apply it, and knowing all three matters, even if you'll mostly use one.
+CSS does not have to live in its own file. There are three ways to apply it.
 
-**Inline CSS** goes directly on an HTML element using the `style` attribute:
+**Inline CSS** goes directly on an element with the `style` attribute:
 
 ```html title="index.html"
 <p style="color: blue; font-size: 16px;">Hello there</p>
 ```
 
-This works, but it doesn't scale. You'd have to repeat it on every single element, and it mixes structure with style, which makes everything harder to maintain. Use it sparingly, mostly for quick testing or dynamic styles set by JavaScript.
+It works, but it does not scale. You repeat yourself on every element, and structure gets mixed with style. Use it sparingly, for quick tests or values set by JavaScript.
 
-**Internal CSS** lives inside a `<style>` tag in the document's `<head>`:
+**Internal CSS** lives in a `<style>` tag inside the `<head>`:
 
 ```html title="index.html"
 <head>
@@ -69,9 +88,9 @@ This works, but it doesn't scale. You'd have to repeat it on every single elemen
 </head>
 ```
 
-Better than inline, since your styles are grouped together, but it's still stuck to one page. If you have ten pages, you'd need to repeat this ten times.
+Better, since your styles are grouped, but they are stuck to one page. Ten pages would mean ten copies.
 
-**External CSS** is the one you'll actually use in real projects. You write your styles in a separate `.css` file, and link it from your HTML:
+**External CSS** is what you will use in real projects. You write a separate `.css` file and link it:
 
 ```html title="index.html"
 <head>
@@ -88,127 +107,172 @@ p {
 
 <div className="img-dev">
   ![3 ways to add CSS to your
-  HTML](https://assets.wiki.nzar.dev/web-basics/css/3-ways-to-write-css.png)
+  HTML](https://assets.wiki.nzar.dev/web-basics/css/three-ways-to-write-css.webp)
 </div>
 
-One file, linked from every page that needs it. Change something once, and it updates everywhere. This is the standard approach, and it's what the rest of this chapter assumes you're using.
+One file, linked from every page. Change it once and every page updates. The browser can also cache it, so it is downloaded only once. The rest of this part of the chapter assumes external CSS.
 
 ---
 
 ## Selectors: Choosing What Gets Styled
 
-Before the cascade makes sense, you need to be comfortable picking targets. Here are the ones you'll use constantly:
+Before the cascade makes sense, you need to be able to pick targets. These are the four you will use constantly:
 
 ```css
-/* Element selector, targets every <h1> */
+/* Element selector: every <h1> */
 h1 {
   margin: 0;
 }
 
-/* Class selector, targets anything with class="card" */
+/* Class selector: anything with class="card" */
 .card {
   padding: 16px;
 }
 
-/* ID selector, targets the one element with id="header" */
+/* ID selector: the one element with id="header" */
 #header {
   background: white;
 }
 
-/* Descendant selector, targets <a> tags inside .card */
+/* Descendant selector: <a> tags inside .card */
 .card a {
   color: teal;
 }
-
-/* Multiple selectors, applies the same rule to both */
-h1,
-h2 {
-  font-family: sans-serif;
-}
 ```
 
-There's a whole world of more advanced selectors, attribute selectors, pseudo-classes, combinators, and modern additions like `:has()`. We'll cover those properly in the next article. For now, element, class, and ID selectors are enough to understand the cascade.
+To apply the same rule to several selectors, separate them with commas: `h1, h2 { ... }`.
+
+There is much more to selectors, like attribute selectors, pseudo-classes, combinators and modern additions such as `:has()`. Those get their own article, <Clink label="Selectors Explained" href="/docs/web-basics/css/selectors-explained-basics-to-has-is-where" />. Element, class and ID selectors are all you need for now.
 
 ---
 
 ## The Cascade: Why It's Called "Cascading"
 
-Here's the situation that trips almost everyone up eventually. You write a rule to make some text red. Somewhere else, another rule tries to make it blue. Which one wins?
+Here is the situation that eventually trips up everyone. One rule says the text is red. Another rule says it is blue. Which one wins?
 
-The browser doesn't guess. It follows a strict, predictable order, and that order is called the **cascade**. Think of it as a waterfall of rules flowing down, where each one can override the ones before it, but only according to fixed priorities. The cascade decides the winner using **4 factors**, checked in this order:
+The browser does not guess. It follows a strict order, and that order is the **cascade**. Think of a waterfall of rules flowing down, where each can override the others, but only according to fixed priorities.
 
-1. **Importance**, whether a declaration is marked `!important`
-2. **Specificity**, how precisely a selector targets an element
-3. **Source order**, which rule was written last
-4. **Origin**, where the style came from (browser defaults, your CSS, or user settings)
+Remember from the browser article that the page has a built-in look before you write a single line of CSS? That is the browser's own _user-agent stylesheet_, which gives links their blue underline and headings their size. Your CSS does not replace it. It competes with it, together with any library styles you add.
 
-Most day to day CSS confusion comes down to the first two, so let's slow down on both.
+One thing to understand early: the cascade picks a winner **per property, per element**, not per rule. Two rules can each win a different property on the same element.
+
+```css
+p {
+  color: blue;
+  font-size: 20px;
+}
+.note {
+  color: red;
+}
+```
+
+For `<p class="note">`, the color comes from `.note` and the font size comes from `p`. Each property had its own contest.
+
+To decide a contest, the browser checks these in order and stops at the first one that produces a winner:
+
+1. **Origin and importance:** where the declaration came from, and whether it is marked `!important`.
+2. **Specificity:** how precisely the selector targets the element.
+3. **Source order:** if everything is tied, the last declaration wins.
+
+Origin has three possible values: the browser's stylesheet, the user's own settings, and your author stylesheet. For normal declarations, yours beats the user's, which beats the browser's. That is why your CSS can override the default blue links.
+
+The real algorithm has a few more steps, such as cascade layers, which sit between origin and specificity. We will cover layers later in this part of the chapter. If you want the complete picture, the <Clink label="CSS Cascading and Inheritance specification" img href="https://www.w3.org/TR/css-cascade-5/" /> is the source of truth.
+
+Now let's slow down on the two that cause most confusion.
 
 ---
 
 ## Specificity: The Real Source of Most Confusion
 
-When two rules target the same element with the same importance, the browser needs a way to pick a winner. That's specificity. Every selector gets a specificity score, and the higher score wins, no matter which rule was written first.
+When two rules target the same element, with the same importance, the browser compares how specific their selectors are. The more precisely a selector aims, the more weight it carries, no matter which rule was written first.
 
-Here's how the score is calculated, from highest weight to lowest:
+Think of directions. "The house with the blue door on Elm Street" is more specific than "a house."
 
-- **Inline styles** score the highest. They beat everything in your stylesheet.
-- **IDs** (`#header`) are next.
-- **Classes** (`.card`), **attribute selectors** (`[type="text"]`), and **pseudo-classes** (`:hover`) come after that.
-- **Elements** (`p`, `div`) and **pseudo-elements** (`::before`) score the lowest.
+Here is how weight is counted, from heaviest to lightest:
 
-<div className="img-dev">
-  ![CSS Specificity Priority
-  Order](https://assets.wiki.nzar.dev/web-basics/css/css-specificity.png)
-</div>
+- **Inline styles** beat any selector in your stylesheet.
+- **IDs** (`#header`).
+- **Classes** (`.card`), **attribute selectors** (`[type="text"]`) and **pseudo-classes** (`:hover`).
+- **Elements** (`p`, `div`) and **pseudo-elements** (`::before`).
 
-A useful (if simplified) way to think about it is four columns of points: inline, IDs, classes, elements. Compare left to right, and the first column with a higher number wins.
+A useful way to picture it is columns of points: IDs, classes, elements. Compare left to right, and the first column with a higher number wins.
 
 ```css
 p {
   color: black;
 }
-/* specificity: 0-0-0-1 */
+/* specificity: 0-0-1 (one element) */
 
 .intro {
   color: blue;
 }
-/* specificity: 0-0-1-0, wins over the rule above */
+/* specificity: 0-1-0 (one class), beats the rule above */
 
 #main-text {
   color: green;
 }
-/* specificity: 0-1-0-0, wins over both rules above */
+/* specificity: 1-0-0 (one ID), beats both */
 ```
 
-If `<p id="main-text" class="intro">` matched all three rules, it would end up green, because the ID selector has the highest specificity of the three.
+If `<p id="main-text" class="intro">` matches all three, it ends up green. The ID wins.
 
 <div className="img-dev">
-  ![CSS Specificity Priority Order
-  Example](https://assets.wiki.nzar.dev/web-basics/css/css-specificity-example.png)
+  ![CSS Specificity Priority
+  Order](https://assets.wiki.nzar.dev/web-basics/css/css-specificity.webp)
 </div>
 
-A common trap: writing more selectors doesn't automatically mean more specificity, it depends on the type.
+The columns do not add up into one number. One ID beats any number of classes, because you never carry over from one column to the next.
 
 ```css
 .card .title {
   color: purple;
 }
-/* specificity: 0-0-2-0, two classes */
+/* 0-2-0, two classes */
 
 body p {
   color: orange;
 }
-/* specificity: 0-0-0-2, two elements */
+/* 0-0-2, two elements */
 ```
 
-Even though `body p` has two selectors and `.card .title` also has two, the class-based one wins, because classes are weighted higher than elements.
+Both selectors have two parts, but the class-based one wins. Classes are weighted higher than elements, so the count of parts alone tells you nothing.
+
+Selectors that add nothing at all are the universal selector `*` and combinators like the space or `>`. The `:where()` pseudo-class also always counts as zero, which makes it handy for low-priority defaults.
+
+### A Realistic Bug
+
+Imagine a sidebar, and someone wrote this a year ago:
+
+```css
+#sidebar a {
+  color: gray;
+}
+```
+
+Today you add a button inside it:
+
+```css
+.button {
+  color: white;
+  background: blue;
+}
+```
+
+```html title="index.html"
+<div id="sidebar">
+  <a class="button" href="/signup">Sign up</a>
+</div>
+```
+
+The button has a blue background but gray text. Why? `.button` scores `0-1-0`, while `#sidebar a` scores `1-0-1`. The ID column wins, so the gray text wins. The background had no competitor, so it applied normally.
+
+The fix is rarely a bigger selector. Keep specificity low and flat, so rules stay easy to override.
 
 ---
 
 ## Source Order: The Tiebreaker
 
-If two rules have the exact same specificity, the cascade falls back to source order. Whichever rule appears later in the stylesheet (or in a later linked stylesheet) wins.
+If two rules have the same specificity, the cascade falls back to source order. Whichever comes later wins, even across files. That is why the order you link your stylesheets matters.
 
 ```css
 p {
@@ -220,13 +284,15 @@ p {
 }
 ```
 
-Both rules have identical specificity, so the second one wins, and the text ends up red. This is also why the order you link your stylesheets in actually matters.
+Same specificity, so the second rule wins and the text is red.
+
+Notice this is the last thing the browser checks. _"The last rule wins"_ is only true when specificity is equal. Also, being closer to the element in your HTML gives a rule no extra power. Only the selector counts.
 
 ---
 
-## `!important`: The Escape Hatch You Should Rarely Use
+## The Option You Should Rarely Use
 
-You can force a declaration to override the normal cascade entirely by adding `!important`:
+Adding `!important` moves a declaration into a stronger group, checked before specificity:
 
 ```css
 p {
@@ -234,13 +300,17 @@ p {
 }
 ```
 
-This will beat almost anything else targeting that element, regardless of specificity or source order, unless another `!important` declaration with higher specificity fights back. And that's exactly the problem. Once you start using `!important`, you often need more of it to override the last one, and your stylesheet turns into an arms race. Treat it as a last resort, not a habit. If you find yourself reaching for it often, that's usually a sign your CSS needs better organization, which is exactly what we'll cover later in this chapter with cascade layers.
+This beats a normal declaration from any selector. It can only be beaten by another `!important`, and that is the problem. Once one exists, the next developer needs another one to override it, and your stylesheet becomes an arms race.
+
+There is one more twist. For important declarations, the origin order reverses, so the browser's and the user's important styles outrank yours. That is how users with accessibility needs can force styles a website cannot override.
+
+Treat `!important` as a last resort. If you reach for it often, your CSS needs better organization, and cascade layers, coming later in this part of the chapter, are the proper fix.
 
 ---
 
 ## Inheritance: Some Styles Pass Down Automatically
 
-Separate from the cascade, but closely related, is inheritance. Some CSS properties, mostly text related ones like `color`, `font-family`, and `line-height`, automatically pass down from a parent element to its children, unless something overrides them.
+What if no rule sets a property at all? The browser still needs a value, and it gets one through **inheritance**. Some properties automatically pass from parent to child.
 
 ```css
 body {
@@ -249,25 +319,87 @@ body {
 }
 ```
 
-Every element inside `<body>` will inherit that blue color and that font, without you writing a single extra rule. Not every property inherits though. Layout properties like `margin`, `padding`, `border`, and `width` do not inherit by default, which makes sense, you wouldn't want every nested element automatically copying its parent's exact spacing.
+You do not need to style every heading and paragraph. Elements inside `<body>` inherit the color and font. A child can still override it:
 
-You can control this manually with a few special keywords:
+```css
+body {
+  color: blue;
+}
+
+p {
+  color: red;
+}
+```
+
+Now paragraphs are red, while everything else stays blue.
+
+### Not Every Property Inherits
+
+Text-related properties usually inherit, because that is usually what you want:
+
+- `color`, `font-family`, `line-height`
+
+Layout properties generally do not:
+
+- `margin`, `padding`, `border`, `width`, `height`
+
+You would not want every nested element to copy its parent's border and spacing. Properties that do not inherit fall back to their _initial value_, the default defined by the CSS specification. Each property's page on MDN tells you whether it inherits.
+
+<div className="img-dev">
+  ![How Inheritance Works in
+  CSS](https://assets.wiki.nzar.dev/web-basics/css/css-inheritance.webp)
+</div>
+
+There is one trap worth knowing. An inherited value has no specificity, so any rule that targets the element directly beats it, even the browser's own default stylesheet. That is why this does not turn your links green:
+
+```css
+body {
+  color: green;
+}
+```
+
+Paragraphs become green, but links stay blue, because the browser's stylesheet targets `a` directly.
+
+### Controlling Inheritance
+
+A few keywords work on any property:
 
 ```css
 .child {
-  color: inherit; /* explicitly copy the parent's value */
-  border: initial; /* reset to the property's default value */
+  color: inherit; /* copy the parent's value */
+  border: initial; /* reset to the property's initial value */
+}
+```
+
+`unset` picks the right behavior for you. It acts like `inherit` if the property normally inherits, and like `initial` if it does not:
+
+```css
+.child {
+  color: unset; /* inherits, because color normally does */
+  margin: unset; /* resets, because margin does not inherit */
 }
 ```
 
 ---
 
-## Putting It All Together
+## Finding Out Who Won
 
-When the browser decides how to style an element, it's really just answering one question over and over: out of every rule that could apply here, which one wins? It answers that by checking importance first, then specificity, then source order, and it fills in anything left unstyled using inheritance where applicable.
+You do not have to work this out in your head. Since CSS never reports errors, the browser's DevTools are your best friend.
 
-Once this clicks, CSS debugging changes completely. Instead of randomly adding more rules and hoping one sticks, you can look at a stubborn style and immediately ask the right questions: is something more specific overriding this, is there an `!important` somewhere, is a later rule in the file beating this one. That's the entire game.
+Select an element and open the **Styles** panel. Rules are listed by priority, and declarations that lost the contest appear with a strikethrough. The **Computed** tab shows the final value of each property. If you have not used these tools yet, the <Clink label="Inspecting HTML with Browser DevTools" href="/docs/web-basics/html/inspecting-html-with-browser-devtools" /> article shows you how.
 
-With that foundation in place, we can move on to the next article, where we'll dig properly into the box model, since specificity decides which rules win, but the box model decides what those rules actually do to the size and spacing of everything on your page.
+When a style does not apply, ask three questions. Is my declaration there at all, or was it dropped as invalid? Is it struck through, and which rule beat it? Or is the element inheriting something I did not expect?
+
+---
+
+## Why This Matters
+
+Once this clicks, CSS debugging changes completely. Instead of adding more rules and hoping one sticks, you can look at a stubborn style and ask the right questions. Is something more specific overriding this? Is there an `!important` somewhere? Is a later rule beating it?
+
+It also changes how you write CSS. You stop reaching for IDs and `!important` to force styles through, and you keep selectors flat so overrides stay simple. On a team, that is the difference between a stylesheet that stays predictable at 500 lines and one nobody dares to touch at 5,000.
+
+If you want to keep practicing, MDN's <Clink label="Handling conflicts lesson" img href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Handling_conflicts" /> has exercises for exactly this.
+
+But here is the thing. _Specificity decides which rules win_, and now you know how. Have you ever added padding to a box and watched your whole layout suddenly break? Or set a width of 300px and ended up with something wider? That is not the cascade. That is the box model, and it is the next thing you will learn. Once you understand it, you will never fight spacing again.
 
 ---
